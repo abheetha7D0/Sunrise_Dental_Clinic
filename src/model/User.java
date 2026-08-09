@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
+
+import Enums.Role;
+
 /**
  *
  * @author ASUS
@@ -17,5 +20,12 @@ public class User {
     
     private String fullName;
     
-    private String role;
+    private Role role;
+
+    public User(String username, String password, String fullName, Role role) {
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.role = role;
+    }
 }
