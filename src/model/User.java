@@ -5,6 +5,7 @@
 package model;
 
 import Enums.Role;
+import Enums.UserStetus;
 
 /**
  *
@@ -20,12 +21,20 @@ public class User {
     
     private String fullName;
     
+    private UserStetus stetus;
+    
     private Role role;
 
-    public User(String username, String password, String fullName, Role role) {
+    public User(String username, String password, String fullName, UserStetus stetus,Role role) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
+        this.stetus = stetus;
         this.role = role;
     }
+
+    public void setStetus(UserStetus stetus) {
+        this.stetus = stetus;
+    }
+    
 }
