@@ -4,21 +4,19 @@
  */
 package dao;
 
+import model.Appointment;
 import model.Dentiest;
 
 /**
  *
  * @author ASUS
  */
-public interface DentistDAO {
-
-    Dentiest addDentiest(Dentiest patient);
-
-    Dentiest updateDentiest(Dentiest patient);
+public interface AppointmentDAO {
     
-    Dentiest deleteDentiest(Dentiest patient);
+    Appointment crreateAppoinment(Appointment Appoinment);
 
     Dentiest findByDentiestName(String name);
     
     Dentiest findBySpecialization(String specialization);
+
 }

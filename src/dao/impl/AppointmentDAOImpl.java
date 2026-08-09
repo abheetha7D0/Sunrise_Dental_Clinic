@@ -4,37 +4,32 @@
  */
 package dao.impl;
 
-import dao.DentistDAO;
-import model.Dentiest;
+import dao.AppointmentDAO;
+import model.Appointment;
 
 /**
  *
  * @author ASUS
  */
-public class DentistDAOImpl implements DentistDAO{
+public class AppointmentDAOImpl implements AppointmentDAO{
 
     @Override
-    public Dentiest addDentiest(Dentiest patient) {
+    public Appointment crreateAppoinment(Appointment Appoinment) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Dentiest updateDentiest(Dentiest patient) {
+    public Appointment updateAppoinment(Appointment Appoinment) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Dentiest deleteDentiest(Dentiest patient) {
+    public Appointment cancelAppoinment(Appointment Appoinment) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Dentiest findByDentiestName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Dentiest findBySpecialization(String specialization) {
+    public Appointment findByAppoinmentNum(int appoinmentNum) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
