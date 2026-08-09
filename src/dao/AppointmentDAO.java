@@ -12,11 +12,13 @@ import model.Dentiest;
  * @author ASUS
  */
 public interface AppointmentDAO {
-    
+
     Appointment crreateAppoinment(Appointment Appoinment);
 
-    Dentiest findByDentiestName(String name);
-    
-    Dentiest findBySpecialization(String specialization);
+    Appointment updateAppoinment(Appointment Appoinment);
+
+    Appointment cancelAppoinment(Appointment Appoinment);
+
+    Appointment findByAppoinmentNum(int appoinmentNum);
 
 }
