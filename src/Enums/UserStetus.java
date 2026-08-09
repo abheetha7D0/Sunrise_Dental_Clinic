@@ -9,5 +9,6 @@ package Enums;
  * @author ASUS
  */
 public enum UserStetus {
-    
+    ACTIVATE,
+    DEACTIVATE
 }

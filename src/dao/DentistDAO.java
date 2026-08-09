@@ -4,14 +4,17 @@
  */
 package dao;
 
-import model.Patient;
-
 /**
  *
  * @author ASUS
  */
-public interface PatientDAO {
-        Patient addPatient(Patient patient);
-        Patient updatePatient(Patient patient);
-        Patient findByPatientName(String name);
+public interface DentistDAO {
+
+    Dentiest addDentiest(Dentiest patient);
+
+    Dentiest updateDentiest(Dentiest patient);
+    
+    Dentiest deleteDentiest(Dentiest patient);
+
+    Dentiest findByDentiestName(String name);
 }

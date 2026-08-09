@@ -4,10 +4,33 @@
  */
 package dao.impl;
 
+import dao.UserDAO;
+import model.User;
+
 /**
  *
  * @author ASUS
  */
-public class UserDAOImpl {
+public class UserDAOImpl implements UserDAO{
+
+    @Override
+    public User Login(User user) {
+        throw new UnsupportedOperationException("Not supported yet."); 
+    }
+
+    @Override
+    public User addUser(User user) {
+        throw new UnsupportedOperationException("Not supported yet."); 
+    }
+
+    @Override
+    public User updateUser(User user) {
+        throw new UnsupportedOperationException("Not supported yet."); 
+    }
+
+    @Override
+    public User userDelete(User user) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }

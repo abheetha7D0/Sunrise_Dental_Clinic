@@ -9,5 +9,7 @@ package Enums;
  * @author ASUS
  */
 public enum AppointmentStetus {
-    
+    SHEDULED,
+    COMPLETE,
+    CANCELED
 }

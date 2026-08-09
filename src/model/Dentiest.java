@@ -10,7 +10,7 @@ import Enums.DentiestStetus;
  *
  * @author ASUS
  */
-public class Dentist {
+public class Dentiest {
 
     private int id;
     private String fullName;
@@ -18,7 +18,7 @@ public class Dentist {
     private String contactNumber;
     private DentiestStetus stetus;
 
-    public Dentist(String fullName, String specialization, String contactNumber, DentiestStetus stetus) {
+    public Dentiest(String fullName, String specialization, String contactNumber, DentiestStetus stetus) {
         this.fullName = fullName;
         this.specialization = specialization;
         this.contactNumber = contactNumber;
