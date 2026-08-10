@@ -38,9 +38,10 @@ public class FirstLogin extends javax.swing.JFrame {
         jBtnPassword = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jBtnSignIn = new javax.swing.JButton();
+        jBtnRegister = new javax.swing.JButton();
         jLblPassword1 = new javax.swing.JLabel();
         jBtnReEnterPassword = new javax.swing.JPasswordField();
+        jBtnSignIn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -74,11 +75,11 @@ public class FirstLogin extends javax.swing.JFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/src/converted_image.png"))); // NOI18N
 
-        jBtnSignIn.setBackground(new java.awt.Color(0, 102, 255));
-        jBtnSignIn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jBtnSignIn.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnSignIn.setText("Sign In");
-        jBtnSignIn.addActionListener(this::jBtnSignInActionPerformed);
+        jBtnRegister.setBackground(new java.awt.Color(0, 102, 255));
+        jBtnRegister.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jBtnRegister.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnRegister.setText("Register");
+        jBtnRegister.addActionListener(this::jBtnRegisterActionPerformed);
 
         jLblPassword1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLblPassword1.setForeground(new java.awt.Color(51, 51, 51));
@@ -86,6 +87,12 @@ public class FirstLogin extends javax.swing.JFrame {
 
         jBtnReEnterPassword.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jBtnReEnterPassword.addActionListener(this::jBtnReEnterPasswordActionPerformed);
+
+        jBtnSignIn.setBackground(new java.awt.Color(0, 102, 255));
+        jBtnSignIn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jBtnSignIn.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnSignIn.setText("Sign In");
+        jBtnSignIn.addActionListener(this::jBtnSignInActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -101,25 +108,27 @@ public class FirstLogin extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(62, 62, 62)
                                 .addComponent(jLabel3))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel4)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLblUserName)
-                                        .addComponent(jLblPassword)
-                                        .addComponent(jLblPassword1))
-                                    .addGap(28, 28, 28)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jTxtUserName)
-                                            .addComponent(jBtnPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jBtnReEnterPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLblUserName)
+                                    .addComponent(jLblPassword)
+                                    .addComponent(jLblPassword1))
+                                .addGap(28, 28, 28)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTxtUserName)
+                                        .addComponent(jBtnPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jBtnReEnterPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jBtnRegister)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(jLabel4)))
                         .addGap(335, 335, 335))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jBtnSignIn)
-                            .addComponent(jLabel2))
-                        .addGap(459, 459, 459))))
+                        .addComponent(jLabel2)
+                        .addGap(331, 331, 331)
+                        .addComponent(jBtnSignIn)
+                        .addGap(60, 60, 60))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,8 +137,10 @@ public class FirstLogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jBtnSignIn))
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLblUserName)
                     .addComponent(jTxtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -145,7 +156,7 @@ public class FirstLogin extends javax.swing.JFrame {
                     .addComponent(jLblPassword1)
                     .addComponent(jBtnReEnterPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jBtnSignIn)
+                .addComponent(jBtnRegister)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
@@ -165,13 +176,17 @@ public class FirstLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtnPasswordActionPerformed
 
-    private void jBtnSignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSignInActionPerformed
+    private void jBtnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRegisterActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jBtnSignInActionPerformed
+    }//GEN-LAST:event_jBtnRegisterActionPerformed
 
     private void jBtnReEnterPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnReEnterPasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtnReEnterPasswordActionPerformed
+
+    private void jBtnSignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSignInActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBtnSignInActionPerformed
 
     /**
      * @param args the command line arguments
@@ -201,6 +216,7 @@ public class FirstLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPasswordField jBtnPassword;
     private javax.swing.JPasswordField jBtnReEnterPassword;
+    private javax.swing.JButton jBtnRegister;
     private javax.swing.JButton jBtnSignIn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

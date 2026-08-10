@@ -12,12 +12,12 @@ public class Treatment {
     
     private int id;
     private double treatmentCost;
-    private double tretmentType;
+    private double tretmentName;
     private String description;
 
     public Treatment(double treatmentCost, double tretmentType, String description) {
         this.treatmentCost = treatmentCost;
-        this.tretmentType = tretmentType;
+        this.tretmentName = tretmentType;
         this.description = description;
     }
 
@@ -29,8 +29,8 @@ public class Treatment {
         return treatmentCost;
     }
 
-    public double getTretmentType() {
-        return tretmentType;
+    public double getTretmentName() {
+        return tretmentName;
     }
 
     public String getDescription() {
@@ -45,8 +45,8 @@ public class Treatment {
         this.treatmentCost = treatmentCost;
     }
 
-    public void setTretmentType(double tretmentType) {
-        this.tretmentType = tretmentType;
+    public void setTretmentName(double tretmentName) {
+        this.tretmentName = tretmentName;
     }
 
     public void setDescription(String description) {
@@ -55,7 +55,7 @@ public class Treatment {
 
     @Override
     public String toString() {
-        return "Treatment{" + "id=" + id + ", treatmentCost=" + treatmentCost + ", tretmentType=" + tretmentType + ", description=" + description + '}';
+        return "Treatment{" + "id=" + id + ", treatmentCost=" + treatmentCost + ", tretmentType=" + tretmentName + ", description=" + description + '}';
     }
     
     

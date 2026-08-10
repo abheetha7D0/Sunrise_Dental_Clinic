@@ -10,5 +10,6 @@ package Enums;
  */
 public enum UserStetus {
     ACTIVATE,
-    DEACTIVATE
+    DEACTIVATE,
+    UNREGISTERED 
 }
