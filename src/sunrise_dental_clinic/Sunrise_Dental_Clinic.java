@@ -4,6 +4,9 @@
  */
 package sunrise_dental_clinic;
 
+import javax.swing.SwingUtilities;
+import view.Login;
+
 /**
  *
  * @author ASUS
@@ -15,6 +18,11 @@ public class Sunrise_Dental_Clinic {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+         SwingUtilities.invokeLater(() -> {
+            Login loginFrame = new Login();
+            loginFrame.setLocationRelativeTo(null);
+            loginFrame.setVisible(true);      
+        });
     }
     
 }

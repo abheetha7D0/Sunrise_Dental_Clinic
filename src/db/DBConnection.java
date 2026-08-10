@@ -21,7 +21,7 @@ public class DBConnection {
         try {
             Class.forName("com.mysql.jdbc.Driver");
 
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student_db?useSSL=false", "root", "1234");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sunrise_dental_clinic?useSSL=false", "root", "1234");
             System.out.println("Database Connected");
         } catch (Exception e) {
             System.out.println(e);

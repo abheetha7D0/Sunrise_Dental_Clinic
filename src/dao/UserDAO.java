@@ -4,6 +4,7 @@
  */
 package dao;
 
+import dto.UserDTO;
 import model.User;
 
 /**
@@ -11,7 +12,7 @@ import model.User;
  * @author ASUS
  */
 public interface UserDAO {
-    User Login(User user);
+    boolean Login(UserDTO userDTO);
     User addUser(User user);
     User updateUser(User user);
     User userDelete(User user);

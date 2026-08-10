@@ -12,10 +12,10 @@ public class Treatment {
     
     private int id;
     private double treatmentCost;
-    private double tretmentName;
+    private String tretmentName;
     private String description;
 
-    public Treatment(double treatmentCost, double tretmentType, String description) {
+    public Treatment(double treatmentCost, String tretmentType, String description) {
         this.treatmentCost = treatmentCost;
         this.tretmentName = tretmentType;
         this.description = description;
@@ -29,7 +29,7 @@ public class Treatment {
         return treatmentCost;
     }
 
-    public double getTretmentName() {
+    public String getTretmentName() {
         return tretmentName;
     }
 
@@ -45,7 +45,7 @@ public class Treatment {
         this.treatmentCost = treatmentCost;
     }
 
-    public void setTretmentName(double tretmentName) {
+    public void setTretmentName(String tretmentName) {
         this.tretmentName = tretmentName;
     }
 

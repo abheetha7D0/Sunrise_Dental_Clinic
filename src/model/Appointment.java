@@ -14,16 +14,20 @@ public class Appointment {
 
     private int id;
     private int Appointment_number;
-    private String Appointment_date;
-    private String Appointment; 
-    private String time;
+    private int patientId;
+    private int dentistId;
+    private int treatmentId;
+    private String AppointmentDate;
+    private String AppointmentTime;
     private AppointmentStetus Stetus;
 
-    public Appointment(int Appointment_number, String Appointment_date, String Appointment, String time, AppointmentStetus Stetus) {
+    public Appointment(int Appointment_number, int patientId, int dentistId, int treatmentId, String AppointmentDate, String AppointmentTime, AppointmentStetus Stetus) {
         this.Appointment_number = Appointment_number;
-        this.Appointment_date = Appointment_date;
-        this.Appointment = Appointment;
-        this.time = time;
+        this.patientId = patientId;
+        this.dentistId = dentistId;
+        this.treatmentId = treatmentId;
+        this.AppointmentDate = AppointmentDate;
+        this.AppointmentTime = AppointmentTime;
         this.Stetus = Stetus;
     }
 
@@ -35,16 +39,24 @@ public class Appointment {
         return Appointment_number;
     }
 
-    public String getAppointment_date() {
-        return Appointment_date;
+    public int getPatientId() {
+        return patientId;
     }
 
-    public String getAppointment() {
-        return Appointment;
+    public int getDentistId() {
+        return dentistId;
     }
 
-    public String getTime() {
-        return time;
+    public int getTreatmentId() {
+        return treatmentId;
+    }
+
+    public String getAppointmentDate() {
+        return AppointmentDate;
+    }
+
+    public String getAppointmentTime() {
+        return AppointmentTime;
     }
 
     public AppointmentStetus getStetus() {
@@ -59,19 +71,28 @@ public class Appointment {
         this.Appointment_number = Appointment_number;
     }
 
-    public void setAppointment_date(String Appointment_date) {
-        this.Appointment_date = Appointment_date;
+    public void setPatientId(int patientId) {
+        this.patientId = patientId;
     }
 
-    public void setAppointment(String Appointment) {
-        this.Appointment = Appointment;
+    public void setDentistId(int dentistId) {
+        this.dentistId = dentistId;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setTreatmentId(int treatmentId) {
+        this.treatmentId = treatmentId;
+    }
+
+    public void setAppointmentDate(String AppointmentDate) {
+        this.AppointmentDate = AppointmentDate;
+    }
+
+    public void setAppointmentTime(String AppointmentTime) {
+        this.AppointmentTime = AppointmentTime;
     }
 
     public void setStetus(AppointmentStetus Stetus) {
         this.Stetus = Stetus;
-    }  
+    }
+
 }

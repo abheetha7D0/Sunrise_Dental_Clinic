@@ -4,6 +4,12 @@
  */
 package view;
 
+import dao.UserDAO;
+import dao.impl.UserDAOImpl;
+import dto.UserDTO;
+import java.util.Arrays;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ASUS
@@ -35,7 +41,7 @@ public class Login extends javax.swing.JFrame {
         jLblUserName = new javax.swing.JLabel();
         jLblPassword = new javax.swing.JLabel();
         jTxtUserName = new javax.swing.JTextField();
-        jBtnPassword = new javax.swing.JPasswordField();
+        jTxtPassword = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jBtnSignIn = new javax.swing.JButton();
@@ -70,8 +76,8 @@ public class Login extends javax.swing.JFrame {
         jTxtUserName.setName(""); // NOI18N
         jTxtUserName.addActionListener(this::jTxtUserNameActionPerformed);
 
-        jBtnPassword.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jBtnPassword.addActionListener(this::jBtnPasswordActionPerformed);
+        jTxtPassword.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jTxtPassword.addActionListener(this::jTxtPasswordActionPerformed);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/src/converted_image.png"))); // NOI18N
 
@@ -117,7 +123,7 @@ public class Login extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jTxtUserName)
-                                    .addComponent(jBtnPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTxtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jBtnSignIn)
                                 .addComponent(jBtnForgottonPassword))
                             .addGap(377, 377, 377)))
@@ -142,7 +148,7 @@ public class Login extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLblPassword)
-                    .addComponent(jBtnPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTxtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addGap(9, 9, 9)
@@ -165,12 +171,26 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTxtUserNameActionPerformed
 
-    private void jBtnPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPasswordActionPerformed
+    private void jTxtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtPasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jBtnPasswordActionPerformed
+    }//GEN-LAST:event_jTxtPasswordActionPerformed
 
     private void jBtnSignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSignInActionPerformed
         // TODO add your handling code here:
+        String userName = jTxtUserName.getText().strip();
+        String password = new String(jTxtPassword.getPassword());
+        
+        UserDAOImpl userDAOImpl = new UserDAOImpl();
+        boolean Login = userDAOImpl.Login(new UserDTO(userName,password));
+
+        if (userDAOImpl.Login(new UserDTO(userName,password))) {
+            MainWindow form = new MainWindow();
+            form.setVisible(true);
+            this.dispose();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid username or password.");
+        }
     }//GEN-LAST:event_jBtnSignInActionPerformed
 
     private void jBtnFistLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnFistLogInActionPerformed
@@ -205,7 +225,6 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnFistLogIn;
     private javax.swing.JLabel jBtnForgottonPassword;
-    private javax.swing.JPasswordField jBtnPassword;
     private javax.swing.JButton jBtnSignIn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -214,6 +233,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLblPassword;
     private javax.swing.JLabel jLblUserName;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPasswordField jTxtPassword;
     private javax.swing.JTextField jTxtUserName;
     // End of variables declaration//GEN-END:variables
 }
