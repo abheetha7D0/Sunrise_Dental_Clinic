@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  * @author ASUS
  */
 public class Login extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
 
     /**
@@ -23,7 +23,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
-        
+
     }
 
     /**
@@ -179,11 +179,10 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         String userName = jTxtUserName.getText().strip();
         String password = new String(jTxtPassword.getPassword());
-        
-        UserDAOImpl userDAOImpl = new UserDAOImpl();
-        boolean Login = userDAOImpl.Login(new UserDTO(userName,password));
 
-        if (userDAOImpl.Login(new UserDTO(userName,password))) {
+        UserDAOImpl userDAOImpl = new UserDAOImpl();
+
+        if (userDAOImpl.Login(new UserDTO(userName, password))) {
             MainWindow form = new MainWindow();
             form.setVisible(true);
             this.dispose();
@@ -195,6 +194,9 @@ public class Login extends javax.swing.JFrame {
 
     private void jBtnFistLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnFistLogInActionPerformed
         // TODO add your handling code here:
+        FirstLogin form = new FirstLogin();
+        form.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnFistLogInActionPerformed
 
     /**
