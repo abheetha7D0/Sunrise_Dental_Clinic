@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dao.impl;
+package dao.costom.impl;
 
-import dao.BillDAO;
+import dao.costom.BillDAO;
 import model.Bill;
 
 /**

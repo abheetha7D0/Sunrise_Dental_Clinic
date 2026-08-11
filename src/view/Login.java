@@ -4,8 +4,10 @@
  */
 package view;
 
-import dao.UserDAO;
-import dao.impl.UserDAOImpl;
+import Enums.DAOType;
+import dao.DAOFactory;
+import dao.costom.UserDAO;
+import dao.costom.impl.UserDAOImpl;
 import dto.UserDTO;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
@@ -25,6 +27,7 @@ public class Login extends javax.swing.JFrame {
         initComponents();
 
     }
+    UserDAOImpl userDAO = (UserDAOImpl) DAOFactory.getInstance().getDAO(DAOType.USER);
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,7 +52,7 @@ public class Login extends javax.swing.JFrame {
         jBtnFistLogIn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
+        setPreferredSize(new java.awt.Dimension(1085, 730));
         setSize(new java.awt.Dimension(1085, 730));
 
         jLabel1.setBackground(new java.awt.Color(102, 102, 102));
@@ -89,6 +92,11 @@ public class Login extends javax.swing.JFrame {
 
         jBtnForgottonPassword.setForeground(new java.awt.Color(51, 51, 51));
         jBtnForgottonPassword.setText("Forgotton Password ?");
+        jBtnForgottonPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jBtnForgottonPasswordMouseClicked(evt);
+            }
+        });
 
         jBtnFistLogIn.setBackground(new java.awt.Color(102, 102, 102));
         jBtnFistLogIn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -161,7 +169,6 @@ public class Login extends javax.swing.JFrame {
         );
 
         jTxtUserName.getAccessibleContext().setAccessibleName("");
-        jTxtUserName.getAccessibleContext().setAccessibleDescription("");
 
         pack();
         setLocationRelativeTo(null);
@@ -179,11 +186,9 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         String userName = jTxtUserName.getText().strip();
         String password = new String(jTxtPassword.getPassword());
-
-        UserDAOImpl userDAOImpl = new UserDAOImpl();
-
-        if (userDAOImpl.Login(new UserDTO(userName, password))) {
-            MainWindow form = new MainWindow();
+        
+        if (userDAO.Login(new UserDTO(userName, password))) {
+            DashbordForm form = new DashbordForm();
             form.setVisible(true);
             this.dispose();
 
@@ -198,6 +203,10 @@ public class Login extends javax.swing.JFrame {
         form.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtnFistLogInActionPerformed
+
+    private void jBtnForgottonPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnForgottonPasswordMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBtnForgottonPasswordMouseClicked
 
     /**
      * @param args the command line arguments

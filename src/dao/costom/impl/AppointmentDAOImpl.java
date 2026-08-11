@@ -2,34 +2,34 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dao.impl;
+package dao.costom.impl;
 
-import dao.TreatmentDAO;
-import model.Treatment;
+import dao.costom.AppointmentDAO;
+import model.Appointment;
 
 /**
  *
  * @author ASUS
  */
-public class TreatmentDAOImpl implements TreatmentDAO{
+public class AppointmentDAOImpl implements AppointmentDAO{
 
     @Override
-    public Treatment createTreatment(Treatment treatment) {
+    public Appointment crreateAppoinment(Appointment Appoinment) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Treatment updateTreatment(Treatment treatment) {
+    public Appointment updateAppoinment(Appointment Appoinment) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Treatment deleteTreatment(Treatment treatment) {
+    public Appointment cancelAppoinment(Appointment Appoinment) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Treatment findByTreatmentName(String treatment) {
+    public Appointment findByAppoinmentNum(int appoinmentNum) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

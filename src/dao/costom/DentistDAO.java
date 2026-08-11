@@ -2,15 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package dao;
+package dao.costom;
 
+import dao.SuperDAO;
 import model.Dentiest;
 
 /**
  *
  * @author ASUS
  */
-public interface DentistDAO {
+public interface DentistDAO extends SuperDAO{
 
     Dentiest addDentiest(Dentiest patient);
 

@@ -2,39 +2,34 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dao.impl;
+package dao.costom.impl;
 
-import dao.DentistDAO;
-import model.Dentiest;
+import dao.costom.TreatmentDAO;
+import model.Treatment;
 
 /**
  *
  * @author ASUS
  */
-public class DentistDAOImpl implements DentistDAO{
+public class TreatmentDAOImpl implements TreatmentDAO{
 
     @Override
-    public Dentiest addDentiest(Dentiest patient) {
+    public Treatment createTreatment(Treatment treatment) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Dentiest updateDentiest(Dentiest patient) {
+    public Treatment updateTreatment(Treatment treatment) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Dentiest deleteDentiest(Dentiest patient) {
+    public Treatment deleteTreatment(Treatment treatment) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Dentiest findByDentiestName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Dentiest findBySpecialization(String specialization) {
+    public Treatment findByTreatmentName(String treatment) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

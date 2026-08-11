@@ -9,7 +9,7 @@ package view;
  * @author ASUS
  */
 public class FirstLogin extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FirstLogin.class.getName());
 
     /**
@@ -17,7 +17,7 @@ public class FirstLogin extends javax.swing.JFrame {
      */
     public FirstLogin() {
         initComponents();
-        
+
     }
 
     /**
@@ -185,7 +185,10 @@ public class FirstLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnReEnterPasswordActionPerformed
 
     private void jBtnSignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSignInActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here
+        Login form = new Login();
+        form.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnSignInActionPerformed
 
     /**

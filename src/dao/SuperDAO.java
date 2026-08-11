@@ -4,12 +4,10 @@
  */
 package dao;
 
-import model.Bill;
-
 /**
  *
  * @author ASUS
  */
-public interface BillDAO {
-    Bill printBill(Bill bill);
+public interface SuperDAO {
+    
 }
