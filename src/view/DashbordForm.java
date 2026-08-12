@@ -4,19 +4,46 @@
  */
 package view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.Timer;
+
 /**
  *
  * @author ASUS
  */
 public class DashbordForm extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashbordForm.class.getName());
+
+    void showDate() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        Date date = new Date();
+        jLblDate.setText(simpleDateFormat.format(date));
+    }
+
+    void showTime() {
+        new Timer(0, new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh-mm a");
+                Date date = new Date();
+                jLblTime.setText(simpleDateFormat.format(date));
+            }
+        }).start();
+    }
 
     /**
      * Creates new form DashbordForm
      */
     public DashbordForm() {
         initComponents();
+        showDate();
+        showTime();
     }
 
     /**
@@ -288,11 +315,11 @@ public class DashbordForm extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Sunrise Dental Clinic");
 
-        jLblDate.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLblDate.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLblDate.setForeground(new java.awt.Color(204, 204, 204));
         jLblDate.setText("2025/11/15");
 
-        jLblTime.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLblTime.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLblTime.setForeground(new java.awt.Color(204, 204, 204));
         jLblTime.setText("10.53 am");
 
@@ -319,20 +346,18 @@ public class DashbordForm extends javax.swing.JFrame {
         jPanelLayout.setVerticalGroup(
             jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelLayout.createSequentialGroup()
-                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
                         .addComponent(jLblDate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLblTime))
-                    .addGroup(jPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jBtnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelLayout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addComponent(jBtnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel1)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

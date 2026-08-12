@@ -20,7 +20,9 @@ public class DAOFactory {
 
     private static DAOFactory daoFactory;
 
-    //public DAOFactory();
+    private DAOFactory() {
+    }
+
     public static DAOFactory getInstance() {
         return (null == daoFactory) ? daoFactory = new DAOFactory() : daoFactory;
     }
