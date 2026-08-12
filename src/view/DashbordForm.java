@@ -29,7 +29,6 @@ public class DashbordForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanelMenuContext = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -42,17 +41,17 @@ public class DashbordForm extends javax.swing.JFrame {
         jTxtDentistName = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTxtDentistName1 = new javax.swing.JTextField();
+        jTxtDentistSpec = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTxtDentistName2 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jTxtDentistContactNum = new javax.swing.JTextField();
+        jCmbDentistStetus = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jBtnDentistSave = new javax.swing.JButton();
         jBtnDentistUpdate = new javax.swing.JButton();
         jBtnDentistDelete = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTblDentist = new javax.swing.JTable();
         jPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLblDate = new javax.swing.JLabel();
@@ -66,12 +65,6 @@ public class DashbordForm extends javax.swing.JFrame {
 
         jPanelMenuContext.setBackground(new java.awt.Color(0, 153, 204));
         jPanelMenuContext.setForeground(new java.awt.Color(255, 255, 255));
-
-        jButton1.setBackground(new java.awt.Color(0, 102, 204));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(204, 255, 255));
-        jButton1.setText("Home");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton2.setBackground(new java.awt.Color(0, 102, 204));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -115,7 +108,6 @@ public class DashbordForm extends javax.swing.JFrame {
             .addGroup(jPanelMenuContextLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelMenuContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -132,8 +124,6 @@ public class DashbordForm extends javax.swing.JFrame {
             jPanelMenuContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMenuContextLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -164,15 +154,15 @@ public class DashbordForm extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Specialization");
 
-        jTxtDentistName1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtDentistSpec.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Contact Number");
 
-        jTxtDentistName2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtDentistContactNum.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AVAILABLE", "NOTAVAILABLE", "DEACTIVATED" }));
+        jCmbDentistStetus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jCmbDentistStetus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AVAILABLE", "NOTAVAILABLE", "DEACTIVATED" }));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setText("Stetus");
@@ -195,10 +185,10 @@ public class DashbordForm extends javax.swing.JFrame {
         jBtnDentistDelete.setText("Delete");
         jBtnDentistDelete.addActionListener(this::jBtnDentistDeleteActionPerformed);
 
-        jTable1.setBackground(new java.awt.Color(0, 153, 204));
-        jTable1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(0, 102, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTblDentist.setBackground(new java.awt.Color(0, 153, 204));
+        jTblDentist.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jTblDentist.setForeground(new java.awt.Color(0, 102, 255));
+        jTblDentist.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -209,7 +199,7 @@ public class DashbordForm extends javax.swing.JFrame {
                 "Name", "Specialization", "Contact Number", "Stetus"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTblDentist);
 
         javax.swing.GroupLayout jPanelMainContextLayout = new javax.swing.GroupLayout(jPanelMainContext);
         jPanelMainContext.setLayout(jPanelMainContextLayout);
@@ -240,15 +230,15 @@ public class DashbordForm extends javax.swing.JFrame {
                                 .addGap(40, 40, 40)
                                 .addGroup(jPanelMainContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
-                                    .addComponent(jTxtDentistName1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTxtDentistSpec, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(36, 36, 36)
                                 .addGroup(jPanelMainContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTxtDentistName2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTxtDentistContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel6))
                                 .addGap(28, 28, 28)
                                 .addGroup(jPanelMainContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jCmbDentistStetus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 69, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMainContextLayout.createSequentialGroup()
@@ -271,15 +261,15 @@ public class DashbordForm extends javax.swing.JFrame {
                         .addGroup(jPanelMainContextLayout.createSequentialGroup()
                             .addComponent(jLabel7)
                             .addGap(18, 18, 18)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jCmbDentistStetus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMainContextLayout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
-                        .addComponent(jTxtDentistName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTxtDentistSpec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelMainContextLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
-                        .addComponent(jTxtDentistName2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTxtDentistContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(25, 25, 25)
                 .addGroup(jPanelMainContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnDentistSave)
@@ -288,8 +278,8 @@ public class DashbordForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jPanel.setBackground(new java.awt.Color(0, 102, 204));
@@ -322,7 +312,7 @@ public class DashbordForm extends javax.swing.JFrame {
                     .addComponent(jLblTime))
                 .addGap(253, 253, 253)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jBtnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44))
         );
@@ -371,10 +361,6 @@ public class DashbordForm extends javax.swing.JFrame {
     private void jBtnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLogOutActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtnLogOutActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
@@ -430,14 +416,13 @@ public class DashbordForm extends javax.swing.JFrame {
     private javax.swing.JButton jBtnDentistSave;
     private javax.swing.JButton jBtnDentistUpdate;
     private javax.swing.JButton jBtnLogOut;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jCmbDentistStetus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -452,9 +437,9 @@ public class DashbordForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelMenuContext;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTblDentist;
+    private javax.swing.JTextField jTxtDentistContactNum;
     private javax.swing.JTextField jTxtDentistName;
-    private javax.swing.JTextField jTxtDentistName1;
-    private javax.swing.JTextField jTxtDentistName2;
+    private javax.swing.JTextField jTxtDentistSpec;
     // End of variables declaration//GEN-END:variables
 }
