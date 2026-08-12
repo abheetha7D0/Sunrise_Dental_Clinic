@@ -4,38 +4,59 @@
  */
 package dao.costom.impl;
 
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
 import dao.costom.DentistDAO;
-import model.Dentiest;
+import db.DBConnection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import model.Dentist;
 
 /**
  *
  * @author ASUS
  */
-public class DentistDAOImpl implements DentistDAO{
+public class DentistDAOImpl implements DentistDAO {
 
     @Override
-    public Dentiest addDentiest(Dentiest patient) {
+    public ResultSet getALLDentists() {
+        ResultSet rs = null;
+
+        try {
+
+            java.sql.Connection con = DBConnection.getConnection();
+            String sql = "SELECT * FROM dentists";
+            java.sql.PreparedStatement pst = con.prepareStatement(sql);
+            rs = pst.executeQuery();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return rs;
+    }
+
+    @Override
+    public Dentist addDentist(Dentist patient) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Dentiest updateDentiest(Dentiest patient) {
+    public Dentist updateDentist(Dentist patient) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Dentiest deleteDentiest(Dentiest patient) {
+    public Dentist deleteDentist(Dentist patient) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Dentiest findByDentiestName(String name) {
+    public Dentist findByDentistName(String name) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Dentiest findBySpecialization(String specialization) {
+    public Dentist findBySpecialization(String specialization) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
 }

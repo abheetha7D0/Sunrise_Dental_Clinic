@@ -5,21 +5,25 @@
 package dao.costom;
 
 import dao.SuperDAO;
-import model.Dentiest;
+import java.awt.List;
+import java.sql.ResultSet;
+import model.Dentist;
 
 /**
  *
  * @author ASUS
  */
-public interface DentistDAO extends SuperDAO{
+public interface DentistDAO extends SuperDAO {
 
-    Dentiest addDentiest(Dentiest patient);
-
-    Dentiest updateDentiest(Dentiest patient);
+    ResultSet getALLDentists();
     
-    Dentiest deleteDentiest(Dentiest patient);
+    Dentist addDentist(Dentist patient);
 
-    Dentiest findByDentiestName(String name);
-    
-    Dentiest findBySpecialization(String specialization);
+    Dentist updateDentist(Dentist patient);
+
+    Dentist deleteDentist(Dentist patient);
+
+    Dentist findByDentistName(String name);
+
+    Dentist findBySpecialization(String specialization);
 }
