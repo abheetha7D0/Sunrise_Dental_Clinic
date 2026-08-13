@@ -513,6 +513,11 @@ public class DashbordForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTblDentist.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTblDentistMousePressed(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTblDentist);
 
         jBtnDentistCancel.setBackground(new java.awt.Color(255, 51, 0));
@@ -1425,6 +1430,27 @@ public class DashbordForm extends javax.swing.JFrame {
     private void jCmbDentistStetusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCmbDentistStetusActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCmbDentistStetusActionPerformed
+
+    private void jTblDentistMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblDentistMousePressed
+        // TODO add your handling code here:
+        int row = jTblDentist.getSelectedRow();
+
+        String name = jTblDentist.getValueAt(row, 0).toString();
+        String spec = jTblDentist.getValueAt(row, 1).toString();
+        String contact_number = jTblDentist.getValueAt(row, 2).toString();
+        Object stetusOb = jTblDentist.getValueAt(row, 3);
+
+        jTxtDentistName.setText(name);
+        jTxtDentistSpec.setText(spec);
+        jTxtDentistContactNum.setText(contact_number);
+        
+       
+        if (stetusOb != null) {
+           
+            jCmbDentistStetus.setSelectedItem(stetusOb.toString());
+
+        }
+    }//GEN-LAST:event_jTblDentistMousePressed
 
     /**
      * @param args the command line arguments
