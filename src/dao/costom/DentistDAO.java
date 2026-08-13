@@ -5,9 +5,9 @@
 package dao.costom;
 
 import dao.SuperDAO;
-import java.awt.List;
 import java.sql.ResultSet;
 import model.Dentist;
+import java.sql.SQLException;
 
 /**
  *
@@ -17,11 +17,11 @@ public interface DentistDAO extends SuperDAO {
 
     ResultSet getALLDentists();
     
-    Dentist addDentist(Dentist patient);
+    boolean addDentist(Dentist dentist) throws SQLException ;
 
-    Dentist updateDentist(Dentist patient);
+    Dentist updateDentist(Dentist dentist);
 
-    Dentist deleteDentist(Dentist patient);
+    Dentist deleteDentist(Dentist dentist);
 
     Dentist findByDentistName(String name);
 

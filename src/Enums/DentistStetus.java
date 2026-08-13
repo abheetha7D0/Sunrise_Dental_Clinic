@@ -8,7 +8,7 @@ package Enums;
  *
  * @author ASUS
  */
-public enum DentiestStetus {
+public enum DentistStetus {
     AVAILABLE,
     UNAVAILABLE,
 }

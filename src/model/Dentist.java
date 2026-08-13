@@ -4,7 +4,7 @@
  */
 package model;
 
-import Enums.DentiestStetus;
+import Enums.DentistStetus;
 
 /**
  *
@@ -16,9 +16,9 @@ public class Dentist {
     private String fullName;
     private String specialization;
     private String contactNumber;
-    private DentiestStetus stetus;
+    private DentistStetus stetus;
 
-    public Dentist(String fullName, String specialization, String contactNumber, DentiestStetus stetus) {
+    public Dentist(String fullName, String specialization, String contactNumber, DentistStetus stetus) {
         this.fullName = fullName;
         this.specialization = specialization;
         this.contactNumber = contactNumber;
@@ -41,7 +41,7 @@ public class Dentist {
         return contactNumber;
     }
 
-    public DentiestStetus getStetus() {
+    public DentistStetus getStetus() {
         return stetus;
     }
 
@@ -57,7 +57,7 @@ public class Dentist {
         this.contactNumber = contactNumber;
     }
 
-    public void setStetus(DentiestStetus stetus) {
+    public void setStetus(DentistStetus stetus) {
         this.stetus = stetus;
     }
 

@@ -5,6 +5,7 @@
 package view;
 
 import Enums.DAOType;
+import Enums.DentistStetus;
 import dao.DAOFactory;
 import dao.costom.impl.DentistDAOImpl;
 import dao.costom.impl.UserDAOImpl;
@@ -26,13 +27,13 @@ public class DashbordForm extends javax.swing.JFrame {
     UserDAOImpl userDAO = (UserDAOImpl) DAOFactory.getInstance().getDAO(DAOType.USER);
     DentistDAOImpl dentistDAO = (DentistDAOImpl) DAOFactory.getInstance().getDAO(DAOType.DENTIST);
 
-    void showDate() {
+    final void showDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
         Date date = new Date();
         jLblDate.setText(simpleDateFormat.format(date));
     }
 
-    void showTime() {
+    final void showTime() {
         new Timer(0, (ActionEvent e) -> {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh-mm a");
             Date date = new Date();
@@ -53,9 +54,10 @@ public class DashbordForm extends javax.swing.JFrame {
         jPanelSettingContext.setVisible(false);
         jPanelTreatmentContext.setVisible(false);
         viewAllDentist();
+        
     }
 
-    void viewAllDentist() {
+    final void viewAllDentist() {
         try {
             ResultSet rs = dentistDAO.getALLDentists();
 
@@ -452,13 +454,21 @@ public class DashbordForm extends javax.swing.JFrame {
             new String [] {
                 "Name", "Specialization", "Contact Number", "Stetus"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane3.setViewportView(jTblDentist);
 
         jBtnDentistCancel.setBackground(new java.awt.Color(255, 51, 0));
         jBtnDentistCancel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jBtnDentistCancel.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnDentistCancel.setText("Update");
+        jBtnDentistCancel.setText("Cancel");
         jBtnDentistCancel.addActionListener(this::jBtnDentistCancelActionPerformed);
 
         javax.swing.GroupLayout jPanelDentistContextLayout = new javax.swing.GroupLayout(jPanelDentistContext);
@@ -1181,6 +1191,7 @@ public class DashbordForm extends javax.swing.JFrame {
 
     private void jBtnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLogOutActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jBtnLogOutActionPerformed
 
     private void jBtnSettingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSettingActionPerformed
@@ -1197,6 +1208,48 @@ public class DashbordForm extends javax.swing.JFrame {
 
     private void jBtnDentistSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistSaveActionPerformed
         // TODO add your handling code here:
+        String name = jTxtDentistName.getText().trim();
+        String course = jTxtDentistSpec.getText().trim();
+        String contact_number = jTxtDentistContactNum.getText().trim();
+        De stetus = jCmbDentistStetus.getName();
+           DentistStetus
+        // email validation
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+
+        if (!Pattern.matches(emailRegex, email)) {
+            JOptionPane.showMessageDialog(this, "Invalid email address.");
+            return;
+        }
+
+        StudentDAO dao = new StudentDAO();
+
+        Student s = new Student();
+        s.setFullName(name);
+        s.setCourse(course);
+        s.setEmail(email);
+
+        dao.addStudent(s);
+
+        JOptionPane.showMessageDialog(this, "Student added successfully.");
+        try {
+
+            ResultSet rs = dao.getAllStudents();
+
+            DefaultTableModel model = (DefaultTableModel) tblStudent.getModel();
+            model.setRowCount(0);
+
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getInt("studentID"),
+                    rs.getString("studentName"),
+                    rs.getString("studentCourse"),
+                    rs.getString("studentEmail")
+                });
+            }
+        } catch (SQLException e) {
+            // Changed to printStackTrace to help you debug table errors in NetBeans
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jBtnDentistSaveActionPerformed
 
     private void jBtnDentistUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistUpdateActionPerformed
