@@ -53,6 +53,27 @@ public class DashbordForm extends javax.swing.JFrame {
         return phone != null && phone.trim().matches(phoneRegex);
     }
 
+    private void checkInputs() {
+        String name = jTxtDentistName.getText().trim();
+        String spec = jTxtDentistSpec.getText().trim();
+        String phone = jTxtDentistContactNum.getText().trim();
+
+        boolean isDataEnterd = !name.isEmpty()
+                || !spec.isEmpty()
+                || !phone.isEmpty()
+                || phone.length() == 10;
+
+        boolean isAllDataEnterd = !name.isEmpty()
+                && !spec.isEmpty()
+                && !phone.isEmpty()
+                && phone.length() == 10;
+
+        jBtnDentistSave.setEnabled(isAllDataEnterd);
+        jBtnDentistUpdate.setEnabled(isAllDataEnterd);
+        jBtnDentistDelete.setEnabled(isAllDataEnterd);
+        jBtnDentistCancel.setEnabled(isDataEnterd);
+    }
+
     /**
      * Creates new form DashbordForm
      */
@@ -128,7 +149,6 @@ public class DashbordForm extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jTxtDentistSpec = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        jTxtDentistContactNum = new javax.swing.JTextField();
         jCmbDentistStetus = new javax.swing.JComboBox<>();
         jLabel17 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
@@ -138,6 +158,7 @@ public class DashbordForm extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTblDentist = new javax.swing.JTable();
         jBtnDentistCancel = new javax.swing.JButton();
+        jTxtDentistContactNum = new javax.swing.JFormattedTextField();
         jPanelPatientContext = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
         jTxtPatientName = new javax.swing.JTextField();
@@ -413,6 +434,11 @@ public class DashbordForm extends javax.swing.JFrame {
         jLabel13.setText("Name");
 
         jTxtDentistName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtDentistName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtDentistNameKeyReleased(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("Microsoft Yi Baiti", 1, 48)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 102, 255));
@@ -422,21 +448,24 @@ public class DashbordForm extends javax.swing.JFrame {
         jLabel15.setText("Specialization");
 
         jTxtDentistSpec.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtDentistSpec.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtDentistSpecKeyReleased(evt);
+            }
+        });
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel16.setText("Contact Number");
 
-        jTxtDentistContactNum.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTxtDentistContactNum.addActionListener(this::jTxtDentistContactNumActionPerformed);
-        jTxtDentistContactNum.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTxtDentistContactNumKeyTyped(evt);
+        jCmbDentistStetus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jCmbDentistStetus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AVAILABLE", "UNAVAILABLE", "DEACTIVATED" }));
+        jCmbDentistStetus.setToolTipText("Select");
+        jCmbDentistStetus.addActionListener(this::jCmbDentistStetusActionPerformed);
+        jCmbDentistStetus.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jCmbDentistStetusKeyReleased(evt);
             }
         });
-
-        jCmbDentistStetus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jCmbDentistStetus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AVAILABLE", "NOTAVAILABLE", "DEACTIVATED" }));
-        jCmbDentistStetus.setToolTipText("Select");
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel17.setText("Stetus");
@@ -445,18 +474,21 @@ public class DashbordForm extends javax.swing.JFrame {
         jBtnDentistSave.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jBtnDentistSave.setForeground(new java.awt.Color(255, 255, 255));
         jBtnDentistSave.setText("Save");
+        jBtnDentistSave.setEnabled(false);
         jBtnDentistSave.addActionListener(this::jBtnDentistSaveActionPerformed);
 
         jBtnDentistUpdate.setBackground(new java.awt.Color(255, 102, 51));
         jBtnDentistUpdate.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jBtnDentistUpdate.setForeground(new java.awt.Color(255, 255, 255));
         jBtnDentistUpdate.setText("Update");
+        jBtnDentistUpdate.setEnabled(false);
         jBtnDentistUpdate.addActionListener(this::jBtnDentistUpdateActionPerformed);
 
         jBtnDentistDelete.setBackground(new java.awt.Color(255, 0, 0));
         jBtnDentistDelete.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jBtnDentistDelete.setForeground(new java.awt.Color(255, 255, 255));
         jBtnDentistDelete.setText("Delete");
+        jBtnDentistDelete.setEnabled(false);
         jBtnDentistDelete.addActionListener(this::jBtnDentistDeleteActionPerformed);
 
         jTblDentist.setBackground(new java.awt.Color(0, 153, 204));
@@ -487,7 +519,19 @@ public class DashbordForm extends javax.swing.JFrame {
         jBtnDentistCancel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jBtnDentistCancel.setForeground(new java.awt.Color(255, 255, 255));
         jBtnDentistCancel.setText("Cancel");
+        jBtnDentistCancel.setEnabled(false);
         jBtnDentistCancel.addActionListener(this::jBtnDentistCancelActionPerformed);
+
+        try {
+            jTxtDentistContactNum.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("0#########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jTxtDentistContactNum.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtDentistContactNumKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelDentistContextLayout = new javax.swing.GroupLayout(jPanelDentistContext);
         jPanelDentistContext.setLayout(jPanelDentistContextLayout);
@@ -525,13 +569,13 @@ public class DashbordForm extends javax.swing.JFrame {
                                             .addComponent(jTxtDentistSpec, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(36, 36, 36)
                                         .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTxtDentistContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel16))
-                                        .addGap(28, 28, 28)
+                                            .addComponent(jLabel16)
+                                            .addComponent(jTxtDentistContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(38, 38, 38)
                                         .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel17)
                                             .addComponent(jCmbDentistStetus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addGap(0, 28, Short.MAX_VALUE)))
+                        .addGap(0, 38, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDentistContextLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -545,24 +589,27 @@ public class DashbordForm extends javax.swing.JFrame {
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanelDentistContextLayout.createSequentialGroup()
-                            .addComponent(jLabel13)
-                            .addGap(18, 18, 18)
-                            .addComponent(jTxtDentistName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanelDentistContextLayout.createSequentialGroup()
-                            .addComponent(jLabel17)
-                            .addGap(18, 18, 18)
-                            .addComponent(jCmbDentistStetus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDentistContextLayout.createSequentialGroup()
-                        .addComponent(jLabel15)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTxtDentistSpec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelDentistContextLayout.createSequentialGroup()
-                        .addComponent(jLabel16)
+                        .addComponent(jLabel17)
                         .addGap(18, 18, 18)
-                        .addComponent(jTxtDentistContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(25, 25, 25)
+                        .addComponent(jCmbDentistStetus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDentistContextLayout.createSequentialGroup()
+                        .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDentistContextLayout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel15)
+                                    .addComponent(jLabel13))
+                                .addGap(18, 18, 18))
+                            .addGroup(jPanelDentistContextLayout.createSequentialGroup()
+                                .addComponent(jLabel16)
+                                .addGap(21, 21, 21)))
+                        .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTxtDentistContactNum)
+                            .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTxtDentistSpec)
+                                .addComponent(jTxtDentistName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(22, 22, 22)
                 .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnDentistSave)
                     .addComponent(jBtnDentistUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1230,7 +1277,7 @@ public class DashbordForm extends javax.swing.JFrame {
         String Specialization = jTxtDentistSpec.getText().trim();
         String contact_number = jTxtDentistContactNum.getText().trim();
         DentistStetus status = DentistStetus.valueOf(jCmbDentistStetus.getSelectedItem().toString());
-        
+
         if (!isValidFullName(name)) {
             JOptionPane.showMessageDialog(
                     this,
@@ -1249,37 +1296,22 @@ public class DashbordForm extends javax.swing.JFrame {
                     "Invalid Contact Number",
                     JOptionPane.ERROR_MESSAGE
             );
-            jTxtDentistContactNum.requestFocus(); 
+            jTxtDentistContactNum.requestFocus();
             return;
         }
 
         try {
-            dentistDAO.addDentist(new Dentist(name, Specialization, contact_number, status));
-            JOptionPane.showMessageDialog(this, "Dentist added successfully.");
+            boolean addDentist = dentistDAO.addDentist(new Dentist(name, Specialization, contact_number, status));
+            if (addDentist) {
+                JOptionPane.showMessageDialog(this, "Dentist added successfully.");
+            }
+
         } catch (SQLException ex) {
             System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            JOptionPane.showMessageDialog(this, "Somthing wrong...");
         }
 
-        JOptionPane.showMessageDialog(this, "Dentist added successfully.");
-        try {
-
-            ResultSet rs = dentistDAO.getALLDentists();
-
-            DefaultTableModel model = (DefaultTableModel) jTblDentist.getModel();
-            model.setRowCount(0);
-
-            while (rs.next()) {
-                model.addRow(new Object[]{
-                    rs.getString("name"),
-                    rs.getString("Specialization"),
-                    rs.getString("contact_number"),
-                    rs.getString("status")
-                });
-            }
-        } catch (SQLException e) {
-            // Changed to printStackTrace to help you debug table errors in NetBeans
-            e.printStackTrace();
-        }
+        viewAllDentist();
     }//GEN-LAST:event_jBtnDentistSaveActionPerformed
 
     private void jBtnDentistUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistUpdateActionPerformed
@@ -1370,14 +1402,29 @@ public class DashbordForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTxtDentistName3ActionPerformed
 
-    private void jTxtDentistContactNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtDentistContactNumActionPerformed
+    private void jCmbDentistStetusKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCmbDentistStetusKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTxtDentistContactNumActionPerformed
+        checkInputs();
+    }//GEN-LAST:event_jCmbDentistStetusKeyReleased
 
-    private void jTxtDentistContactNumKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtDentistContactNumKeyTyped
+    private void jTxtDentistContactNumKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtDentistContactNumKeyReleased
         // TODO add your handling code here:
-        if (!Character.isDigit(evt.getKeyChar())) evt.consume();
-    }//GEN-LAST:event_jTxtDentistContactNumKeyTyped
+        checkInputs();
+    }//GEN-LAST:event_jTxtDentistContactNumKeyReleased
+
+    private void jTxtDentistSpecKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtDentistSpecKeyReleased
+        // TODO add your handling code here:
+        checkInputs();
+    }//GEN-LAST:event_jTxtDentistSpecKeyReleased
+
+    private void jTxtDentistNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtDentistNameKeyReleased
+        // TODO add your handling code here:
+        checkInputs();
+    }//GEN-LAST:event_jTxtDentistNameKeyReleased
+
+    private void jCmbDentistStetusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCmbDentistStetusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCmbDentistStetusActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1490,7 +1537,7 @@ public class DashbordForm extends javax.swing.JFrame {
     private javax.swing.JTable jTblPatient;
     private javax.swing.JTable jTblTreatment;
     private javax.swing.JTable jTblTreatment1;
-    private javax.swing.JTextField jTxtDentistContactNum;
+    private javax.swing.JFormattedTextField jTxtDentistContactNum;
     private javax.swing.JTextField jTxtDentistContactNum5;
     private javax.swing.JTextField jTxtDentistContactNum6;
     private javax.swing.JTextField jTxtDentistName;

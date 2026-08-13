@@ -11,4 +11,5 @@ package Enums;
 public enum DentistStetus {
     AVAILABLE,
     UNAVAILABLE,
+    DEACTIVATED
 }

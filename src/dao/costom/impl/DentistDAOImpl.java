@@ -39,7 +39,7 @@ public class DentistDAOImpl implements DentistDAO {
 
         Connection con = (Connection) DBConnection.getConnection();
 
-        String sql = "INSERT INTO dentists(name,specialization,contact_number,stetus) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO dentists(name,specialization,contact_number,status) VALUES(?,?,?,?)";
 
         PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
 
@@ -51,12 +51,9 @@ public class DentistDAOImpl implements DentistDAO {
 
         pst.setString(4, dentist.getStetus().name());
 
-        pst.executeUpdate();
-
-        System.out.println("Dentist Added");
-        
         int executeUpdate = pst.executeUpdate();
         con.close();
+        System.out.println("Dentist Added");
         return executeUpdate > 0;
 
     }
