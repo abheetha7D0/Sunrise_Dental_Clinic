@@ -14,8 +14,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
+import model.Dentist;
 
 /**
  *
@@ -41,6 +43,16 @@ public class DashbordForm extends javax.swing.JFrame {
         }).start();
     }
 
+    public boolean isValidFullName(String name) {
+        String fullNameRegex = "^[a-zA-Z]+(['-][a-zA-Z]+)?(\\s+[a-zA-Z]+(['-][a-zA-Z]+)?)+$";
+        return name != null && name.trim().matches(fullNameRegex);
+    }
+
+    public boolean isValidPhoneNumber(String phone) {
+        String phoneRegex = "^0\\d{9}$";
+        return phone != null && phone.trim().matches(phoneRegex);
+    }
+
     /**
      * Creates new form DashbordForm
      */
@@ -54,7 +66,7 @@ public class DashbordForm extends javax.swing.JFrame {
         jPanelSettingContext.setVisible(false);
         jPanelTreatmentContext.setVisible(false);
         viewAllDentist();
-        
+
     }
 
     final void viewAllDentist() {
@@ -415,6 +427,12 @@ public class DashbordForm extends javax.swing.JFrame {
         jLabel16.setText("Contact Number");
 
         jTxtDentistContactNum.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtDentistContactNum.addActionListener(this::jTxtDentistContactNumActionPerformed);
+        jTxtDentistContactNum.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTxtDentistContactNumKeyTyped(evt);
+            }
+        });
 
         jCmbDentistStetus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jCmbDentistStetus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AVAILABLE", "NOTAVAILABLE", "DEACTIVATED" }));
@@ -1191,7 +1209,7 @@ public class DashbordForm extends javax.swing.JFrame {
 
     private void jBtnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLogOutActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jBtnLogOutActionPerformed
 
     private void jBtnSettingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSettingActionPerformed
@@ -1209,41 +1227,53 @@ public class DashbordForm extends javax.swing.JFrame {
     private void jBtnDentistSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistSaveActionPerformed
         // TODO add your handling code here:
         String name = jTxtDentistName.getText().trim();
-        String course = jTxtDentistSpec.getText().trim();
+        String Specialization = jTxtDentistSpec.getText().trim();
         String contact_number = jTxtDentistContactNum.getText().trim();
-        De stetus = jCmbDentistStetus.getName();
-           DentistStetus
-        // email validation
-        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
-
-        if (!Pattern.matches(emailRegex, email)) {
-            JOptionPane.showMessageDialog(this, "Invalid email address.");
+        DentistStetus status = DentistStetus.valueOf(jCmbDentistStetus.getSelectedItem().toString());
+        
+        if (!isValidFullName(name)) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Please enter a valid full name (e.g., First and Last name).",
+                    "Invalid Name Input",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            jTxtDentistName.requestFocus();
             return;
         }
 
-        StudentDAO dao = new StudentDAO();
+        if (!isValidPhoneNumber(contact_number)) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Please enter a valid 10-digit phone number (e.g., 0771111111).",
+                    "Invalid Contact Number",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            jTxtDentistContactNum.requestFocus(); 
+            return;
+        }
 
-        Student s = new Student();
-        s.setFullName(name);
-        s.setCourse(course);
-        s.setEmail(email);
+        try {
+            dentistDAO.addDentist(new Dentist(name, Specialization, contact_number, status));
+            JOptionPane.showMessageDialog(this, "Dentist added successfully.");
+        } catch (SQLException ex) {
+            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
 
-        dao.addStudent(s);
-
-        JOptionPane.showMessageDialog(this, "Student added successfully.");
+        JOptionPane.showMessageDialog(this, "Dentist added successfully.");
         try {
 
-            ResultSet rs = dao.getAllStudents();
+            ResultSet rs = dentistDAO.getALLDentists();
 
-            DefaultTableModel model = (DefaultTableModel) tblStudent.getModel();
+            DefaultTableModel model = (DefaultTableModel) jTblDentist.getModel();
             model.setRowCount(0);
 
             while (rs.next()) {
                 model.addRow(new Object[]{
-                    rs.getInt("studentID"),
-                    rs.getString("studentName"),
-                    rs.getString("studentCourse"),
-                    rs.getString("studentEmail")
+                    rs.getString("name"),
+                    rs.getString("Specialization"),
+                    rs.getString("contact_number"),
+                    rs.getString("status")
                 });
             }
         } catch (SQLException e) {
@@ -1339,6 +1369,15 @@ public class DashbordForm extends javax.swing.JFrame {
     private void jTxtDentistName3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtDentistName3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTxtDentistName3ActionPerformed
+
+    private void jTxtDentistContactNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtDentistContactNumActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtDentistContactNumActionPerformed
+
+    private void jTxtDentistContactNumKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtDentistContactNumKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())) evt.consume();
+    }//GEN-LAST:event_jTxtDentistContactNumKeyTyped
 
     /**
      * @param args the command line arguments
