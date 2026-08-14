@@ -53,6 +53,20 @@ public class DashbordForm extends javax.swing.JFrame {
         return phone != null && phone.trim().matches(phoneRegex);
     }
 
+    private void clearInputs() {
+        jTxtDentistName.setText("");
+        jTxtDentistSpec.setText("");
+        jTxtDentistContactNum.setText("");
+
+        if (jCmbDentistStetus.getItemCount() > 0) {
+            jCmbDentistStetus.setSelectedIndex(0);
+        }
+
+        jTblDentist.clearSelection();
+
+        jTxtDentistName.requestFocus();
+    }
+
     private void checkInputs() {
         String name = jTxtDentistName.getText().trim();
         String spec = jTxtDentistSpec.getText().trim();
@@ -1322,7 +1336,7 @@ public class DashbordForm extends javax.swing.JFrame {
             System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             JOptionPane.showMessageDialog(this, "Somthing wrong...");
         }
-
+        clearInputs();
         viewAllDentist();
     }//GEN-LAST:event_jBtnDentistSaveActionPerformed
 
@@ -1377,12 +1391,29 @@ public class DashbordForm extends javax.swing.JFrame {
             System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             JOptionPane.showMessageDialog(this, "Somthing wrong...");
         }
+        clearInputs();
 
         viewAllDentist();
     }//GEN-LAST:event_jBtnDentistUpdateActionPerformed
 
     private void jBtnDentistDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistDeleteActionPerformed
         // TODO add your handling code here:
+        int row = jTblDentist.getSelectedRow();
+
+        int id = Integer.parseInt(jTblDentist.getValueAt(row, 0).toString());
+
+        try {
+            boolean deleteDentist = dentistDAO.deleteDentist(id);
+            if (deleteDentist) {
+                JOptionPane.showMessageDialog(this, "Dentist Delete successfully.");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Somthing wrong...");
+            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        clearInputs();
+
+        viewAllDentist();
     }//GEN-LAST:event_jBtnDentistDeleteActionPerformed
 
     private void jBtnDentistCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistCancelActionPerformed
@@ -1503,9 +1534,7 @@ public class DashbordForm extends javax.swing.JFrame {
         jTxtDentistContactNum.setText(contact_number);
 
         if (stetusOb != null) {
-
             jCmbDentistStetus.setSelectedItem(stetusOb.toString());
-
         }
         jBtnDentistSave.setEnabled(false);
     }//GEN-LAST:event_jTblDentistMousePressed
