@@ -257,11 +257,13 @@ public class DashbordForm extends javax.swing.JFrame {
         jBtnTretment.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jBtnTretment.setForeground(new java.awt.Color(204, 255, 255));
         jBtnTretment.setText("Treatment");
+        jBtnTretment.addActionListener(this::jBtnTretmentActionPerformed);
 
         jBtnBill.setBackground(new java.awt.Color(0, 102, 204));
         jBtnBill.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jBtnBill.setForeground(new java.awt.Color(204, 255, 255));
         jBtnBill.setText("Bills");
+        jBtnBill.addActionListener(this::jBtnBillActionPerformed);
 
         jBtnSetting.setBackground(new java.awt.Color(0, 102, 204));
         jBtnSetting.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -275,6 +277,7 @@ public class DashbordForm extends javax.swing.JFrame {
         jBtnAppoinmenet.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jBtnAppoinmenet.setForeground(new java.awt.Color(204, 255, 255));
         jBtnAppoinmenet.setText("Appoinment ");
+        jBtnAppoinmenet.addActionListener(this::jBtnAppoinmenetActionPerformed);
 
         jBtnDentist.setBackground(new java.awt.Color(0, 102, 204));
         jBtnDentist.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -1286,14 +1289,36 @@ public class DashbordForm extends javax.swing.JFrame {
 
     private void jBtnSettingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSettingActionPerformed
         // TODO add your handling code here:
+        jPanelAppoinmentContext.setVisible(false);
+        jPanelPatientContext.setVisible(false);
+        jPanelBillsContext.setVisible(false);
+        jPanelSettingContext.setVisible(true);
+        jPanelTreatmentContext.setVisible(false);
+        jPanelDentistContext.setVisible(false);
+        viewAllDentist();
     }//GEN-LAST:event_jBtnSettingActionPerformed
 
     private void jBtnDentistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistActionPerformed
         // TODO add your handling code here:
+        jPanelAppoinmentContext.setVisible(false);
+        jPanelPatientContext.setVisible(false);
+        jPanelBillsContext.setVisible(false);
+        jPanelSettingContext.setVisible(false);
+        jPanelTreatmentContext.setVisible(false);
+        jPanelDentistContext.setVisible(true);
+
+        viewAllDentist();
     }//GEN-LAST:event_jBtnDentistActionPerformed
 
     private void jBtnPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPatientActionPerformed
         // TODO add your handling code here:
+        jPanelAppoinmentContext.setVisible(false);
+        jPanelPatientContext.setVisible(true);
+        jPanelBillsContext.setVisible(false);
+        jPanelSettingContext.setVisible(false);
+        jPanelTreatmentContext.setVisible(false);
+        jPanelDentistContext.setVisible(false);
+        viewAllDentist();
     }//GEN-LAST:event_jBtnPatientActionPerformed
 
     private void jBtnDentistSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistSaveActionPerformed
@@ -1418,6 +1443,8 @@ public class DashbordForm extends javax.swing.JFrame {
 
     private void jBtnDentistCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistCancelActionPerformed
         // TODO add your handling code here:
+        clearInputs();
+
     }//GEN-LAST:event_jBtnDentistCancelActionPerformed
 
     private void jBtnDentistSave3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistSave3ActionPerformed
@@ -1544,6 +1571,39 @@ public class DashbordForm extends javax.swing.JFrame {
         checkInputs();
 
     }//GEN-LAST:event_jTxtDentistContactNumPropertyChange
+
+    private void jBtnAppoinmenetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAppoinmenetActionPerformed
+        // TODO add your handling code here:
+        jPanelAppoinmentContext.setVisible(true);
+        jPanelPatientContext.setVisible(false);
+        jPanelBillsContext.setVisible(false);
+        jPanelSettingContext.setVisible(false);
+        jPanelTreatmentContext.setVisible(false);
+        jPanelDentistContext.setVisible(false);
+        viewAllDentist();
+    }//GEN-LAST:event_jBtnAppoinmenetActionPerformed
+
+    private void jBtnTretmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTretmentActionPerformed
+        // TODO add your handling code here:
+        jPanelAppoinmentContext.setVisible(false);
+        jPanelPatientContext.setVisible(false);
+        jPanelBillsContext.setVisible(false);
+        jPanelSettingContext.setVisible(false);
+        jPanelTreatmentContext.setVisible(true);
+        jPanelDentistContext.setVisible(false);
+        viewAllDentist();
+    }//GEN-LAST:event_jBtnTretmentActionPerformed
+
+    private void jBtnBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBillActionPerformed
+        // TODO add your handling code here:
+        jPanelAppoinmentContext.setVisible(false);
+        jPanelPatientContext.setVisible(false);
+        jPanelBillsContext.setVisible(true);
+        jPanelSettingContext.setVisible(false);
+        jPanelTreatmentContext.setVisible(false);
+        jPanelDentistContext.setVisible(false);
+        viewAllDentist();
+    }//GEN-LAST:event_jBtnBillActionPerformed
 
     /**
      * @param args the command line arguments

@@ -140,6 +140,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Treatment"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnTretmentActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jBtnBill">
           <Properties>
@@ -154,6 +157,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Bills"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnBillActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jBtnSetting">
           <Properties>
@@ -192,6 +198,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Appoinment "/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnAppoinmenetActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jBtnDentist">
           <Properties>
