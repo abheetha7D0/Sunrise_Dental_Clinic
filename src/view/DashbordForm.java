@@ -72,6 +72,9 @@ public class DashbordForm extends javax.swing.JFrame {
         jBtnDentistUpdate.setEnabled(isAllDataEnterd);
         jBtnDentistDelete.setEnabled(isAllDataEnterd);
         jBtnDentistCancel.setEnabled(isDataEnterd);
+        if (jTblDentist.getSelectedRow() > 0) {
+            jBtnDentistSave.setEnabled(false);
+        }
     }
 
     /**
@@ -99,6 +102,7 @@ public class DashbordForm extends javax.swing.JFrame {
 
             while (rs.next()) {
                 model.addRow(new Object[]{
+                    rs.getString("id"),
                     rs.getString("name"),
                     rs.getString("specialization"),
                     rs.getString("contact_number"),
@@ -106,6 +110,7 @@ public class DashbordForm extends javax.swing.JFrame {
                 });
             }
         } catch (SQLException e) {
+            System.out.println("somthing wrong");
             e.printStackTrace();
         }
     }
@@ -496,17 +501,17 @@ public class DashbordForm extends javax.swing.JFrame {
         jTblDentist.setForeground(new java.awt.Color(255, 255, 255));
         jTblDentist.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Name", "Specialization", "Contact Number", "Stetus"
+                "Id", "Name", "Specialization", "Contact Number", "Stetus"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -532,6 +537,7 @@ public class DashbordForm extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        jTxtDentistContactNum.addPropertyChangeListener(this::jTxtDentistContactNumPropertyChange);
         jTxtDentistContactNum.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTxtDentistContactNumKeyReleased(evt);
@@ -1278,6 +1284,7 @@ public class DashbordForm extends javax.swing.JFrame {
 
     private void jBtnDentistSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistSaveActionPerformed
         // TODO add your handling code here:
+
         String name = jTxtDentistName.getText().trim();
         String Specialization = jTxtDentistSpec.getText().trim();
         String contact_number = jTxtDentistContactNum.getText().trim();
@@ -1321,6 +1328,57 @@ public class DashbordForm extends javax.swing.JFrame {
 
     private void jBtnDentistUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistUpdateActionPerformed
         // TODO add your handling code here:
+        int row = jTblDentist.getSelectedRow();
+        int id
+                = Integer.parseInt(
+                        jTblDentist.getValueAt(row, 0).toString()
+                );
+
+        String name = jTxtDentistName.getText().trim();
+        String Specialization = jTxtDentistSpec.getText().trim();
+        String contact_number = jTxtDentistContactNum.getText().trim();
+        DentistStetus status = DentistStetus.valueOf(jCmbDentistStetus.getSelectedItem().toString());
+
+        if (!isValidFullName(name)) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Please enter a valid full name (e.g., First and Last name).",
+                    "Invalid Name Input",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            jTxtDentistName.requestFocus();
+            return;
+        }
+
+        if (!isValidPhoneNumber(contact_number)) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Please enter a valid 10-digit phone number (e.g., 0771111111).",
+                    "Invalid Contact Number",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            jTxtDentistContactNum.requestFocus();
+            return;
+        }
+
+        try {
+            Dentist dentistOb = dentistDAO.findByDentistId(id);
+            dentistOb.setFullName(name);
+            dentistOb.setContactNumber(contact_number);
+            dentistOb.setSpecialization(Specialization);
+            dentistOb.setStetus(status);
+            boolean updateDentist = dentistDAO.updateDentist(dentistOb);
+
+            if (updateDentist) {
+                JOptionPane.showMessageDialog(this, "Dentist Updated successfully.");
+            }
+
+        } catch (SQLException ex) {
+            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            JOptionPane.showMessageDialog(this, "Somthing wrong...");
+        }
+
+        viewAllDentist();
     }//GEN-LAST:event_jBtnDentistUpdateActionPerformed
 
     private void jBtnDentistDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistDeleteActionPerformed
@@ -1435,22 +1493,28 @@ public class DashbordForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         int row = jTblDentist.getSelectedRow();
 
-        String name = jTblDentist.getValueAt(row, 0).toString();
-        String spec = jTblDentist.getValueAt(row, 1).toString();
-        String contact_number = jTblDentist.getValueAt(row, 2).toString();
-        Object stetusOb = jTblDentist.getValueAt(row, 3);
+        String name = jTblDentist.getValueAt(row, 1).toString();
+        String spec = jTblDentist.getValueAt(row, 2).toString();
+        String contact_number = jTblDentist.getValueAt(row, 3).toString();
+        Object stetusOb = jTblDentist.getValueAt(row, 4);
 
         jTxtDentistName.setText(name);
         jTxtDentistSpec.setText(spec);
         jTxtDentistContactNum.setText(contact_number);
-        
-       
+
         if (stetusOb != null) {
-           
+
             jCmbDentistStetus.setSelectedItem(stetusOb.toString());
 
         }
+        jBtnDentistSave.setEnabled(false);
     }//GEN-LAST:event_jTblDentistMousePressed
+
+    private void jTxtDentistContactNumPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTxtDentistContactNumPropertyChange
+        // TODO add your handling code here:
+        checkInputs();
+
+    }//GEN-LAST:event_jTxtDentistContactNumPropertyChange
 
     /**
      * @param args the command line arguments

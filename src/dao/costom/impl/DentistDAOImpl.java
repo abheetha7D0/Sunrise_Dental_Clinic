@@ -4,6 +4,7 @@
  */
 package dao.costom.impl;
 
+import Enums.DentistStetus;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import dao.costom.DentistDAO;
@@ -59,13 +60,46 @@ public class DentistDAOImpl implements DentistDAO {
     }
 
     @Override
-    public Dentist updateDentist(Dentist patient) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean updateDentist(Dentist dentist) throws SQLException {
+        System.out.println(dentist);
+
+        Connection con = (Connection) DBConnection.getConnection();
+
+        String sql = "UPDATE dentists SET name=?,specialization=?,contact_number=?,status=? WHERE id=?";
+
+        PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+
+        pst.setString(1, dentist.getFullName());
+
+        pst.setString(2, dentist.getSpecialization());
+
+        pst.setString(3, dentist.getContactNumber());
+
+        pst.setString(4, dentist.getStetus().name());
+
+        pst.setInt(5, dentist.getId());
+
+        int executeUpdate = pst.executeUpdate();
+        con.close();
+        return executeUpdate > 0;
+
     }
 
     @Override
-    public Dentist deleteDentist(Dentist patient) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean deleteDentist(int id) throws SQLException {
+
+        Connection con = (Connection) DBConnection.getConnection();
+
+        String sql
+                = "DELETE FROM dentists WHERE id=?";
+
+        PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+
+        pst.setInt(1, id);
+        int executeUpdate = pst.executeUpdate();
+        con.close();
+
+        return executeUpdate > 0;
     }
 
     @Override
@@ -76,6 +110,31 @@ public class DentistDAOImpl implements DentistDAO {
     @Override
     public Dentist findBySpecialization(String specialization) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Dentist findByDentistId(int id) throws SQLException {
+        Connection con = (Connection) DBConnection.getConnection();
+        PreparedStatement pst = (PreparedStatement) con.prepareStatement("select * from dentists where id=?");
+        pst.setObject(1, id);
+
+        ResultSet rst = pst.executeQuery();
+
+        Dentist dentist = null;
+
+        if (rst.next()) {
+            String statusStr = rst.getString(5);
+            DentistStetus status = null;
+
+            if (statusStr != null) {
+                status = DentistStetus.valueOf(statusStr.toUpperCase());
+            }
+            dentist = new Dentist(rst.getString(2), rst.getString(3),
+                    rst.getString(4), status);
+            dentist.setId(id);
+        }
+        con.close();
+        return dentist;
     }
 
 }

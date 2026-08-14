@@ -25,6 +25,10 @@ public class Dentist {
         this.stetus = stetus;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

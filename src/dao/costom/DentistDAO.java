@@ -19,11 +19,13 @@ public interface DentistDAO extends SuperDAO {
     
     boolean addDentist(Dentist dentist) throws SQLException ;
 
-    Dentist updateDentist(Dentist dentist);
+    boolean updateDentist(Dentist dentist) throws SQLException;
 
-    Dentist deleteDentist(Dentist dentist);
+    boolean deleteDentist(int id) throws SQLException;
 
-    Dentist findByDentistName(String name);
+    Dentist findByDentistName(String name) throws SQLException;
+    
+    Dentist findByDentistId(int id) throws SQLException ;
 
-    Dentist findBySpecialization(String specialization);
+    Dentist findBySpecialization(String specialization) throws SQLException;
 }
