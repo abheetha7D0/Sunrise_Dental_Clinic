@@ -11,8 +11,15 @@ import model.Patient;
  *
  * @author ASUS
  */
-public interface PatientDAO extends SuperDAO{
-        Patient addPatient(Patient patient);
-        Patient updatePatient(Patient patient);
-        Patient findByPatientName(String name);
+public interface PatientDAO extends SuperDAO {
+
+    boolean addPatient(Patient patient);
+
+    boolean updatePatient(Patient patient);
+
+    boolean deletePatient(int id);
+
+    Patient findByPatientId(int id);
+
+    Patient findByPatientName(String name);
 }
