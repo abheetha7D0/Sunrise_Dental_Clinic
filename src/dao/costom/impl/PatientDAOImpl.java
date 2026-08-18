@@ -60,12 +60,12 @@ public class PatientDAOImpl implements PatientDAO {
     }
 
     @Override
-    public Patient findByPatientName(String name) {
+    public Patient findByPatientName(String name)  throws SQLException{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean deletePatient(int id) {
+    public boolean deletePatient(int id)  throws SQLException{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

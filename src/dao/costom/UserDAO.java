@@ -6,6 +6,7 @@ package dao.costom;
 
 import dao.SuperDAO;
 import dto.UserDTO;
+import java.sql.SQLException;
 import model.User;
 
 /**
@@ -13,8 +14,8 @@ import model.User;
  * @author ASUS
  */
 public interface UserDAO extends SuperDAO{
-    boolean Login(UserDTO userDTO);
-    User addUser(User user);
-    User updateUser(User user);
-    User userDelete(User user);
+    boolean Login(UserDTO userDTO)  throws SQLException;
+    User addUser(User user)  throws SQLException;
+    User updateUser(User user)  throws SQLException;
+    User userDelete(User user)  throws SQLException;
 }

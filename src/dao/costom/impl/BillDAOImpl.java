@@ -5,6 +5,7 @@
 package dao.costom.impl;
 
 import dao.costom.BillDAO;
+import java.sql.SQLException;
 import model.Bill;
 
 /**
@@ -14,7 +15,7 @@ import model.Bill;
 public class BillDAOImpl implements BillDAO{
 
     @Override
-    public Bill printBill(Bill bill) {
+    public Bill printBill(Bill bill)  throws SQLException{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

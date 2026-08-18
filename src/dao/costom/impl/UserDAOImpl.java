@@ -20,7 +20,7 @@ import java.sql.SQLException;
 public class UserDAOImpl implements UserDAO {
 
     @Override
-    public boolean Login(UserDTO userDTO) {
+    public boolean Login(UserDTO userDTO)  throws SQLException{
         String sql = "SELECT * FROM USERS WHERE username = ? AND password = ?";
 
         try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
@@ -39,17 +39,17 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User addUser(User user) {
+    public User addUser(User user)  throws SQLException{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public User updateUser(User user) {
+    public User updateUser(User user)  throws SQLException{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public User userDelete(User user) {
+    public User userDelete(User user)  throws SQLException{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

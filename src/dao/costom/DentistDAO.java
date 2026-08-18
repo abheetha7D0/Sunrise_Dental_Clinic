@@ -15,7 +15,7 @@ import java.sql.SQLException;
  */
 public interface DentistDAO extends SuperDAO {
 
-    ResultSet getALLDentists();
+    ResultSet getALLDentists() throws SQLException;
     
     boolean addDentist(Dentist dentist) throws SQLException ;
 

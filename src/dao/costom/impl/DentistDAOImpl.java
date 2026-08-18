@@ -20,7 +20,7 @@ import model.Dentist;
 public class DentistDAOImpl implements DentistDAO {
 
     @Override
-    public ResultSet getALLDentists() {
+    public ResultSet getALLDentists()  throws SQLException{
         ResultSet rs = null;
 
         try {
@@ -61,7 +61,6 @@ public class DentistDAOImpl implements DentistDAO {
 
     @Override
     public boolean updateDentist(Dentist dentist) throws SQLException {
-        System.out.println(dentist);
 
         Connection con = (Connection) DBConnection.getConnection();
 
@@ -103,12 +102,12 @@ public class DentistDAOImpl implements DentistDAO {
     }
 
     @Override
-    public Dentist findByDentistName(String name) {
+    public Dentist findByDentistName(String name)  throws SQLException{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Dentist findBySpecialization(String specialization) {
+    public Dentist findBySpecialization(String specialization)  throws SQLException{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

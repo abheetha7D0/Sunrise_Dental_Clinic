@@ -8,6 +8,7 @@ import Enums.DAOType;
 import Enums.DentistStetus;
 import dao.DAOFactory;
 import dao.costom.impl.DentistDAOImpl;
+import dao.costom.impl.PatientDAOImpl;
 import dao.costom.impl.UserDAOImpl;
 import java.awt.event.ActionEvent;
 import java.sql.ResultSet;
@@ -18,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import model.Dentist;
+import model.Patient;
 
 /**
  *
@@ -28,6 +30,7 @@ public class DashbordForm extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashbordForm.class.getName());
     UserDAOImpl userDAO = (UserDAOImpl) DAOFactory.getInstance().getDAO(DAOType.USER);
     DentistDAOImpl dentistDAO = (DentistDAOImpl) DAOFactory.getInstance().getDAO(DAOType.DENTIST);
+    PatientDAOImpl patientDAO = (PatientDAOImpl) DAOFactory.getInstance().getDAO(DAOType.PATIENT);
 
     final void showDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
@@ -54,6 +57,10 @@ public class DashbordForm extends javax.swing.JFrame {
     }
 
     private void clearInputs() {
+        jTxtPatientName.setText("");
+        jTxtPatientAddress.setText("");
+        jTxtPatientContactNum.setText("");
+        
         jTxtDentistName.setText("");
         jTxtDentistSpec.setText("");
         jTxtDentistContactNum.setText("");
@@ -65,6 +72,12 @@ public class DashbordForm extends javax.swing.JFrame {
         jTblDentist.clearSelection();
 
         jTxtDentistName.requestFocus();
+        
+        jTblPatient.clearSelection();
+
+        jTxtPatientName.requestFocus();
+        
+        
     }
 
     private void checkInputs() {
@@ -88,6 +101,28 @@ public class DashbordForm extends javax.swing.JFrame {
         jBtnDentistCancel.setEnabled(isDataEnterd);
         if (jTblDentist.getSelectedRow() > 0) {
             jBtnDentistSave.setEnabled(false);
+        }
+        
+        String patient_name = jTxtPatientName.getText().trim();
+        String patient_adress = jTxtPatientAddress.getText().trim();
+        String patient_contact_number = jTxtPatientContactNum.getText().trim();
+        
+        boolean isPatientDataEnterd = !patient_name.isEmpty()
+                || !patient_adress.isEmpty()
+                || !patient_contact_number.isEmpty()
+                || phone.length() == 10;
+
+        boolean isPatientAllDataEnterd = !name.isEmpty()
+                && !spec.isEmpty()
+                && !phone.isEmpty()
+                && phone.length() == 10;
+
+        jBtnDentistSave.setEnabled(isPatientAllDataEnterd);
+        jBtnDentistUpdate.setEnabled(isPatientAllDataEnterd);
+        jBtnDentistDelete.setEnabled(isPatientAllDataEnterd);
+        jBtnDentistCancel.setEnabled(isPatientDataEnterd);
+        if (jTblPatient.getSelectedRow() > 0) {
+            jBtnPatientSave.setEnabled(false);
         }
     }
 
@@ -694,14 +729,14 @@ public class DashbordForm extends javax.swing.JFrame {
         jTblPatient.setForeground(new java.awt.Color(0, 102, 255));
         jTblPatient.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Name", "Adress", "Contact Number"
+                "Id", "Name", "Adress", "Contact Number"
             }
         ));
         jScrollPane5.setViewportView(jTblPatient);
@@ -1465,6 +1500,44 @@ public class DashbordForm extends javax.swing.JFrame {
 
     private void jBtnPatientSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPatientSaveActionPerformed
         // TODO add your handling code here:
+        String name = jTxtPatientName.getText().trim();
+        String adress = jTxtPatientAddress.getText().trim();
+        String contact_number = jTxtPatientContactNum.getText().trim();
+
+        if (!isValidFullName(name)) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Please enter a valid full name (e.g., First and Last name).",
+                    "Invalid Name Input",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            jTxtDentistName.requestFocus();
+            return;
+        }
+
+        if (!isValidPhoneNumber(contact_number)) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Please enter a valid 10-digit phone number (e.g., 0771111111).",
+                    "Invalid Contact Number",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            jTxtDentistContactNum.requestFocus();
+            return;
+        }
+
+        try {
+            boolean addPatient = patientDAO.addPatient(new Patient(name, adress, contact_number));
+            if (addPatient) {
+                JOptionPane.showMessageDialog(this, "Patient added successfully.");
+            }
+
+        } catch (SQLException ex) {
+            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            JOptionPane.showMessageDialog(this, "Somthing wrong...");
+        }
+        clearInputs();
+        
     }//GEN-LAST:event_jBtnPatientSaveActionPerformed
 
     private void jBtnPatientUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPatientUpdateActionPerformed

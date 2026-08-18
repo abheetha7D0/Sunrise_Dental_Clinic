@@ -5,6 +5,7 @@
 package dao.costom;
 
 import dao.SuperDAO;
+import java.sql.SQLException;
 import model.Bill;
 
 /**
@@ -12,5 +13,5 @@ import model.Bill;
  * @author ASUS
  */
 public interface BillDAO extends SuperDAO{
-    Bill printBill(Bill bill);
+    Bill printBill(Bill bill)  throws SQLException;
 }
