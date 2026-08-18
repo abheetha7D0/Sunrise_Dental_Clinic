@@ -4,8 +4,8 @@
  */
 package dao.costom.impl;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import dao.costom.TreatmentDAO;
 import db.DBConnection;
 import java.sql.ResultSet;
@@ -20,11 +20,11 @@ public class TreatmentDAOImpl implements TreatmentDAO {
 
     @Override
     public boolean createTreatment(Treatment treatment) throws SQLException {
-        Connection con = (Connection) DBConnection.getConnection();
+        Connection con = DBConnection.getConnection();
 
         String sql = "INSERT INTO treatment(treatmentCost,tretmentName,description) VALUES(?,?,?)";
 
-        PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+        PreparedStatement pst = con.prepareStatement(sql);
 
         pst.setDouble(1, treatment.getTreatmentCost());
 
@@ -39,11 +39,11 @@ public class TreatmentDAOImpl implements TreatmentDAO {
 
     @Override
     public boolean updateTreatment(Treatment treatment) throws SQLException {
-        Connection con = (Connection) DBConnection.getConnection();
+        Connection con = DBConnection.getConnection();
 
         String sql = "UPDATE treatment SET treatmentCost=?,tretmentName=?,description=? WHERE id=?";
 
-        PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+        PreparedStatement pst = con.prepareStatement(sql);
 
         pst.setDouble(1, treatment.getTreatmentCost());
 
@@ -59,8 +59,18 @@ public class TreatmentDAOImpl implements TreatmentDAO {
     }
 
     @Override
-    public boolean deleteTreatment(Treatment treatment) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean deleteTreatment(int id) throws SQLException {
+        Connection con = DBConnection.getConnection();
+
+        String sql = "DELETE FROM treatment WHERE id=?";
+
+        PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+
+        pst.setInt(1, id);
+        int executeUpdate = pst.executeUpdate();
+        con.close();
+
+        return executeUpdate > 0;
     }
 
     @Override

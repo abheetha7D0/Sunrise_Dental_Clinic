@@ -89,8 +89,7 @@ public class DentistDAOImpl implements DentistDAO {
 
         Connection con = (Connection) DBConnection.getConnection();
 
-        String sql
-                = "DELETE FROM dentists WHERE id=?";
+        String sql= "DELETE FROM dentists WHERE id=?";
 
         PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
 
