@@ -5,6 +5,7 @@
 package dao.costom;
 
 import dao.SuperDAO;
+import java.sql.SQLException;
 import model.Patient;
 
 /**
@@ -13,13 +14,13 @@ import model.Patient;
  */
 public interface PatientDAO extends SuperDAO {
 
-    boolean addPatient(Patient patient);
+    boolean addPatient(Patient patient) throws SQLException;
 
-    boolean updatePatient(Patient patient);
+    boolean updatePatient(Patient patient)  throws SQLException;
 
-    boolean deletePatient(int id);
+    boolean deletePatient(int id)  throws SQLException;
 
-    Patient findByPatientId(int id);
+    Patient findByPatientId(int id)  throws SQLException;
 
-    Patient findByPatientName(String name);
+    Patient findByPatientName(String name)  throws SQLException;
 }
