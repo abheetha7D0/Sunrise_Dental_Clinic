@@ -39,7 +39,7 @@ public class PatientDAOImpl implements PatientDAO {
     }
 
     @Override
-    public boolean updatePatient(Patient patient)  throws SQLException{
+    public boolean updatePatient(Patient patient) throws SQLException {
         Connection con = (Connection) DBConnection.getConnection();
 
         String sql = "UPDATE Patient SET name=?,address=?,contact_number=? WHERE id=?";
@@ -70,8 +70,22 @@ public class PatientDAOImpl implements PatientDAO {
     }
 
     @Override
-    public Patient findByPatientId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Patient findByPatientId(int id) throws SQLException{
+        Connection con = (Connection) DBConnection.getConnection();
+        PreparedStatement pst = (PreparedStatement) con.prepareStatement("select * from dentists where id=?");
+        pst.setObject(1, id);
+
+        ResultSet rst = pst.executeQuery();
+
+        Patient patient = null;
+
+        if (rst.next()) {
+
+            patient = new Patient(rst.getString(2), rst.getString(3),rst.getString(4));
+            patient.setId(id);
+        }
+        con.close();
+        return patient;
     }
 
 }
