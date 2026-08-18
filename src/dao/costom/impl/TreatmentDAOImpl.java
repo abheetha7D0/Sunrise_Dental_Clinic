@@ -8,6 +8,7 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import dao.costom.TreatmentDAO;
 import db.DBConnection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Treatment;
 
@@ -38,7 +39,23 @@ public class TreatmentDAOImpl implements TreatmentDAO{
 
     @Override
     public boolean updateTreatment(Treatment treatment)  throws SQLException{
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Connection con = (Connection) DBConnection.getConnection();
+
+        String sql = "UPDATE treatment SET treatmentCost=?,tretmentName=?,description=? WHERE id=?";
+
+        PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+
+        pst.setDouble(1, treatment.getTreatmentCost());
+
+        pst.setString(2, treatment.getTretmentName());
+
+        pst.setString(3, treatment.getDescription());
+
+        pst.setInt(4, treatment.getId());
+
+        int executeUpdate = pst.executeUpdate();
+        con.close();
+        return executeUpdate > 0;
     }
 
     @Override
@@ -48,6 +65,11 @@ public class TreatmentDAOImpl implements TreatmentDAO{
 
     @Override
     public Treatment findByTreatmentName(String treatment)  throws SQLException{
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public ResultSet getALLTretments() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

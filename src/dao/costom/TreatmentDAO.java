@@ -5,6 +5,7 @@
 package dao.costom;
 
 import dao.SuperDAO;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Treatment;
 
@@ -13,6 +14,8 @@ import model.Treatment;
  * @author ASUS
  */
 public interface TreatmentDAO extends SuperDAO{
+    
+    ResultSet getALLTretments() throws SQLException;
 
     boolean createTreatment(Treatment treatment) throws SQLException;
 
