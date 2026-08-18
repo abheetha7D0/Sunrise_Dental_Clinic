@@ -60,17 +60,17 @@ public class PatientDAOImpl implements PatientDAO {
     }
 
     @Override
-    public Patient findByPatientName(String name)  throws SQLException{
+    public Patient findByPatientName(String name) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean deletePatient(int id)  throws SQLException{
+    public boolean deletePatient(int id) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Patient findByPatientId(int id) throws SQLException{
+    public Patient findByPatientId(int id) throws SQLException {
         Connection con = (Connection) DBConnection.getConnection();
         PreparedStatement pst = (PreparedStatement) con.prepareStatement("select * from dentists where id=?");
         pst.setObject(1, id);
@@ -81,11 +81,22 @@ public class PatientDAOImpl implements PatientDAO {
 
         if (rst.next()) {
 
-            patient = new Patient(rst.getString(2), rst.getString(3),rst.getString(4));
+            patient = new Patient(rst.getString(2), rst.getString(3), rst.getString(4));
             patient.setId(id);
         }
         con.close();
         return patient;
+    }
+
+    @Override
+    public ResultSet getALLPatients() throws SQLException {
+        ResultSet rs = null;
+
+        java.sql.Connection con = DBConnection.getConnection();
+        String sql = "SELECT * FROM Patient";
+        java.sql.PreparedStatement pst = con.prepareStatement(sql);
+        rs = pst.executeQuery();
+        return rs;
     }
 
 }

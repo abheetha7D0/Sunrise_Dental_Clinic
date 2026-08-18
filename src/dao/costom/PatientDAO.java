@@ -5,6 +5,7 @@
 package dao.costom;
 
 import dao.SuperDAO;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Patient;
 
@@ -13,6 +14,7 @@ import model.Patient;
  * @author ASUS
  */
 public interface PatientDAO extends SuperDAO {
+    ResultSet getALLPatients() throws SQLException;
 
     boolean addPatient(Patient patient) throws SQLException;
 

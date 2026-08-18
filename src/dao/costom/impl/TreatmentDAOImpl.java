@@ -16,10 +16,10 @@ import model.Treatment;
  *
  * @author ASUS
  */
-public class TreatmentDAOImpl implements TreatmentDAO{
+public class TreatmentDAOImpl implements TreatmentDAO {
 
     @Override
-    public boolean createTreatment(Treatment treatment) throws SQLException{
+    public boolean createTreatment(Treatment treatment) throws SQLException {
         Connection con = (Connection) DBConnection.getConnection();
 
         String sql = "INSERT INTO treatment(treatmentCost,tretmentName,description) VALUES(?,?,?)";
@@ -38,7 +38,7 @@ public class TreatmentDAOImpl implements TreatmentDAO{
     }
 
     @Override
-    public boolean updateTreatment(Treatment treatment)  throws SQLException{
+    public boolean updateTreatment(Treatment treatment) throws SQLException {
         Connection con = (Connection) DBConnection.getConnection();
 
         String sql = "UPDATE treatment SET treatmentCost=?,tretmentName=?,description=? WHERE id=?";
@@ -59,18 +59,25 @@ public class TreatmentDAOImpl implements TreatmentDAO{
     }
 
     @Override
-    public boolean deleteTreatment(Treatment treatment)  throws SQLException{
+    public boolean deleteTreatment(Treatment treatment) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Treatment findByTreatmentName(String treatment)  throws SQLException{
+    public Treatment findByTreatmentName(String treatment) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public ResultSet getALLTretments() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ResultSet rs = null;
+
+        java.sql.Connection con = DBConnection.getConnection();
+        String sql = "SELECT * FROM treatment";
+        java.sql.PreparedStatement pst = con.prepareStatement(sql);
+        rs = pst.executeQuery();
+
+        return rs;
     }
-    
+
 }
