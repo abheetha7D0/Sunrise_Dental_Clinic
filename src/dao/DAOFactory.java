@@ -37,7 +37,7 @@ public class DAOFactory {
                 return new DentistDAOImpl();
             case PATIENT:
                 return new PatientDAOImpl();
-            case TRETMENT:
+            case TREATMENT:
                 return new TreatmentDAOImpl();
             case USER:
                 return new UserDAOImpl();

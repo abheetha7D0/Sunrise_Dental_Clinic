@@ -79,7 +79,7 @@ public class TreatmentDAOImpl implements TreatmentDAO {
     }
 
     @Override
-    public ResultSet getALLTretments() throws SQLException {
+    public ResultSet getALLTreatments() throws SQLException {
         ResultSet rs = null;
 
         java.sql.Connection con = DBConnection.getConnection();

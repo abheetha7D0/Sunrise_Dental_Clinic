@@ -15,7 +15,7 @@ import model.Treatment;
  */
 public interface TreatmentDAO extends SuperDAO{
     
-    ResultSet getALLTretments() throws SQLException;
+    ResultSet getALLTreatments() throws SQLException;
 
     boolean createTreatment(Treatment treatment) throws SQLException;
 

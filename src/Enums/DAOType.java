@@ -13,6 +13,6 @@ public enum DAOType {
     BILL,
     DENTIST,
     PATIENT,
-    TRETMENT,
+    TREATMENT,
     USER
 }

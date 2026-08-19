@@ -6,10 +6,9 @@ package view;
 
 import Enums.DAOType;
 import dao.DAOFactory;
-import dao.costom.UserDAO;
 import dao.costom.impl.UserDAOImpl;
 import dto.UserDTO;
-import java.util.Arrays;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -187,13 +186,17 @@ public class Login extends javax.swing.JFrame {
         String userName = jTxtUserName.getText().strip();
         String password = new String(jTxtPassword.getPassword());
         
-        if (userDAO.Login(new UserDTO(userName, password))) {
-            DashbordForm form = new DashbordForm();
-            form.setVisible(true);
-            this.dispose();
-
-        } else {
-            JOptionPane.showMessageDialog(this, "Invalid username or password.");
+        try {
+            if (userDAO.Login(new UserDTO(userName, password))) {
+                DashbordForm form = new DashbordForm();
+                form.setVisible(true);
+                this.dispose();
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid username or password.");
+            }
+        } catch (SQLException ex) {
+            System.getLogger(Login.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }//GEN-LAST:event_jBtnSignInActionPerformed
 

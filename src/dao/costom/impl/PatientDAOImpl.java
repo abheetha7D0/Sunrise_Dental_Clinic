@@ -22,7 +22,7 @@ public class PatientDAOImpl implements PatientDAO {
     public boolean addPatient(Patient patient) throws SQLException {
         Connection con = (Connection) DBConnection.getConnection();
 
-        String sql = "INSERT INTO Patient(name,adress,contact_number) VALUES(?,?,?)";
+        String sql = "INSERT INTO Patients(name,adress,contact_number) VALUES(?,?,?)";
 
         PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
 
@@ -42,7 +42,7 @@ public class PatientDAOImpl implements PatientDAO {
     public boolean updatePatient(Patient patient) throws SQLException {
         Connection con = (Connection) DBConnection.getConnection();
 
-        String sql = "UPDATE Patient SET name=?,address=?,contact_number=? WHERE id=?";
+        String sql = "UPDATE Patients SET name=?,address=?,contact_number=? WHERE id=?";
 
         PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
 
@@ -66,13 +66,23 @@ public class PatientDAOImpl implements PatientDAO {
 
     @Override
     public boolean deletePatient(int id) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Connection con = DBConnection.getConnection();
+
+        String sql = "DELETE FROM Patients WHERE id=?";
+
+        PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+
+        pst.setInt(1, id);
+        int executeUpdate = pst.executeUpdate();
+        con.close();
+
+        return executeUpdate > 0;
     }
 
     @Override
     public Patient findByPatientId(int id) throws SQLException {
         Connection con = (Connection) DBConnection.getConnection();
-        PreparedStatement pst = (PreparedStatement) con.prepareStatement("select * from dentists where id=?");
+        PreparedStatement pst = (PreparedStatement) con.prepareStatement("select * from Patients where id=?");
         pst.setObject(1, id);
 
         ResultSet rst = pst.executeQuery();
@@ -93,7 +103,7 @@ public class PatientDAOImpl implements PatientDAO {
         ResultSet rs = null;
 
         java.sql.Connection con = DBConnection.getConnection();
-        String sql = "SELECT * FROM Patient";
+        String sql = "SELECT * FROM Patients";
         java.sql.PreparedStatement pst = con.prepareStatement(sql);
         rs = pst.executeQuery();
         return rs;
