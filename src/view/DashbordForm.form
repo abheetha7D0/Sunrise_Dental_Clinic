@@ -270,10 +270,10 @@
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                      <Component id="jPanelAppoinmentContext" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                      <Component id="jPanelAppoinmentContext" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="1400" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
@@ -377,7 +377,7 @@
                               <Component id="jCmbDentist1" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="424" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jBtnDentistSave3" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jBtnDentistUpdate3" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
@@ -686,7 +686,7 @@
                       <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane3" min="-2" pref="356" max="-2" attributes="0"/>
-                      <EmptySpace pref="1334" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1016,6 +1016,9 @@
                   <Font name="Segoe UI" size="18" style="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTxtPatientNameKeyReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel24">
               <Properties>
@@ -1042,6 +1045,9 @@
                   <Font name="Segoe UI" size="18" style="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTxtPatientAddressKeyReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel26">
               <Properties>
@@ -1057,6 +1063,9 @@
                   <Font name="Segoe UI" size="18" style="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTxtPatientContactNumKeyReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator5">
             </Component>
@@ -1131,13 +1140,16 @@
                     </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="4" rowCount="5">
-                        <Column editable="true" title="Id" type="java.lang.Object"/>
-                        <Column editable="true" title="Name" type="java.lang.Object"/>
-                        <Column editable="true" title="Address" type="java.lang.Object"/>
-                        <Column editable="true" title="Contact Number" type="java.lang.Object"/>
+                        <Column editable="false" title="Id" type="java.lang.Object"/>
+                        <Column editable="false" title="Name" type="java.lang.Object"/>
+                        <Column editable="false" title="Address" type="java.lang.Object"/>
+                        <Column editable="false" title="Contact Number" type="java.lang.Object"/>
                       </Table>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTblPatientMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -1187,13 +1199,13 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
-                                      <Component id="jBtnTretmentSave" min="-2" pref="86" max="-2" attributes="0"/>
+                                      <Component id="jBtnTreatmentSave" min="-2" pref="86" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                                      <Component id="jBtnTretmentUpdate" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jBtnTreatmentUpdate" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                                       <Component id="jBtnTreatmentDelete" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                                      <Component id="jBtnTratmentCancel" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jBtnTreatmentCancel" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -1256,10 +1268,10 @@
                       </Group>
                       <EmptySpace min="25" pref="25" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jBtnTretmentSave" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jBtnTretmentUpdate" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                          <Component id="jBtnTreatmentSave" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jBtnTreatmentUpdate" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                           <Component id="jBtnTreatmentDelete" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                          <Component id="jBtnTratmentCancel" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                          <Component id="jBtnTreatmentCancel" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jSeparator6" min="-2" pref="10" max="-2" attributes="0"/>
@@ -1322,7 +1334,7 @@
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator6">
             </Component>
-            <Component class="javax.swing.JButton" name="jBtnTretmentSave">
+            <Component class="javax.swing.JButton" name="jBtnTreatmentSave">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="66" red="0" type="rgb"/>
@@ -1336,10 +1348,10 @@
                 <Property name="text" type="java.lang.String" value="Save"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnTretmentSaveActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnTreatmentSaveActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jBtnTretmentUpdate">
+            <Component class="javax.swing.JButton" name="jBtnTreatmentUpdate">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="66" red="ff" type="rgb"/>
@@ -1353,7 +1365,7 @@
                 <Property name="text" type="java.lang.String" value="Update"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnTretmentUpdateActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnTreatmentUpdateActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jBtnTreatmentDelete">
@@ -1400,10 +1412,13 @@
                       </Table>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTblTreatmentMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="jBtnTratmentCancel">
+            <Component class="javax.swing.JButton" name="jBtnTreatmentCancel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="33" red="ff" type="rgb"/>
@@ -1417,7 +1432,7 @@
                 <Property name="text" type="java.lang.String" value="Cancel"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnTratmentCancelActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnTreatmentCancelActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JFormattedTextField" name="jTxtTreatmentPrice">

@@ -22,7 +22,7 @@ public class PatientDAOImpl implements PatientDAO {
     public boolean addPatient(Patient patient) throws SQLException {
         Connection con = (Connection) DBConnection.getConnection();
 
-        String sql = "INSERT INTO Patients(name,adress,contact_number) VALUES(?,?,?)";
+        String sql = "INSERT INTO Patients(name,address,contact_number) VALUES(?,?,?)";
 
         PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
 

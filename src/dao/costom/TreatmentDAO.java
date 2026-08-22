@@ -22,6 +22,8 @@ public interface TreatmentDAO extends SuperDAO{
     boolean updateTreatment(Treatment treatment)throws SQLException;
     
     boolean deleteTreatment(int id) throws SQLException;
+    
+    Treatment findByTreatmentId(int id) throws SQLException;
 
     Treatment findByTreatmentName(String treatment) throws SQLException;
 }

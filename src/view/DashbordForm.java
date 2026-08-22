@@ -78,11 +78,9 @@ public class DashbordForm extends javax.swing.JFrame {
 
         jTblDentist.clearSelection();
 
-        jTxtDentistName.requestFocus();
-
-        jTblPatient.clearSelection();
-
-        jTxtPatientName.requestFocus();
+        jTblPatient.clearSelection();      
+        
+        jTblTreatment.clearSelection();
 
     }
 
@@ -116,19 +114,41 @@ public class DashbordForm extends javax.swing.JFrame {
         boolean isPatientDataEnterd = !patient_name.isEmpty()
                 || !patient_adress.isEmpty()
                 || !patient_contact_number.isEmpty()
-                || phone.length() == 10;
+                || patient_contact_number.length() == 10;
 
-        boolean isPatientAllDataEnterd = !name.isEmpty()
-                && !spec.isEmpty()
-                && !phone.isEmpty()
-                && phone.length() == 10;
+        boolean isPatientAllDataEnterd = !patient_name.isEmpty()
+                && !patient_adress.isEmpty()
+                && !patient_contact_number.isEmpty()
+                && patient_contact_number.length() == 10;
 
-        jBtnDentistSave.setEnabled(isPatientAllDataEnterd);
-        jBtnDentistUpdate.setEnabled(isPatientAllDataEnterd);
-        jBtnDentistDelete.setEnabled(isPatientAllDataEnterd);
-        jBtnDentistCancel.setEnabled(isPatientDataEnterd);
+        jBtnPatientSave.setEnabled(isPatientAllDataEnterd);
+        jBtnPatientUpdate.setEnabled(isPatientAllDataEnterd);
+        jBtnPatientDelete.setEnabled(isPatientAllDataEnterd);
+        jBtnPatientCancel.setEnabled(isPatientDataEnterd);
+
         if (jTblPatient.getSelectedRow() > 0) {
             jBtnPatientSave.setEnabled(false);
+        }
+
+        String treatmentName = jTxtTreatmentName.getText().trim();
+        String treatmentDescription = jTxtTreatmentDescription.getText().trim();
+        String treatmentPrice = jTxtTreatmentPrice.getText().trim();
+
+        boolean isTreatmentDataEnterd = !treatmentName.isEmpty()
+                || !treatmentDescription.isEmpty()
+                || !treatmentPrice.isEmpty();
+
+        boolean isTreatmentAllDataEnterd = !treatmentName.isEmpty()
+                && !treatmentDescription.isEmpty()
+                && !treatmentPrice.isEmpty();
+
+        jBtnTreatmentSave.setEnabled(isTreatmentAllDataEnterd);
+        jBtnTreatmentUpdate.setEnabled(isTreatmentAllDataEnterd);
+        jBtnTreatmentDelete.setEnabled(isTreatmentAllDataEnterd);
+        jBtnTreatmentCancel.setEnabled(isTreatmentDataEnterd);
+
+        if (jTblTreatment.getSelectedRow() > 0) {
+            jBtnTreatmentSave.setEnabled(false);
         }
     }
 
@@ -285,12 +305,12 @@ public class DashbordForm extends javax.swing.JFrame {
         jTxtTreatmentDescription = new javax.swing.JTextField();
         jLabel30 = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
-        jBtnTretmentSave = new javax.swing.JButton();
-        jBtnTretmentUpdate = new javax.swing.JButton();
+        jBtnTreatmentSave = new javax.swing.JButton();
+        jBtnTreatmentUpdate = new javax.swing.JButton();
         jBtnTreatmentDelete = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTblTreatment = new javax.swing.JTable();
-        jBtnTratmentCancel = new javax.swing.JButton();
+        jBtnTreatmentCancel = new javax.swing.JButton();
         jTxtTreatmentPrice = new javax.swing.JFormattedTextField();
         jPanelBillsContext = new javax.swing.JPanel();
         jLabel31 = new javax.swing.JLabel();
@@ -525,7 +545,7 @@ public class DashbordForm extends javax.swing.JFrame {
                         .addComponent(jLabel22)
                         .addGap(18, 18, 18)
                         .addComponent(jCmbDentist1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 424, Short.MAX_VALUE)
                 .addGroup(jPanelAppoinmentContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnDentistSave3)
                     .addComponent(jBtnDentistUpdate3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -731,7 +751,7 @@ public class DashbordForm extends javax.swing.JFrame {
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1334, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanelPatientContext.setBackground(new java.awt.Color(255, 255, 255));
@@ -740,6 +760,11 @@ public class DashbordForm extends javax.swing.JFrame {
         jLabel23.setText("Name");
 
         jTxtPatientName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtPatientName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtPatientNameKeyReleased(evt);
+            }
+        });
 
         jLabel24.setFont(new java.awt.Font("Microsoft Yi Baiti", 1, 48)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(0, 102, 255));
@@ -749,11 +774,21 @@ public class DashbordForm extends javax.swing.JFrame {
         jLabel25.setText("Address");
 
         jTxtPatientAddress.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtPatientAddress.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtPatientAddressKeyReleased(evt);
+            }
+        });
 
         jLabel26.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel26.setText("Contact Number");
 
         jTxtPatientContactNum.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtPatientContactNum.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtPatientContactNumKeyReleased(evt);
+            }
+        });
 
         jBtnPatientSave.setBackground(new java.awt.Color(0, 102, 255));
         jBtnPatientSave.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -787,7 +822,20 @@ public class DashbordForm extends javax.swing.JFrame {
             new String [] {
                 "Id", "Name", "Address", "Contact Number"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTblPatient.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTblPatientMouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(jTblPatient);
 
         jBtnPatientCancel.setBackground(new java.awt.Color(255, 51, 0));
@@ -891,17 +939,17 @@ public class DashbordForm extends javax.swing.JFrame {
         jLabel30.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel30.setText("Price");
 
-        jBtnTretmentSave.setBackground(new java.awt.Color(0, 102, 255));
-        jBtnTretmentSave.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jBtnTretmentSave.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnTretmentSave.setText("Save");
-        jBtnTretmentSave.addActionListener(this::jBtnTretmentSaveActionPerformed);
+        jBtnTreatmentSave.setBackground(new java.awt.Color(0, 102, 255));
+        jBtnTreatmentSave.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jBtnTreatmentSave.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnTreatmentSave.setText("Save");
+        jBtnTreatmentSave.addActionListener(this::jBtnTreatmentSaveActionPerformed);
 
-        jBtnTretmentUpdate.setBackground(new java.awt.Color(255, 102, 51));
-        jBtnTretmentUpdate.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jBtnTretmentUpdate.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnTretmentUpdate.setText("Update");
-        jBtnTretmentUpdate.addActionListener(this::jBtnTretmentUpdateActionPerformed);
+        jBtnTreatmentUpdate.setBackground(new java.awt.Color(255, 102, 51));
+        jBtnTreatmentUpdate.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jBtnTreatmentUpdate.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnTreatmentUpdate.setText("Update");
+        jBtnTreatmentUpdate.addActionListener(this::jBtnTreatmentUpdateActionPerformed);
 
         jBtnTreatmentDelete.setBackground(new java.awt.Color(255, 0, 0));
         jBtnTreatmentDelete.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -924,13 +972,18 @@ public class DashbordForm extends javax.swing.JFrame {
                 "Id", "Name", "Description", "Price"
             }
         ));
+        jTblTreatment.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTblTreatmentMouseClicked(evt);
+            }
+        });
         jScrollPane6.setViewportView(jTblTreatment);
 
-        jBtnTratmentCancel.setBackground(new java.awt.Color(255, 51, 0));
-        jBtnTratmentCancel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jBtnTratmentCancel.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnTratmentCancel.setText("Cancel");
-        jBtnTratmentCancel.addActionListener(this::jBtnTratmentCancelActionPerformed);
+        jBtnTreatmentCancel.setBackground(new java.awt.Color(255, 51, 0));
+        jBtnTreatmentCancel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jBtnTreatmentCancel.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnTreatmentCancel.setText("Cancel");
+        jBtnTreatmentCancel.addActionListener(this::jBtnTreatmentCancelActionPerformed);
 
         jTxtTreatmentPrice.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
@@ -953,13 +1006,13 @@ public class DashbordForm extends javax.swing.JFrame {
                         .addGroup(jPanelTreatmentContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelTreatmentContextLayout.createSequentialGroup()
                                 .addGap(117, 117, 117)
-                                .addComponent(jBtnTretmentSave, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jBtnTreatmentSave, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(32, 32, 32)
-                                .addComponent(jBtnTretmentUpdate)
+                                .addComponent(jBtnTreatmentUpdate)
                                 .addGap(38, 38, 38)
                                 .addComponent(jBtnTreatmentDelete)
                                 .addGap(41, 41, 41)
-                                .addComponent(jBtnTratmentCancel))
+                                .addComponent(jBtnTreatmentCancel))
                             .addGroup(jPanelTreatmentContextLayout.createSequentialGroup()
                                 .addGroup(jPanelTreatmentContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel27)
@@ -1003,10 +1056,10 @@ public class DashbordForm extends javax.swing.JFrame {
                         .addComponent(jTxtTreatmentName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(25, 25, 25)
                 .addGroup(jPanelTreatmentContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBtnTretmentSave)
-                    .addComponent(jBtnTretmentUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnTreatmentSave)
+                    .addComponent(jBtnTreatmentUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnTreatmentDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnTratmentCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBtnTreatmentCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1277,8 +1330,8 @@ public class DashbordForm extends javax.swing.JFrame {
             .addGroup(jPanelMainContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelMainContextLayout.createSequentialGroup()
                     .addGap(12, 12, 12)
-                    .addComponent(jPanelAppoinmentContext, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(12, 12, 12)))
+                    .addComponent(jPanelAppoinmentContext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(1400, Short.MAX_VALUE)))
             .addGroup(jPanelMainContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelMainContextLayout.createSequentialGroup()
                     .addComponent(jPanelPatientContext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1590,22 +1643,90 @@ public class DashbordForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Somthing wrong...");
         }
         clearInputs();
-
+        viewAllPatient();
     }//GEN-LAST:event_jBtnPatientSaveActionPerformed
 
     private void jBtnPatientUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPatientUpdateActionPerformed
         // TODO add your handling code here:
+        int row = jTblPatient.getSelectedRow();
+        int id
+                = Integer.parseInt(
+                        jTblPatient.getValueAt(row, 0).toString()
+                );
+
+        String name = jTxtPatientName.getText().trim();
+        String address = jTxtPatientAddress.getText().trim();
+        String contact_number = jTxtPatientContactNum.getText().trim();
+
+        if (!isValidFullName(name)) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Please enter a valid full name (e.g., First and Last name).",
+                    "Invalid Name Input",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            jTxtPatientName.requestFocus();
+            return;
+        }
+
+        if (!isValidPhoneNumber(contact_number)) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Please enter a valid 10-digit phone number (e.g., 0771111111).",
+                    "Invalid Contact Number",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            jTxtPatientContactNum.requestFocus();
+            return;
+        }
+
+        try {
+            Patient patientOb = patientDAO.findByPatientId(id);
+            patientOb.setFullName(name);
+            patientOb.setContactNumber(contact_number);
+            patientOb.setAddress(address);
+            boolean updatePatient = patientDAO.updatePatient(patientOb);
+
+            if (updatePatient) {
+                JOptionPane.showMessageDialog(this, "Patient Updated successfully.");
+            }
+
+        } catch (SQLException ex) {
+            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            JOptionPane.showMessageDialog(this, "Somthing wrong...");
+        }
+        clearInputs();
+
+        viewAllPatient();
     }//GEN-LAST:event_jBtnPatientUpdateActionPerformed
 
     private void jBtnPatientDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPatientDeleteActionPerformed
         // TODO add your handling code here:
+        int row = jTblPatient.getSelectedRow();
+
+        int id = Integer.parseInt(jTblPatient.getValueAt(row, 0).toString());
+
+        try {
+            boolean deletePatient = patientDAO.deletePatient(id);
+            if (deletePatient) {
+                JOptionPane.showMessageDialog(this, "Patient Delete successfully.");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Somthing wrong...");
+            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        clearInputs();
+
+        viewAllPatient();
     }//GEN-LAST:event_jBtnPatientDeleteActionPerformed
 
     private void jBtnPatientCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPatientCancelActionPerformed
         // TODO add your handling code here:
+        clearInputs();
+        checkInputs();
     }//GEN-LAST:event_jBtnPatientCancelActionPerformed
 
-    private void jBtnTretmentSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTretmentSaveActionPerformed
+    private void jBtnTreatmentSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTreatmentSaveActionPerformed
         String name = jTxtTreatmentName.getText().trim();
         String description = jTxtTreatmentDescription.getText().trim();
         double price = Double.parseDouble(jTxtTreatmentPrice.getText());
@@ -1621,19 +1742,65 @@ public class DashbordForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Somthing wrong...");
         }
         clearInputs();
-    }//GEN-LAST:event_jBtnTretmentSaveActionPerformed
+        viewAllTreatment();
+    }//GEN-LAST:event_jBtnTreatmentSaveActionPerformed
 
-    private void jBtnTretmentUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTretmentUpdateActionPerformed
+    private void jBtnTreatmentUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTreatmentUpdateActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jBtnTretmentUpdateActionPerformed
+        int row = jTblTreatment.getSelectedRow();
+        int id
+                = Integer.parseInt(
+                        jTblTreatment.getValueAt(row, 0).toString()
+                );
+
+        String name = jTxtTreatmentName.getText().trim();
+        String description = jTxtTreatmentDescription.getText().trim();
+        double price = Double.parseDouble(jTxtTreatmentPrice.getText());
+
+        try {
+            Treatment treatmentOb = treatmentDAO.findByTreatmentId(id);
+            treatmentOb.setTretmentName(name);
+            treatmentOb.setDescription(description);
+            treatmentOb.setTreatmentCost(price);
+            boolean updateTreatment = treatmentDAO.updateTreatment(treatmentOb);
+
+            if (updateTreatment) {
+                JOptionPane.showMessageDialog(this, "Treatment Updated successfully.");
+            }
+
+        } catch (SQLException ex) {
+            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            JOptionPane.showMessageDialog(this, "Somthing wrong...");
+        }
+        clearInputs();
+
+        viewAllTreatment();
+    }//GEN-LAST:event_jBtnTreatmentUpdateActionPerformed
 
     private void jBtnTreatmentDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTreatmentDeleteActionPerformed
         // TODO add your handling code here:
+        int row = jTblTreatment.getSelectedRow();
+
+        int id = Integer.parseInt(jTblTreatment.getValueAt(row, 0).toString());
+
+        try {
+            boolean deleteTreatment = treatmentDAO.deleteTreatment(id);
+            if (deleteTreatment) {
+                JOptionPane.showMessageDialog(this, "Treatment Delete successfully.");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Somthing wrong...");
+            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        clearInputs();
+
+        viewAllTreatment();
     }//GEN-LAST:event_jBtnTreatmentDeleteActionPerformed
 
-    private void jBtnTratmentCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTratmentCancelActionPerformed
+    private void jBtnTreatmentCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTreatmentCancelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jBtnTratmentCancelActionPerformed
+        clearInputs();
+    }//GEN-LAST:event_jBtnTreatmentCancelActionPerformed
 
     private void jBtnDentistSave6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistSave6ActionPerformed
         // TODO add your handling code here:
@@ -1745,6 +1912,56 @@ public class DashbordForm extends javax.swing.JFrame {
         viewAllDentist();
     }//GEN-LAST:event_jBtnBillActionPerformed
 
+    private void jTxtPatientNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtPatientNameKeyReleased
+        // TODO add your handling code here:
+        checkInputs();
+
+    }//GEN-LAST:event_jTxtPatientNameKeyReleased
+
+    private void jTxtPatientAddressKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtPatientAddressKeyReleased
+        // TODO add your handling code here:
+        checkInputs();
+
+    }//GEN-LAST:event_jTxtPatientAddressKeyReleased
+
+    private void jTxtPatientContactNumKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtPatientContactNumKeyReleased
+        // TODO add your handling code here:
+        checkInputs();
+
+    }//GEN-LAST:event_jTxtPatientContactNumKeyReleased
+
+    private void jTblPatientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblPatientMouseClicked
+        // TODO add your handling code here:
+        int row = jTblPatient.getSelectedRow();
+
+        String name = jTblPatient.getValueAt(row, 1).toString();
+        String address = jTblPatient.getValueAt(row, 2).toString();
+        String contact_number = jTblPatient.getValueAt(row, 3).toString();
+
+        jTxtPatientName.setText(name);
+        jTxtPatientAddress.setText(address);
+        jTxtPatientContactNum.setText(contact_number);
+        checkInputs();
+        jBtnPatientSave.setEnabled(false);
+
+    }//GEN-LAST:event_jTblPatientMouseClicked
+
+    private void jTblTreatmentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblTreatmentMouseClicked
+        // TODO add your handling code here:
+        int row = jTblTreatment.getSelectedRow();
+
+        String name = jTblTreatment.getValueAt(row, 1).toString();
+        String desc = jTblTreatment.getValueAt(row, 2).toString();
+        String price = jTblTreatment.getValueAt(row, 3).toString();
+
+        jTxtTreatmentName.setText(name);
+        jTxtTreatmentDescription.setText(desc);
+        jTxtTreatmentPrice.setText(price);
+
+        checkInputs();
+        jBtnTreatmentSave.setEnabled(false);
+    }//GEN-LAST:event_jTblTreatmentMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1796,11 +2013,11 @@ public class DashbordForm extends javax.swing.JFrame {
     private javax.swing.JButton jBtnPatientSave;
     private javax.swing.JButton jBtnPatientUpdate;
     private javax.swing.JButton jBtnSetting;
-    private javax.swing.JButton jBtnTratmentCancel;
+    private javax.swing.JButton jBtnTreatmentCancel;
     private javax.swing.JButton jBtnTreatmentDelete;
+    private javax.swing.JButton jBtnTreatmentSave;
+    private javax.swing.JButton jBtnTreatmentUpdate;
     private javax.swing.JButton jBtnTretment;
-    private javax.swing.JButton jBtnTretmentSave;
-    private javax.swing.JButton jBtnTretmentUpdate;
     private javax.swing.JComboBox<String> jCmbDentist;
     private javax.swing.JComboBox<String> jCmbDentist1;
     private javax.swing.JComboBox<String> jCmbDentistStetus;

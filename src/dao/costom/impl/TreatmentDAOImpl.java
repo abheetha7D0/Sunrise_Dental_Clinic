@@ -22,7 +22,7 @@ public class TreatmentDAOImpl implements TreatmentDAO {
     public boolean createTreatment(Treatment treatment) throws SQLException {
         Connection con = DBConnection.getConnection();
 
-        String sql = "INSERT INTO treatment(treatmentCost,tretmentName,description) VALUES(?,?,?)";
+        String sql = "INSERT INTO treatment(price,name,description) VALUES(?,?,?)";
 
         PreparedStatement pst = con.prepareStatement(sql);
 
@@ -41,7 +41,7 @@ public class TreatmentDAOImpl implements TreatmentDAO {
     public boolean updateTreatment(Treatment treatment) throws SQLException {
         Connection con = DBConnection.getConnection();
 
-        String sql = "UPDATE treatment SET treatmentCost=?,tretmentName=?,description=? WHERE id=?";
+        String sql = "UPDATE treatment SET price=?,name=?,description=? WHERE id=?";
 
         PreparedStatement pst = con.prepareStatement(sql);
 
@@ -88,6 +88,25 @@ public class TreatmentDAOImpl implements TreatmentDAO {
         rs = pst.executeQuery();
 
         return rs;
+    }
+
+    @Override
+    public Treatment findByTreatmentId(int id) throws SQLException {
+       Connection con = (Connection) DBConnection.getConnection();
+        PreparedStatement pst = (PreparedStatement) con.prepareStatement("select * from Treatment where id=?");
+        pst.setObject(1, id);
+
+        ResultSet rst = pst.executeQuery();
+
+        Treatment treatment = null;
+
+        if (rst.next()) {
+
+            treatment = new Treatment(rst.getDouble(4), rst.getString(2), rst.getString(3));
+            treatment.setId(id);
+        }
+        con.close();
+        return treatment;
     }
 
 }
