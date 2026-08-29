@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -99,14 +101,26 @@ public class PatientDAOImpl implements PatientDAO {
     }
 
     @Override
-    public ResultSet getALLPatients() throws SQLException {
+    public List<Patient> getALLPatients() throws SQLException {
         ResultSet rs = null;
 
         java.sql.Connection con = DBConnection.getConnection();
         String sql = "SELECT * FROM Patients";
         java.sql.PreparedStatement pst = con.prepareStatement(sql);
         rs = pst.executeQuery();
-        return rs;
+        List<Patient> dentistList = new ArrayList<>();
+        
+        while (rs.next()) {
+            int id = rs.getInt(1);
+            String name = rs.getString(2);
+            String address = rs.getString(3);
+            String number = rs.getString(4);
+            
+            Patient dentiest = new Patient(id, name, address, number);
+            dentistList.add(dentiest);
+        }
+        con.close();
+        return dentistList;
     }
 
 }

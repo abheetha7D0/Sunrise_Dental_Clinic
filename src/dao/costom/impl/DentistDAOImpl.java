@@ -41,6 +41,7 @@ public class DentistDAOImpl implements DentistDAO {
             Dentist dentiest = new Dentist(id, name, specialization, number, status);
             dentistList.add(dentiest);
         }
+        con.close();
         return dentistList;
     }
 

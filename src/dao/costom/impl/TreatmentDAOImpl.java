@@ -10,6 +10,9 @@ import dao.costom.TreatmentDAO;
 import db.DBConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import model.Patient;
 import model.Treatment;
 
 /**
@@ -79,20 +82,31 @@ public class TreatmentDAOImpl implements TreatmentDAO {
     }
 
     @Override
-    public ResultSet getALLTreatments() throws SQLException {
+    public List<Treatment> getALLTreatments() throws SQLException {
         ResultSet rs = null;
 
         java.sql.Connection con = DBConnection.getConnection();
         String sql = "SELECT * FROM treatment";
         java.sql.PreparedStatement pst = con.prepareStatement(sql);
         rs = pst.executeQuery();
+        
+        List<Treatment> treatmentList = new ArrayList<>();
+       
+        while (rs.next()) {
+            int id = rs.getInt(1);
+            double cost = rs.getDouble(4);
+            String name = rs.getString(2);
+            String description = rs.getString(3);
 
-        return rs;
+            Treatment treatment = new Treatment(id, cost, name, description);
+            treatmentList.add(treatment);
+        }
+        return treatmentList;
     }
 
     @Override
     public Treatment findByTreatmentId(int id) throws SQLException {
-       Connection con = (Connection) DBConnection.getConnection();
+        Connection con = (Connection) DBConnection.getConnection();
         PreparedStatement pst = (PreparedStatement) con.prepareStatement("select * from Treatment where id=?");
         pst.setObject(1, id);
 

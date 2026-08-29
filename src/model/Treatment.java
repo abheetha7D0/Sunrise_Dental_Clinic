@@ -21,6 +21,13 @@ public class Treatment {
         this.description = description;
     }
 
+    public Treatment(int id, double treatmentCost, String tretmentName, String description) {
+        this.id = id;
+        this.treatmentCost = treatmentCost;
+        this.tretmentName = tretmentName;
+        this.description = description;
+    }
+
     public int getId() {
         return id;
     }

@@ -6,6 +6,7 @@ package view;
 
 import Controller.DentiestController;
 import Controller.PatientController;
+import Controller.TreatmentController;
 import Controller.UserController;
 import Enums.DAOType;
 import Enums.DentistStetus;
@@ -16,6 +17,7 @@ import dao.costom.impl.TreatmentDAOImpl;
 import dao.costom.impl.UserDAOImpl;
 import dto.DentiestDTO;
 import dto.PatientDTO;
+import dto.TreatmentDTO;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
@@ -39,9 +41,7 @@ public class DashbordForm extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashbordForm.class.getName());
     private final DentiestController dentiestController;
     private final PatientController patientController;
-
-    PatientDAOImpl patientDAO = (PatientDAOImpl) DAOFactory.getInstance().getDAO(DAOType.PATIENT);
-    TreatmentDAOImpl treatmentDAO = (TreatmentDAOImpl) DAOFactory.getInstance().getDAO(DAOType.TREATMENT);
+    private final TreatmentController treatmentController;
 
     final void showDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
@@ -175,6 +175,7 @@ public class DashbordForm extends javax.swing.JFrame {
         initComponents();
         dentiestController = new DentiestController(this);
         patientController = new PatientController(this);
+        treatmentController = new TreatmentController(this);
         showDate();
         showTime();
         jPanelAppoinmentContext.setVisible(false);
@@ -185,11 +186,12 @@ public class DashbordForm extends javax.swing.JFrame {
         viewAllDentist();
         viewAllPatient();
         viewAllTreatment();
+
     }
 
     final void viewAllDentist() {
         try {
-            List<DentiestDTO> allDentists = dentiestController.getAllDentists();
+            List<DentiestDTO> allDentists = dentiestController.getAll();
 
             DefaultTableModel model = (DefaultTableModel) jTblDentist.getModel();
             model.setRowCount(0);
@@ -205,51 +207,53 @@ public class DashbordForm extends javax.swing.JFrame {
                 });
             }
 
-        } catch (SQLException e) {
-            this.showMessage("Somthing wrong");
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            System.out.println("somthing wrong viewAllDentist");
+            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }
 
     final void viewAllPatient() {
         try {
-            ResultSet rs = patientDAO.getALLPatients();
-
+            List<PatientDTO> all = patientController.getAll();
             DefaultTableModel model = (DefaultTableModel) jTblPatient.getModel();
             model.setRowCount(0);
 
-            while (rs.next()) {
+            for (PatientDTO dentiest : all) {
+
                 model.addRow(new Object[]{
-                    rs.getString("id"),
-                    rs.getString("name"),
-                    rs.getString("address"),
-                    rs.getString("contact_number")
+                    dentiest.getId(),
+                    dentiest.getFullName(),
+                    dentiest.getAddress(),
+                    dentiest.getContactNumber()
                 });
             }
-        } catch (SQLException e) {
-            System.out.println("somthing wrong");
-            e.printStackTrace();
+        } catch (SQLException ex) {
+
+            System.out.println("somthing wrong viewAllPatient");
+            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }
 
     final void viewAllTreatment() {
         try {
-            ResultSet rs = treatmentDAO.getALLTreatments();
+            List<TreatmentDTO> all = treatmentController.getAll();
 
             DefaultTableModel model = (DefaultTableModel) jTblTreatment.getModel();
             model.setRowCount(0);
 
-            while (rs.next()) {
+            for (TreatmentDTO treatment : all) {
+
                 model.addRow(new Object[]{
-                    rs.getString("id"),
-                    rs.getString("name"),
-                    rs.getString("description"),
-                    rs.getString("price")
+                    treatment.getId(),
+                    treatment.getTretmentName(),
+                    treatment.getDescription(),
+                    treatment.getTreatmentCost()
                 });
             }
-        } catch (SQLException e) {
-            System.out.println("somthing wrong");
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            System.out.println("somthing wrong viewAllTreatment");
+            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }
 
@@ -1536,7 +1540,6 @@ public class DashbordForm extends javax.swing.JFrame {
     private void jBtnDentistDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistDeleteActionPerformed
         // TODO add your handling code here:
         int row = jTblDentist.getSelectedRow();
-
         int id = Integer.parseInt(jTblDentist.getValueAt(row, 0).toString());
 
         dentiestController.delete(id);
@@ -1581,10 +1584,7 @@ public class DashbordForm extends javax.swing.JFrame {
     private void jBtnPatientUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPatientUpdateActionPerformed
         // TODO add your handling code here:
         int row = jTblPatient.getSelectedRow();
-        int id
-                = Integer.parseInt(
-                        jTblPatient.getValueAt(row, 0).toString()
-                );
+        int id = Integer.parseInt(jTblPatient.getValueAt(row, 0).toString());
 
         String name = jTxtPatientName.getText().trim();
         String address = jTxtPatientAddress.getText().trim();
@@ -1599,10 +1599,9 @@ public class DashbordForm extends javax.swing.JFrame {
     private void jBtnPatientDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPatientDeleteActionPerformed
         // TODO add your handling code here:
         int row = jTblPatient.getSelectedRow();
-
         int id = Integer.parseInt(jTblPatient.getValueAt(row, 0).toString());
-        
-        patientController.delete(id);        
+
+        patientController.delete(id);
         clearInputs();
         viewAllPatient();
     }//GEN-LAST:event_jBtnPatientDeleteActionPerformed
@@ -1618,16 +1617,8 @@ public class DashbordForm extends javax.swing.JFrame {
         String description = jTxtTreatmentDescription.getText().trim();
         double price = Double.parseDouble(jTxtTreatmentPrice.getText());
 
-        try {
-            boolean addPatient = treatmentDAO.createTreatment(new Treatment(price, name, description));
-            if (addPatient) {
-                JOptionPane.showMessageDialog(this, "Treatment added successfully.");
-            }
+        treatmentController.save(new TreatmentDTO(price, name, description));
 
-        } catch (SQLException ex) {
-            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            JOptionPane.showMessageDialog(this, "Somthing wrong...");
-        }
         clearInputs();
         viewAllTreatment();
     }//GEN-LAST:event_jBtnTreatmentSaveActionPerformed
@@ -1635,30 +1626,13 @@ public class DashbordForm extends javax.swing.JFrame {
     private void jBtnTreatmentUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTreatmentUpdateActionPerformed
         // TODO add your handling code here:
         int row = jTblTreatment.getSelectedRow();
-        int id
-                = Integer.parseInt(
-                        jTblTreatment.getValueAt(row, 0).toString()
-                );
+        int id = Integer.parseInt(jTblTreatment.getValueAt(row, 0).toString());
 
         String name = jTxtTreatmentName.getText().trim();
         String description = jTxtTreatmentDescription.getText().trim();
         double price = Double.parseDouble(jTxtTreatmentPrice.getText());
 
-        try {
-            Treatment treatmentOb = treatmentDAO.findByTreatmentId(id);
-            treatmentOb.setTretmentName(name);
-            treatmentOb.setDescription(description);
-            treatmentOb.setTreatmentCost(price);
-            boolean updateTreatment = treatmentDAO.updateTreatment(treatmentOb);
-
-            if (updateTreatment) {
-                JOptionPane.showMessageDialog(this, "Treatment Updated successfully.");
-            }
-
-        } catch (SQLException ex) {
-            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            JOptionPane.showMessageDialog(this, "Somthing wrong...");
-        }
+        treatmentController.update(new TreatmentDTO(id, price, name, description));
         clearInputs();
 
         viewAllTreatment();
@@ -1669,16 +1643,7 @@ public class DashbordForm extends javax.swing.JFrame {
         int row = jTblTreatment.getSelectedRow();
 
         int id = Integer.parseInt(jTblTreatment.getValueAt(row, 0).toString());
-
-        try {
-            boolean deleteTreatment = treatmentDAO.deleteTreatment(id);
-            if (deleteTreatment) {
-                JOptionPane.showMessageDialog(this, "Treatment Delete successfully.");
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Somthing wrong...");
-            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
+        treatmentController.delete(id);
         clearInputs();
 
         viewAllTreatment();

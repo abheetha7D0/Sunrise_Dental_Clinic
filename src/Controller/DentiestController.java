@@ -40,7 +40,7 @@ public class DentiestController {
         return phone != null && phone.trim().matches(phoneRegex);
     }
 
-    public List<DentiestDTO> getAllDentists() throws SQLException {
+    public List<DentiestDTO> getAll() throws SQLException {
         List<Dentist> allDentists = dentistDAO.getALLDentists();
         List<DentiestDTO> dentistList = new ArrayList<>();
 
