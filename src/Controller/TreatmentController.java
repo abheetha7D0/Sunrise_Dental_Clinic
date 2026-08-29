@@ -5,12 +5,14 @@
 package Controller;
 
 import Enums.DAOType;
+import Enums.Role;
 import dao.DAOFactory;
 import dao.costom.impl.TreatmentDAOImpl;
 import dto.TreatmentDTO;
 import java.sql.SQLException;
 import java.util.*;
 import model.Treatment;
+import util.UserSession;
 import view.DashbordForm;
 
 /**
@@ -27,6 +29,11 @@ public class TreatmentController {
     }
 
     public void save(TreatmentDTO treatment) {
+        Role userRole = UserSession.getUserRole();
+        if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole)) {
+            dasbordForm.showMessage("Access denied");
+            return;
+        }
         try {
             boolean addPatient = treatmentDAO.createTreatment(new Treatment(treatment.getTreatmentCost(), treatment.getTretmentName(), treatment.getDescription()));
             if (addPatient) {
@@ -38,11 +45,15 @@ public class TreatmentController {
             dasbordForm.showMessage("Somthing wrong...");
         }
     }
-    
+
     public List<TreatmentDTO> getAll() throws SQLException {
-        
+        Role userRole = UserSession.getUserRole();
+        if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole) && !Role.DENTIST.equals(userRole)) {
+            dasbordForm.showMessage("Access denied");
+            return null;
+        }
         List<Treatment> allTreatments = treatmentDAO.getALLTreatments();
-        
+
         List<TreatmentDTO> dentistList = new ArrayList<>();
 
         for (Treatment treatment : allTreatments) {
@@ -54,11 +65,16 @@ public class TreatmentController {
                     treatment.getDescription()
             ));
         }
-        
+
         return dentistList;
     }
 
     public void update(TreatmentDTO treatment) {
+        Role userRole = UserSession.getUserRole();
+        if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole) && !Role.DENTIST.equals(userRole)) {
+            dasbordForm.showMessage("Access denied");
+            return;
+        }
         try {
             Treatment treatmentOb = treatmentDAO.findByTreatmentId(treatment.getId());
             treatmentOb.setTretmentName(treatment.getTretmentName());
@@ -77,7 +93,11 @@ public class TreatmentController {
     }
 
     public void delete(int id) {
-
+        Role userRole = UserSession.getUserRole();
+        if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole) && !Role.DENTIST.equals(userRole)) {
+            dasbordForm.showMessage("Access denied");
+            return;
+        }
         try {
             boolean deleteTreatment = treatmentDAO.deleteTreatment(id);
             if (deleteTreatment) {

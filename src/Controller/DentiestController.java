@@ -5,17 +5,16 @@
 package Controller;
 
 import Enums.DAOType;
-import Enums.DentistStetus;
+import Enums.Role;
 import dao.DAOFactory;
 import dao.costom.impl.DentistDAOImpl;
 import dto.DentiestDTO;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import model.Dentist;
 import view.DashbordForm;
 import java.util.*;
+import util.UserSession;
 
 /**
  *
@@ -41,6 +40,17 @@ public class DentiestController {
     }
 
     public List<DentiestDTO> getAll() throws SQLException {
+        String userName = UserSession.getUserName();
+        Role userRole = UserSession.getUserRole();
+        System.out.println(userRole);
+        System.out.println(userName);
+        System.out.println(!Role.ADMIN.equals(userRole) && !Role.DENTIST.equals(userRole));
+
+        if (!Role.ADMIN.equals(userRole) && !Role.DENTIST.equals(userRole)) {
+            dasbordForm.showMessage("Access denied");
+            return null;
+        }
+
         List<Dentist> allDentists = dentistDAO.getALLDentists();
         List<DentiestDTO> dentistList = new ArrayList<>();
 
@@ -58,6 +68,11 @@ public class DentiestController {
     }
 
     public void save(DentiestDTO dentiestDto) {
+        Role userRole = getUserRole();
+        if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole)) {
+            dasbordForm.showMessage("Access denied");
+            return;
+        }
 
         if (!isValidFullName(dentiestDto.getFullName())) {
             dasbordForm.showMessage("Please enter a valid full name (e.g., First and Last name)", "Invalid Name Input", JOptionPane.ERROR_MESSAGE);
@@ -82,7 +97,11 @@ public class DentiestController {
     }
 
     public void update(DentiestDTO dentiestDto) {
-
+        Role userRole = getUserRole();
+        if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole)) {
+            dasbordForm.showMessage("Access denied");
+            return;
+        }
         if (!isValidFullName(dentiestDto.getFullName())) {
             dasbordForm.showMessage("Please enter a valid full name (e.g., First and Last name)", "Invalid Name Input", JOptionPane.ERROR_MESSAGE);
             return;
@@ -113,7 +132,11 @@ public class DentiestController {
     }
 
     public void delete(int id) {
-
+        Role userRole = getUserRole();
+        if (!Role.ADMIN.equals(userRole)) {
+            dasbordForm.showMessage("Access denied");
+            return;
+        }
         try {
             boolean deleteDentist = dentistDAO.deleteDentist(id);
             if (deleteDentist) {

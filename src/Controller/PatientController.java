@@ -5,6 +5,7 @@
 package Controller;
 
 import Enums.DAOType;
+import Enums.Role;
 import dao.DAOFactory;
 import dao.costom.impl.DentistDAOImpl;
 import dao.costom.impl.PatientDAOImpl;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.Patient;
+import static util.UserSession.getUserRole;
 import view.DashbordForm;
 
 /**
@@ -38,8 +40,13 @@ public class PatientController {
         String phoneRegex = "^0\\d{9}$";
         return phone != null && phone.trim().matches(phoneRegex);
     }
-    
+
     public List<PatientDTO> getAll() throws SQLException {
+        Role userRole = getUserRole();
+        if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole)) {
+            dasbordForm.showMessage("Access denied");
+            return null;
+        }
         List<Patient> allDentists = patientDAO.getALLPatients();
         List<PatientDTO> patientList = new ArrayList<>();
 
@@ -56,6 +63,11 @@ public class PatientController {
     }
 
     public void save(PatientDTO patient) {
+        Role userRole = getUserRole();
+        if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole)) {
+            dasbordForm.showMessage("Access denied");
+            return;
+        }
         if (!isValidFullName(patient.getFullName())) {
             dasbordForm.showMessage("Please enter a valid full name (e.g., First and Last name)", "Invalid Name Input", JOptionPane.ERROR_MESSAGE);
             return;
@@ -79,6 +91,11 @@ public class PatientController {
     }
 
     public void update(PatientDTO patient) {
+        Role userRole = getUserRole();
+        if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole)) {
+            dasbordForm.showMessage("Access denied");
+            return;
+        }
         if (!isValidFullName(patient.getFullName())) {
             dasbordForm.showMessage("Please enter a valid full name (e.g., First and Last name)", "Invalid Name Input", JOptionPane.ERROR_MESSAGE);
             return;
@@ -107,6 +124,11 @@ public class PatientController {
     }
 
     public void delete(int id) {
+        Role userRole = getUserRole();
+        if (!Role.ADMIN.equals(userRole) ) {
+            dasbordForm.showMessage("Access denied");
+            return;
+        }
         try {
             boolean deletePatient = patientDAO.deletePatient(id);
             if (deletePatient) {

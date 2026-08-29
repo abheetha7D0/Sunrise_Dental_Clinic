@@ -74,7 +74,8 @@ public class DashbordForm extends javax.swing.JFrame {
         String phoneRegex = "^0\\d{9}$";
         return phone != null && phone.trim().matches(phoneRegex);
     }
-
+    
+    
     private void clearInputs() {
         jTxtPatientName.setText("");
         jTxtPatientAddress.setText("");
@@ -173,6 +174,7 @@ public class DashbordForm extends javax.swing.JFrame {
      */
     public DashbordForm() {
         initComponents();
+        
         dentiestController = new DentiestController(this);
         patientController = new PatientController(this);
         treatmentController = new TreatmentController(this);

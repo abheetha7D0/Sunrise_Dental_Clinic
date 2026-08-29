@@ -4,8 +4,8 @@
  */
 package dao.costom;
 
+import Enums.Role;
 import dao.SuperDAO;
-import dto.UserDTO;
 import java.sql.SQLException;
 import model.User;
 
@@ -18,4 +18,7 @@ public interface UserDAO extends SuperDAO{
     User addUser(User user)  throws SQLException;
     User updateUser(User user)  throws SQLException;
     User userDelete(User user)  throws SQLException;
+    Role getRoleByUserName(String userName)throws SQLException;
+    
+    
 }

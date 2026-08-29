@@ -186,9 +186,9 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         String userName = jTxtUserName.getText().strip();
         String password = new String(jTxtPassword.getPassword());
-
+        
         controller.logIn(userName, password);
-
+        
     }//GEN-LAST:event_jBtnSignInActionPerformed
 
     private void jBtnFistLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnFistLogInActionPerformed

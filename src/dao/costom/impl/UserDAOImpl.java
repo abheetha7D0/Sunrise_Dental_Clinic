@@ -4,6 +4,7 @@
  */
 package dao.costom.impl;
 
+import Enums.Role;
 import dao.costom.UserDAO;
 import db.DBConnection;
 import dto.UserDTO;
@@ -50,6 +51,27 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User userDelete(User user) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Role getRoleByUserName(String userName) throws SQLException {
+        String sql = "SELECT * FROM USERS WHERE username = ?";
+        Role role = null;
+
+        Connection con = DBConnection.getConnection();
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, userName);
+
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            String userRole = rs.getString(6);
+
+            if (userRole != null) {
+                role = Role.valueOf(userRole.toUpperCase());
+            }
+        }
+        return role;
+
     }
 
 }

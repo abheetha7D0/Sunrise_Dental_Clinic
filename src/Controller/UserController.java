@@ -5,12 +5,15 @@
 package Controller;
 
 import Enums.DAOType;
+import Enums.Role;
 import dao.DAOFactory;
-import dao.costom.UserDAO;
 import dao.costom.impl.UserDAOImpl;
-import dto.UserDTO;
 import java.sql.SQLException;
 import model.User;
+import util.UserSession;
+import static util.UserSession.createSession;
+import static util.UserSession.getUserName;
+import static util.UserSession.getUserRole;
 import view.DashbordForm;
 import view.Login;
 
@@ -19,6 +22,7 @@ import view.Login;
  * @author ASUS
  */
 public class UserController {
+
     UserDAOImpl userDAO = (UserDAOImpl) DAOFactory.getInstance().getDAO(DAOType.USER);
     private final Login loginView;
 
@@ -29,9 +33,12 @@ public class UserController {
     public void logIn(String userName, String password) {
         try {
             if (userDAO.Login(new User(userName, password))) {
+                Role roleByUserName = userDAO.getRoleByUserName(userName);
+                createSession(userName, roleByUserName);
                 DashbordForm form = new DashbordForm();
                 form.setVisible(true);
                 loginView.dispose();
+                
 
             } else {
                 loginView.showMessage("Invalid Username or Password");

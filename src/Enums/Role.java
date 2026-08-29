@@ -9,7 +9,7 @@ package Enums;
  * @author ASUS
  */
 public enum Role {
-    ROLE_ADMIN,
-    ROLE_STAFF,
-    ROLE_DENTIST
+    ADMIN,
+    STAFF,
+    DENTIST
 }
