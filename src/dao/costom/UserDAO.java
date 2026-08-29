@@ -14,7 +14,7 @@ import model.User;
  * @author ASUS
  */
 public interface UserDAO extends SuperDAO{
-    boolean Login(UserDTO userDTO)  throws SQLException;
+    boolean Login(User user)  throws SQLException;
     User addUser(User user)  throws SQLException;
     User updateUser(User user)  throws SQLException;
     User userDelete(User user)  throws SQLException;

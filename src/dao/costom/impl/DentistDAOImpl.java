@@ -11,6 +11,7 @@ import dao.costom.DentistDAO;
 import db.DBConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.*;
 import model.Dentist;
 
 /**
@@ -20,19 +21,27 @@ import model.Dentist;
 public class DentistDAOImpl implements DentistDAO {
 
     @Override
-    public ResultSet getALLDentists()  throws SQLException{
+    public List<Dentist> getALLDentists() throws SQLException {
+        
         ResultSet rs = null;
 
-        try {
-
-            java.sql.Connection con = DBConnection.getConnection();
-            String sql = "SELECT * FROM dentists";
-            java.sql.PreparedStatement pst = con.prepareStatement(sql);
-            rs = pst.executeQuery();
-        } catch (SQLException e) {
-            System.out.println(e);
+        java.sql.Connection con = DBConnection.getConnection();
+        String sql = "SELECT * FROM dentists";
+        java.sql.PreparedStatement pst = con.prepareStatement(sql);
+        rs = pst.executeQuery();
+        List<Dentist> dentistList = new ArrayList<>();
+        
+        while (rs.next()) {
+            int id = rs.getInt(1);
+            String name = rs.getString(2);
+            String specialization = rs.getString(3);
+            String number = rs.getString(4);
+            DentistStetus status = DentistStetus.valueOf(rs.getString(5));
+            
+            Dentist dentiest = new Dentist(id, name, specialization, number, status);
+            dentistList.add(dentiest);
         }
-        return rs;
+        return dentistList;
     }
 
     @Override
@@ -89,7 +98,7 @@ public class DentistDAOImpl implements DentistDAO {
 
         Connection con = (Connection) DBConnection.getConnection();
 
-        String sql= "DELETE FROM dentists WHERE id=?";
+        String sql = "DELETE FROM dentists WHERE id=?";
 
         PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
 
@@ -101,12 +110,12 @@ public class DentistDAOImpl implements DentistDAO {
     }
 
     @Override
-    public Dentist findByDentistName(String name)  throws SQLException{
+    public Dentist findByDentistName(String name) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Dentist findBySpecialization(String specialization)  throws SQLException{
+    public Dentist findBySpecialization(String specialization) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

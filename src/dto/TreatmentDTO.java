@@ -8,6 +8,6 @@ package dto;
  *
  * @author ASUS
  */
-public class DentistDTO {
+public class TreatmentDTO {
     
 }

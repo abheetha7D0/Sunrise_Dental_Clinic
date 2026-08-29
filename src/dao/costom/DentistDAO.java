@@ -8,6 +8,7 @@ import dao.SuperDAO;
 import java.sql.ResultSet;
 import model.Dentist;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
@@ -15,7 +16,7 @@ import java.sql.SQLException;
  */
 public interface DentistDAO extends SuperDAO {
 
-    ResultSet getALLDentists() throws SQLException;
+    List<Dentist> getALLDentists() throws SQLException;
     
     boolean addDentist(Dentist dentist) throws SQLException ;
 

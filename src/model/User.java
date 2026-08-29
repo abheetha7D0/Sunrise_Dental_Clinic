@@ -33,8 +33,37 @@ public class User {
         this.role = role;
     }
 
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public void setStetus(UserStetus stetus) {
         this.stetus = stetus;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public UserStetus getStetus() {
+        return stetus;
+    }
+
+    public Role getRole() {
+        return role;
     }
     
 }

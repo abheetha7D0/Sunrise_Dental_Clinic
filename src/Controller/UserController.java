@@ -10,7 +10,7 @@ import dao.costom.UserDAO;
 import dao.costom.impl.UserDAOImpl;
 import dto.UserDTO;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
+import model.User;
 import view.DashbordForm;
 import view.Login;
 
@@ -20,7 +20,7 @@ import view.Login;
  */
 public class UserController {
     UserDAOImpl userDAO = (UserDAOImpl) DAOFactory.getInstance().getDAO(DAOType.USER);
-    private Login loginView;
+    private final Login loginView;
 
     public UserController(Login loginView) {
         this.loginView = loginView;
@@ -28,13 +28,13 @@ public class UserController {
 
     public void logIn(String userName, String password) {
         try {
-            if (userDAO.Login(new UserDTO(userName, password))) {
+            if (userDAO.Login(new User(userName, password))) {
                 DashbordForm form = new DashbordForm();
                 form.setVisible(true);
                 loginView.dispose();
 
             } else {
-                loginView.showError("Invalid Username or Password");
+                loginView.showMessage("Invalid Username or Password");
             }
         } catch (SQLException ex) {
             System.getLogger(Login.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);

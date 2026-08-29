@@ -5,11 +5,6 @@
 package view;
 
 import Controller.UserController;
-import Enums.DAOType;
-import dao.DAOFactory;
-import dao.costom.impl.UserDAOImpl;
-import dto.UserDTO;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,7 +13,7 @@ import javax.swing.JOptionPane;
  */
 public class Login extends javax.swing.JFrame {
 
-    public void showError(String message) {
+    public void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
 
@@ -27,10 +22,11 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-    private UserController controller;
+    private final UserController controller;
 
     public Login() {
         initComponents();
+        controller= new UserController(this);
     }
 
     /**

@@ -4,6 +4,9 @@
  */
 package view;
 
+import Controller.DentiestController;
+import Controller.PatientController;
+import Controller.UserController;
 import Enums.DAOType;
 import Enums.DentistStetus;
 import dao.DAOFactory;
@@ -11,12 +14,15 @@ import dao.costom.impl.DentistDAOImpl;
 import dao.costom.impl.PatientDAOImpl;
 import dao.costom.impl.TreatmentDAOImpl;
 import dao.costom.impl.UserDAOImpl;
+import dto.DentiestDTO;
+import dto.PatientDTO;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
@@ -31,8 +37,9 @@ import model.Treatment;
 public class DashbordForm extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashbordForm.class.getName());
-    UserDAOImpl userDAO = (UserDAOImpl) DAOFactory.getInstance().getDAO(DAOType.USER);
-    DentistDAOImpl dentistDAO = (DentistDAOImpl) DAOFactory.getInstance().getDAO(DAOType.DENTIST);
+    private final DentiestController dentiestController;
+    private final PatientController patientController;
+
     PatientDAOImpl patientDAO = (PatientDAOImpl) DAOFactory.getInstance().getDAO(DAOType.PATIENT);
     TreatmentDAOImpl treatmentDAO = (TreatmentDAOImpl) DAOFactory.getInstance().getDAO(DAOType.TREATMENT);
 
@@ -48,6 +55,14 @@ public class DashbordForm extends javax.swing.JFrame {
             Date date = new Date();
             jLblTime.setText(simpleDateFormat.format(date));
         }).start();
+    }
+
+    public void showMessage(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
+
+    public void showMessage(String message, String title, int messageType) {
+        JOptionPane.showMessageDialog(this, message, title, messageType);
     }
 
     public boolean isValidFullName(String name) {
@@ -158,6 +173,8 @@ public class DashbordForm extends javax.swing.JFrame {
      */
     public DashbordForm() {
         initComponents();
+        dentiestController = new DentiestController(this);
+        patientController = new PatientController(this);
         showDate();
         showTime();
         jPanelAppoinmentContext.setVisible(false);
@@ -172,22 +189,24 @@ public class DashbordForm extends javax.swing.JFrame {
 
     final void viewAllDentist() {
         try {
-            ResultSet rs = dentistDAO.getALLDentists();
+            List<DentiestDTO> allDentists = dentiestController.getAllDentists();
 
             DefaultTableModel model = (DefaultTableModel) jTblDentist.getModel();
             model.setRowCount(0);
 
-            while (rs.next()) {
+            for (DentiestDTO dentiest : allDentists) {
+
                 model.addRow(new Object[]{
-                    rs.getString("id"),
-                    rs.getString("name"),
-                    rs.getString("specialization"),
-                    rs.getString("contact_number"),
-                    rs.getString("status")
+                    dentiest.getId(),
+                    dentiest.getFullName(),
+                    dentiest.getSpecialization(),
+                    dentiest.getContactNumber(),
+                    dentiest.getStetus()
                 });
             }
+
         } catch (SQLException e) {
-            System.out.println("somthing wrong");
+            this.showMessage("Somthing wrong");
             e.printStackTrace();
         }
     }
@@ -1490,38 +1509,7 @@ public class DashbordForm extends javax.swing.JFrame {
         String contact_number = jTxtDentistContactNum.getText().trim();
         DentistStetus status = DentistStetus.valueOf(jCmbDentistStetus.getSelectedItem().toString());
 
-        if (!isValidFullName(name)) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Please enter a valid full name (e.g., First and Last name).",
-                    "Invalid Name Input",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            jTxtDentistName.requestFocus();
-            return;
-        }
-
-        if (!isValidPhoneNumber(contact_number)) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Please enter a valid 10-digit phone number (e.g., 0771111111).",
-                    "Invalid Contact Number",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            jTxtDentistContactNum.requestFocus();
-            return;
-        }
-
-        try {
-            boolean addDentist = dentistDAO.addDentist(new Dentist(name, Specialization, contact_number, status));
-            if (addDentist) {
-                JOptionPane.showMessageDialog(this, "Dentist added successfully.");
-            }
-
-        } catch (SQLException ex) {
-            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            JOptionPane.showMessageDialog(this, "Somthing wrong...");
-        }
+        dentiestController.save(new DentiestDTO(name, Specialization, contact_number, status));
         clearInputs();
         viewAllDentist();
     }//GEN-LAST:event_jBtnDentistSaveActionPerformed
@@ -1539,44 +1527,7 @@ public class DashbordForm extends javax.swing.JFrame {
         String contact_number = jTxtDentistContactNum.getText().trim();
         DentistStetus status = DentistStetus.valueOf(jCmbDentistStetus.getSelectedItem().toString());
 
-        if (!isValidFullName(name)) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Please enter a valid full name (e.g., First and Last name).",
-                    "Invalid Name Input",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            jTxtDentistName.requestFocus();
-            return;
-        }
-
-        if (!isValidPhoneNumber(contact_number)) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Please enter a valid 10-digit phone number (e.g., 0771111111).",
-                    "Invalid Contact Number",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            jTxtDentistContactNum.requestFocus();
-            return;
-        }
-
-        try {
-            Dentist dentistOb = dentistDAO.findByDentistId(id);
-            dentistOb.setFullName(name);
-            dentistOb.setContactNumber(contact_number);
-            dentistOb.setSpecialization(Specialization);
-            dentistOb.setStetus(status);
-            boolean updateDentist = dentistDAO.updateDentist(dentistOb);
-
-            if (updateDentist) {
-                JOptionPane.showMessageDialog(this, "Dentist Updated successfully.");
-            }
-
-        } catch (SQLException ex) {
-            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            JOptionPane.showMessageDialog(this, "Somthing wrong...");
-        }
+        dentiestController.update(new DentiestDTO(id, name, Specialization, contact_number, status));
         clearInputs();
 
         viewAllDentist();
@@ -1588,24 +1539,15 @@ public class DashbordForm extends javax.swing.JFrame {
 
         int id = Integer.parseInt(jTblDentist.getValueAt(row, 0).toString());
 
-        try {
-            boolean deleteDentist = dentistDAO.deleteDentist(id);
-            if (deleteDentist) {
-                JOptionPane.showMessageDialog(this, "Dentist Delete successfully.");
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Somthing wrong...");
-            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
-        clearInputs();
+        dentiestController.delete(id);
 
+        clearInputs();
         viewAllDentist();
     }//GEN-LAST:event_jBtnDentistDeleteActionPerformed
 
     private void jBtnDentistCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistCancelActionPerformed
         // TODO add your handling code here:
         clearInputs();
-
     }//GEN-LAST:event_jBtnDentistCancelActionPerformed
 
     private void jBtnDentistSave3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistSave3ActionPerformed
@@ -1627,41 +1569,11 @@ public class DashbordForm extends javax.swing.JFrame {
     private void jBtnPatientSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPatientSaveActionPerformed
         // TODO add your handling code here:
         String name = jTxtPatientName.getText().trim();
-        String adress = jTxtPatientAddress.getText().trim();
+        String address = jTxtPatientAddress.getText().trim();
         String contact_number = jTxtPatientContactNum.getText().trim();
 
-        if (!isValidFullName(name)) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Please enter a valid full name (e.g., First and Last name).",
-                    "Invalid Name Input",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            jTxtDentistName.requestFocus();
-            return;
-        }
+        patientController.save(new PatientDTO(name, address, contact_number));
 
-        if (!isValidPhoneNumber(contact_number)) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Please enter a valid 10-digit phone number (e.g., 0771111111).",
-                    "Invalid Contact Number",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            jTxtDentistContactNum.requestFocus();
-            return;
-        }
-
-        try {
-            boolean addPatient = patientDAO.addPatient(new Patient(name, adress, contact_number));
-            if (addPatient) {
-                JOptionPane.showMessageDialog(this, "Patient added successfully.");
-            }
-
-        } catch (SQLException ex) {
-            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            JOptionPane.showMessageDialog(this, "Somthing wrong...");
-        }
         clearInputs();
         viewAllPatient();
     }//GEN-LAST:event_jBtnPatientSaveActionPerformed
@@ -1678,43 +1590,7 @@ public class DashbordForm extends javax.swing.JFrame {
         String address = jTxtPatientAddress.getText().trim();
         String contact_number = jTxtPatientContactNum.getText().trim();
 
-        if (!isValidFullName(name)) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Please enter a valid full name (e.g., First and Last name).",
-                    "Invalid Name Input",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            jTxtPatientName.requestFocus();
-            return;
-        }
-
-        if (!isValidPhoneNumber(contact_number)) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Please enter a valid 10-digit phone number (e.g., 0771111111).",
-                    "Invalid Contact Number",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            jTxtPatientContactNum.requestFocus();
-            return;
-        }
-
-        try {
-            Patient patientOb = patientDAO.findByPatientId(id);
-            patientOb.setFullName(name);
-            patientOb.setContactNumber(contact_number);
-            patientOb.setAddress(address);
-            boolean updatePatient = patientDAO.updatePatient(patientOb);
-
-            if (updatePatient) {
-                JOptionPane.showMessageDialog(this, "Patient Updated successfully.");
-            }
-
-        } catch (SQLException ex) {
-            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            JOptionPane.showMessageDialog(this, "Somthing wrong...");
-        }
+        patientController.update(new PatientDTO(id, name, address, contact_number));
         clearInputs();
 
         viewAllPatient();
@@ -1725,18 +1601,9 @@ public class DashbordForm extends javax.swing.JFrame {
         int row = jTblPatient.getSelectedRow();
 
         int id = Integer.parseInt(jTblPatient.getValueAt(row, 0).toString());
-
-        try {
-            boolean deletePatient = patientDAO.deletePatient(id);
-            if (deletePatient) {
-                JOptionPane.showMessageDialog(this, "Patient Delete successfully.");
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Somthing wrong...");
-            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
+        
+        patientController.delete(id);        
         clearInputs();
-
         viewAllPatient();
     }//GEN-LAST:event_jBtnPatientDeleteActionPerformed
 
@@ -1985,7 +1852,7 @@ public class DashbordForm extends javax.swing.JFrame {
 
     private void jTxtTreatmentPriceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtTreatmentPriceKeyPressed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jTxtTreatmentPriceKeyPressed
 
     private void jTxtTreatmentPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtTreatmentPriceActionPerformed
@@ -1994,17 +1861,17 @@ public class DashbordForm extends javax.swing.JFrame {
 
     private void jTxtTreatmentNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtTreatmentNameKeyReleased
         // TODO add your handling code here:
-         checkInputs();
+        checkInputs();
     }//GEN-LAST:event_jTxtTreatmentNameKeyReleased
 
     private void jTxtTreatmentDescriptionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtTreatmentDescriptionKeyReleased
         // TODO add your handling code here:
-         checkInputs();
+        checkInputs();
     }//GEN-LAST:event_jTxtTreatmentDescriptionKeyReleased
 
     private void jTxtTreatmentPriceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtTreatmentPriceKeyReleased
         // TODO add your handling code here:
-         checkInputs();
+        checkInputs();
     }//GEN-LAST:event_jTxtTreatmentPriceKeyReleased
 
     /**

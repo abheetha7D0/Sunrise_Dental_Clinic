@@ -20,12 +20,12 @@ import java.sql.SQLException;
 public class UserDAOImpl implements UserDAO {
 
     @Override
-    public boolean Login(UserDTO userDTO)  throws SQLException{
+    public boolean Login(User user)  throws SQLException{
         String sql = "SELECT * FROM USERS WHERE username = ? AND password = ?";
 
         try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, userDTO.getUsername());
-            ps.setString(2, userDTO.getPassword());
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
 
             ResultSet rs = ps.executeQuery();
 
