@@ -68,7 +68,7 @@ public class DentiestController {
     }
 
     public void save(DentiestDTO dentiestDto) {
-        Role userRole = getUserRole();
+        Role userRole = UserSession.getUserRole();
         if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole)) {
             dasbordForm.showMessage("Access denied");
             return;
@@ -97,7 +97,7 @@ public class DentiestController {
     }
 
     public void update(DentiestDTO dentiestDto) {
-        Role userRole = getUserRole();
+        Role userRole = UserSession.getUserRole();
         if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole)) {
             dasbordForm.showMessage("Access denied");
             return;
@@ -132,7 +132,7 @@ public class DentiestController {
     }
 
     public void delete(int id) {
-        Role userRole = getUserRole();
+        Role userRole = UserSession.getUserRole();
         if (!Role.ADMIN.equals(userRole)) {
             dasbordForm.showMessage("Access denied");
             return;
