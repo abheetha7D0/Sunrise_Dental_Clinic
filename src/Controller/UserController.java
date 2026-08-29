@@ -1,0 +1,44 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Controller;
+
+import Enums.DAOType;
+import dao.DAOFactory;
+import dao.costom.UserDAO;
+import dao.costom.impl.UserDAOImpl;
+import dto.UserDTO;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import view.DashbordForm;
+import view.Login;
+
+/**
+ *
+ * @author ASUS
+ */
+public class UserController {
+    UserDAOImpl userDAO = (UserDAOImpl) DAOFactory.getInstance().getDAO(DAOType.USER);
+    private Login loginView;
+
+    public UserController(Login loginView) {
+        this.loginView = loginView;
+    }
+
+    public void logIn(String userName, String password) {
+        try {
+            if (userDAO.Login(new UserDTO(userName, password))) {
+                DashbordForm form = new DashbordForm();
+                form.setVisible(true);
+                loginView.dispose();
+
+            } else {
+                loginView.showError("Invalid Username or Password");
+            }
+        } catch (SQLException ex) {
+            System.getLogger(Login.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }
+
+}

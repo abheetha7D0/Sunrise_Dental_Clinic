@@ -4,6 +4,7 @@
  */
 package view;
 
+import Controller.UserController;
 import Enums.DAOType;
 import dao.DAOFactory;
 import dao.costom.impl.UserDAOImpl;
@@ -17,16 +18,20 @@ import javax.swing.JOptionPane;
  */
 public class Login extends javax.swing.JFrame {
 
+    public void showError(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
 
     /**
      * Creates new form Login
      */
+    private UserController controller;
+
     public Login() {
         initComponents();
-
     }
-    UserDAOImpl userDAO = (UserDAOImpl) DAOFactory.getInstance().getDAO(DAOType.USER);
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -185,19 +190,9 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         String userName = jTxtUserName.getText().strip();
         String password = new String(jTxtPassword.getPassword());
-        
-        try {
-            if (userDAO.Login(new UserDTO(userName, password))) {
-                DashbordForm form = new DashbordForm();
-                form.setVisible(true);
-                this.dispose();
-                
-            } else {
-                JOptionPane.showMessageDialog(this, "Invalid username or password.");
-            }
-        } catch (SQLException ex) {
-            System.getLogger(Login.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
+
+        controller.logIn(userName, password);
+
     }//GEN-LAST:event_jBtnSignInActionPerformed
 
     private void jBtnFistLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnFistLogInActionPerformed

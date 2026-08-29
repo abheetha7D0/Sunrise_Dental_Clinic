@@ -12,6 +12,7 @@ import dao.costom.impl.PatientDAOImpl;
 import dao.costom.impl.TreatmentDAOImpl;
 import dao.costom.impl.UserDAOImpl;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -78,8 +79,8 @@ public class DashbordForm extends javax.swing.JFrame {
 
         jTblDentist.clearSelection();
 
-        jTblPatient.clearSelection();      
-        
+        jTblPatient.clearSelection();
+
         jTblTreatment.clearSelection();
 
     }
@@ -926,6 +927,11 @@ public class DashbordForm extends javax.swing.JFrame {
         jLabel27.setText("Name");
 
         jTxtTreatmentName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtTreatmentName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtTreatmentNameKeyReleased(evt);
+            }
+        });
 
         jLabel28.setFont(new java.awt.Font("Microsoft Yi Baiti", 1, 48)); // NOI18N
         jLabel28.setForeground(new java.awt.Color(0, 102, 255));
@@ -935,6 +941,11 @@ public class DashbordForm extends javax.swing.JFrame {
         jLabel29.setText("Description");
 
         jTxtTreatmentDescription.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtTreatmentDescription.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtTreatmentDescriptionKeyReleased(evt);
+            }
+        });
 
         jLabel30.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel30.setText("Price");
@@ -986,6 +997,15 @@ public class DashbordForm extends javax.swing.JFrame {
         jBtnTreatmentCancel.addActionListener(this::jBtnTreatmentCancelActionPerformed);
 
         jTxtTreatmentPrice.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        jTxtTreatmentPrice.addActionListener(this::jTxtTreatmentPriceActionPerformed);
+        jTxtTreatmentPrice.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTxtTreatmentPriceKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtTreatmentPriceKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelTreatmentContextLayout = new javax.swing.GroupLayout(jPanelTreatmentContext);
         jPanelTreatmentContext.setLayout(jPanelTreatmentContextLayout);
@@ -1031,7 +1051,7 @@ public class DashbordForm extends javax.swing.JFrame {
                     .addGroup(jPanelTreatmentContextLayout.createSequentialGroup()
                         .addGap(289, 289, 289)
                         .addComponent(jLabel28)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
         jPanelTreatmentContextLayout.setVerticalGroup(
             jPanelTreatmentContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1800,6 +1820,7 @@ public class DashbordForm extends javax.swing.JFrame {
     private void jBtnTreatmentCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTreatmentCancelActionPerformed
         // TODO add your handling code here:
         clearInputs();
+        checkInputs();
     }//GEN-LAST:event_jBtnTreatmentCancelActionPerformed
 
     private void jBtnDentistSave6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistSave6ActionPerformed
@@ -1961,6 +1982,30 @@ public class DashbordForm extends javax.swing.JFrame {
         checkInputs();
         jBtnTreatmentSave.setEnabled(false);
     }//GEN-LAST:event_jTblTreatmentMouseClicked
+
+    private void jTxtTreatmentPriceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtTreatmentPriceKeyPressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jTxtTreatmentPriceKeyPressed
+
+    private void jTxtTreatmentPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtTreatmentPriceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtTreatmentPriceActionPerformed
+
+    private void jTxtTreatmentNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtTreatmentNameKeyReleased
+        // TODO add your handling code here:
+         checkInputs();
+    }//GEN-LAST:event_jTxtTreatmentNameKeyReleased
+
+    private void jTxtTreatmentDescriptionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtTreatmentDescriptionKeyReleased
+        // TODO add your handling code here:
+         checkInputs();
+    }//GEN-LAST:event_jTxtTreatmentDescriptionKeyReleased
+
+    private void jTxtTreatmentPriceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtTreatmentPriceKeyReleased
+        // TODO add your handling code here:
+         checkInputs();
+    }//GEN-LAST:event_jTxtTreatmentPriceKeyReleased
 
     /**
      * @param args the command line arguments

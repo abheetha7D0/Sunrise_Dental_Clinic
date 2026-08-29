@@ -29,7 +29,7 @@ public class UserDAOImpl implements UserDAO {
 
             ResultSet rs = ps.executeQuery();
 
-            return rs.next();
+            return rs.next(); 
 
         } catch (SQLException e) {
             System.out.println(e);
