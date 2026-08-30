@@ -19,7 +19,7 @@ public class UserSession {
         logginUserRole = role;
     }
     
-    public static void clearSession(String username,Role role){
+    public static void clearSession(){
         loginUser = "";
         logginUserRole = null;
     }

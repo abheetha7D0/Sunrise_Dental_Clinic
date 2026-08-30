@@ -9,7 +9,8 @@ package Controller;
  * @author ASUS
  */
 public class AppoinmentController {
-     public void save(){
-    
+
+    public void save() {
+        
     }
 }

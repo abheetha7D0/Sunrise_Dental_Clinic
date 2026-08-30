@@ -39,7 +39,7 @@ public class DentiestController {
         return phone != null && phone.trim().matches(phoneRegex);
     }
 
-    public List<DentiestDTO> getAll() throws SQLException {
+    public List<DentiestDTO> getAll(){
         String userName = UserSession.getUserName();
         Role userRole = UserSession.getUserRole();
         System.out.println(userRole);
@@ -51,7 +51,12 @@ public class DentiestController {
             return null;
         }
 
-        List<Dentist> allDentists = dentistDAO.getALLDentists();
+        List<Dentist> allDentists = null;
+        try {
+            allDentists = dentistDAO.getALLDentists();
+        } catch (SQLException ex) {
+            dasbordForm.showMessage("Get all dentist null");
+        }
         List<DentiestDTO> dentistList = new ArrayList<>();
 
         for (Dentist dentiest : allDentists) {
@@ -87,12 +92,12 @@ public class DentiestController {
         try {
             boolean addDentist = dentistDAO.addDentist(new Dentist(dentiestDto.getFullName(), dentiestDto.getSpecialization(), dentiestDto.getContactNumber(), dentiestDto.getStetus()));
             if (addDentist) {
-                dasbordForm.showMessage("Dentist added successfully.");
+                dasbordForm.showMessage("Dentist added successfully");
             }
 
         } catch (SQLException ex) {
             System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            dasbordForm.showMessage("Somthing wrong...");
+            dasbordForm.showMessage("Dentist added unsuccessfully");
         }
     }
 
@@ -122,12 +127,12 @@ public class DentiestController {
             boolean updateDentist = dentistDAO.updateDentist(dentistOb);
 
             if (updateDentist) {
-                dasbordForm.showMessage("Dentist Updated successfully.");
+                dasbordForm.showMessage("Dentist Updated successfully");
             }
 
         } catch (SQLException ex) {
             System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            dasbordForm.showMessage("Somthing wrong...");
+            dasbordForm.showMessage("Dentist Updated unsuccessfully");
         }
     }
 
@@ -140,10 +145,10 @@ public class DentiestController {
         try {
             boolean deleteDentist = dentistDAO.deleteDentist(id);
             if (deleteDentist) {
-                dasbordForm.showMessage("Dentist Delete successfully.");
+                dasbordForm.showMessage("Dentist Delete successfully");
             }
         } catch (SQLException ex) {
-            dasbordForm.showMessage("Somthing wrong...");
+            dasbordForm.showMessage("Dentist Delete unsuccessfully");
             System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }

@@ -10,10 +10,8 @@ import dao.DAOFactory;
 import dao.costom.impl.UserDAOImpl;
 import java.sql.SQLException;
 import model.User;
-import util.UserSession;
+import static util.UserSession.clearSession;
 import static util.UserSession.createSession;
-import static util.UserSession.getUserName;
-import static util.UserSession.getUserRole;
 import view.DashbordForm;
 import view.Login;
 

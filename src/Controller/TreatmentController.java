@@ -37,22 +37,27 @@ public class TreatmentController {
         try {
             boolean addPatient = treatmentDAO.createTreatment(new Treatment(treatment.getTreatmentCost(), treatment.getTretmentName(), treatment.getDescription()));
             if (addPatient) {
-                dasbordForm.showMessage("Treatment added successfully.");
+                dasbordForm.showMessage("Treatment added successfully");
             }
 
         } catch (SQLException ex) {
             System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            dasbordForm.showMessage("Somthing wrong...");
+            dasbordForm.showMessage("Treatment added unsuccessfully");
         }
     }
 
-    public List<TreatmentDTO> getAll() throws SQLException {
+    public List<TreatmentDTO> getAll(){
         Role userRole = UserSession.getUserRole();
         if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole) && !Role.DENTIST.equals(userRole)) {
             dasbordForm.showMessage("Access denied");
             return null;
         }
-        List<Treatment> allTreatments = treatmentDAO.getALLTreatments();
+        List<Treatment> allTreatments = null;
+        try {
+            allTreatments = treatmentDAO.getALLTreatments();
+        } catch (SQLException ex) {
+             dasbordForm.showMessage("Get All Treatment Null");
+        }
 
         List<TreatmentDTO> dentistList = new ArrayList<>();
 
@@ -83,12 +88,12 @@ public class TreatmentController {
             boolean updateTreatment = treatmentDAO.updateTreatment(treatmentOb);
 
             if (updateTreatment) {
-                dasbordForm.showMessage("Treatment Updated successfully.");
+                dasbordForm.showMessage("Treatment Updated successfully");
             }
 
         } catch (SQLException ex) {
             System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            dasbordForm.showMessage("Somthing wrong...");
+            dasbordForm.showMessage("Treatment Updated unsuccessfully");
         }
     }
 
@@ -101,10 +106,10 @@ public class TreatmentController {
         try {
             boolean deleteTreatment = treatmentDAO.deleteTreatment(id);
             if (deleteTreatment) {
-                dasbordForm.showMessage("Treatment Delete successfully.");
+                dasbordForm.showMessage("Treatment Delete successfully");
             }
         } catch (SQLException ex) {
-            dasbordForm.showMessage("Somthing wrong...");
+            dasbordForm.showMessage("Treatment Delete unsuccessfully");
             System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }

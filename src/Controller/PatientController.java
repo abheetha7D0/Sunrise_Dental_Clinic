@@ -41,16 +41,22 @@ public class PatientController {
         return phone != null && phone.trim().matches(phoneRegex);
     }
 
-    public List<PatientDTO> getAll() throws SQLException {
+    public List<PatientDTO> getAll() {
         Role userRole = getUserRole();
         if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole)) {
             dasbordForm.showMessage("Access denied");
             return null;
         }
-        List<Patient> allDentists = patientDAO.getALLPatients();
+        List<Patient> allPatients = null;
+        try {
+            allPatients = patientDAO.getALLPatients();
+        } catch (SQLException ex) {
+            dasbordForm.showMessage("Get all Patients null");
+            System.getLogger(PatientController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
         List<PatientDTO> patientList = new ArrayList<>();
 
-        for (Patient dentiest : allDentists) {
+        for (Patient dentiest : allPatients) {
 
             patientList.add(new PatientDTO(
                     dentiest.getId(),
@@ -119,7 +125,7 @@ public class PatientController {
 
         } catch (SQLException ex) {
             System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            dasbordForm.showMessage("Somthing wrong...");
+            dasbordForm.showMessage("Patient Updated unsuccessfully.");
         }
     }
 
@@ -135,7 +141,7 @@ public class PatientController {
                 dasbordForm.showMessage("Patient Delete successfully.");
             }
         } catch (SQLException ex) {
-            dasbordForm.showMessage("Somthing wrong...");
+            dasbordForm.showMessage("Patient Delete unsuccessfully");
             System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }

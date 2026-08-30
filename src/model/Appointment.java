@@ -13,7 +13,7 @@ import Enums.AppointmentStetus;
 public class Appointment {
 
     private int id;
-    private int Appointment_number;
+    private String Appointment_number;
     private int patientId;
     private int dentistId;
     private int treatmentId;
@@ -21,7 +21,18 @@ public class Appointment {
     private String AppointmentTime;
     private AppointmentStetus Stetus;
 
-    public Appointment(int Appointment_number, int patientId, int dentistId, int treatmentId, String AppointmentDate, String AppointmentTime, AppointmentStetus Stetus) {
+    public Appointment(String Appointment_number, int patientId, int dentistId, int treatmentId, String AppointmentDate, String AppointmentTime, AppointmentStetus Stetus) {
+        this.Appointment_number = Appointment_number;
+        this.patientId = patientId;
+        this.dentistId = dentistId;
+        this.treatmentId = treatmentId;
+        this.AppointmentDate = AppointmentDate;
+        this.AppointmentTime = AppointmentTime;
+        this.Stetus = Stetus;
+    }
+
+    public Appointment(int id, String Appointment_number, int patientId, int dentistId, int treatmentId, String AppointmentDate, String AppointmentTime, AppointmentStetus Stetus) {
+        this.id = id;
         this.Appointment_number = Appointment_number;
         this.patientId = patientId;
         this.dentistId = dentistId;
@@ -35,7 +46,7 @@ public class Appointment {
         return id;
     }
 
-    public int getAppointment_number() {
+    public String getAppointment_number() {
         return Appointment_number;
     }
 
@@ -67,7 +78,7 @@ public class Appointment {
         this.id = id;
     }
 
-    public void setAppointment_number(int Appointment_number) {
+    public void setAppointment_number(String Appointment_number) {
         this.Appointment_number = Appointment_number;
     }
 

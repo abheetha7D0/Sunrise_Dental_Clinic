@@ -12,7 +12,7 @@ import Enums.AppointmentStetus;
  */
 public class AppoinmentDTO {
     private int id;
-    private int Appointment_number;
+    private String Appointment_number;
     private int patientId;
     private int dentistId;
     private int treatmentId;
@@ -20,7 +20,7 @@ public class AppoinmentDTO {
     private String AppointmentTime;
     private AppointmentStetus Stetus;
 
-    public AppoinmentDTO(int id, int Appointment_number, int patientId, int dentistId, int treatmentId, String AppointmentDate, String AppointmentTime, AppointmentStetus Stetus) {
+    public AppoinmentDTO(int id, String Appointment_number, int patientId, int dentistId, int treatmentId, String AppointmentDate, String AppointmentTime, AppointmentStetus Stetus) {
         this.id = id;
         this.Appointment_number = Appointment_number;
         this.patientId = patientId;
@@ -35,7 +35,7 @@ public class AppoinmentDTO {
         this.id = id;
     }
 
-    public void setAppointment_number(int Appointment_number) {
+    public void setAppointment_number(String Appointment_number) {
         this.Appointment_number = Appointment_number;
     }
 
@@ -67,7 +67,7 @@ public class AppoinmentDTO {
         return id;
     }
 
-    public int getAppointment_number() {
+    public String getAppointment_number() {
         return Appointment_number;
     }
 
