@@ -112,12 +112,52 @@ public class DentistDAOImpl implements DentistDAO {
 
     @Override
     public Dentist findByDentistName(String name) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Connection con = (Connection) DBConnection.getConnection();
+        PreparedStatement pst = (PreparedStatement) con.prepareStatement("select * from dentists where name=?");
+        pst.setObject(1, name);
+
+        ResultSet rst = pst.executeQuery();
+
+        Dentist dentist = null;
+
+        if (rst.next()) {
+            String statusStr = rst.getString(5);
+            DentistStetus status = null;
+
+            if (statusStr != null) {
+                status = DentistStetus.valueOf(statusStr.toUpperCase());
+            }
+            dentist = new Dentist(rst.getString(2), rst.getString(3),
+                    rst.getString(4), status);
+            dentist.setId(rst.getInt(1));
+        }
+        con.close();
+        return dentist;
     }
 
     @Override
     public Dentist findBySpecialization(String specialization) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Connection con = (Connection) DBConnection.getConnection();
+        PreparedStatement pst = (PreparedStatement) con.prepareStatement("select * from dentists where specialization=?");
+        pst.setObject(1, specialization);
+
+        ResultSet rst = pst.executeQuery();
+
+        Dentist dentist = null;
+
+        if (rst.next()) {
+            String statusStr = rst.getString(5);
+            DentistStetus status = null;
+
+            if (statusStr != null) {
+                status = DentistStetus.valueOf(statusStr.toUpperCase());
+            }
+            dentist = new Dentist(rst.getString(2), rst.getString(3),
+                    rst.getString(4), status);
+            dentist.setId(rst.getInt(1));
+        }
+        con.close();
+        return dentist;
     }
 
     @Override
