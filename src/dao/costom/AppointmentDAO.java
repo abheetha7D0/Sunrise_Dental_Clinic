@@ -19,9 +19,9 @@ public interface AppointmentDAO extends SuperDAO{
 
     boolean updateAppoinment(Appointment Appoinment)  throws SQLException;
 
-    boolean cancelAppoinment(Appointment Appoinment)  throws SQLException;
+    boolean cancelAppoinment(String appoinmentNumber)  throws SQLException;
 
-    Appointment findByAppoinmentNum(int appoinmentNum)  throws SQLException;
+    Appointment findByAppoinmentNum(String appoinmentNum)  throws SQLException;
     
     List<Appointment> getAllAppoinment()  throws SQLException;
 

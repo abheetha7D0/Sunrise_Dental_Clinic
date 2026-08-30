@@ -24,7 +24,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
     public boolean createAppoinment(Appointment appoinment) throws SQLException {
         Connection con = DBConnection.getConnection();
 
-        String sql = "INSERT INTO Appointment(appointment_number,patient_id,dentist_id,treatment_id,appointment_date,appointment_time,status) VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO appointments(appointment_number,patient_id,dentist_id,treatment_id,appointment_date,appointment_time,status) VALUES(?,?,?,?,?,?,?)";
 
         PreparedStatement pst = con.prepareStatement(sql);
 
@@ -48,18 +48,73 @@ public class AppointmentDAOImpl implements AppointmentDAO {
     }
 
     @Override
-    public boolean updateAppoinment(Appointment Appoinment) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean updateAppoinment(Appointment appoinment) throws SQLException {
+        Connection con = DBConnection.getConnection();
+
+        String sql = "UPDATE appointments SET appointment_number=?,patient_id=?,dentist_id=?,treatment_id=?,appointment_date=?,appointment_time=?,status=? WHERE id=?";
+
+        PreparedStatement pst = con.prepareStatement(sql);
+
+        pst.setString(1, appoinment.getAppointment_number());
+
+        pst.setInt(2, appoinment.getPatientId());
+
+        pst.setInt(3, appoinment.getDentistId());
+        
+        pst.setInt(4, appoinment.getTreatmentId());
+        
+        pst.setString(5, appoinment.getAppointmentDate());
+        
+        pst.setString(6, appoinment.getAppointmentTime());
+        
+        pst.setString(7, appoinment.getStetus().name());
+
+        pst.setInt(8, appoinment.getId());
+
+        int executeUpdate = pst.executeUpdate();
+        con.close();
+        return executeUpdate > 0;
     }
 
     @Override
-    public boolean cancelAppoinment(Appointment Appoinment) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean cancelAppoinment(String appoinmentNumber) throws SQLException {
+        Connection con = DBConnection.getConnection();
+
+        String sql = "UPDATE appointments SET status=? WHERE appointment_number=?";
+
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setString(1, AppointmentStetus.CANCELED.name());
+        pst.setString(2, appoinmentNumber);
+        int executeUpdate = pst.executeUpdate();
+        con.close();
+        return executeUpdate > 0;
     }
 
     @Override
-    public Appointment findByAppoinmentNum(int appoinmentNum) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Appointment findByAppoinmentNum(String appoinmentNum) throws SQLException {
+        Connection con = DBConnection.getConnection();
+
+        String sql = "SELECT * FROM appointments WHERE appointment_number=?";
+
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setString(1, appoinmentNum);
+        ResultSet executeQuery = pst.executeQuery();
+        
+        Appointment appointment = null;
+        
+        if (executeQuery.next()) {
+            String statusStr = executeQuery.getString(8);
+            AppointmentStetus status = null;
+
+            if (statusStr != null) {
+                status = AppointmentStetus.valueOf(statusStr.toUpperCase());
+            }
+
+            appointment = new Appointment(executeQuery.getInt(1), executeQuery.getString(2), executeQuery.getInt(3),executeQuery.getInt(4),executeQuery.getInt(5),executeQuery.getString(6),executeQuery.getString(7),status);
+            
+        }
+        con.close();
+        return appointment;
     }
 
     @Override
@@ -67,7 +122,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
         ResultSet rs;
 
         java.sql.Connection con = DBConnection.getConnection();
-        String sql = "SELECT * FROM Appoinment";
+        String sql = "SELECT * FROM appointments";
         java.sql.PreparedStatement pst = con.prepareStatement(sql);
         rs = pst.executeQuery();
         List<Appointment> appointmentList = new ArrayList<>();
