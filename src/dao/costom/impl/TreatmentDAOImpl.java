@@ -76,8 +76,22 @@ public class TreatmentDAOImpl implements TreatmentDAO {
     }
 
     @Override
-    public Treatment findByTreatmentName(String treatment) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Treatment findByTreatmentName(String name) throws SQLException {
+        Connection con = (Connection) DBConnection.getConnection();
+        PreparedStatement pst = (PreparedStatement) con.prepareStatement("select * from Treatment where name=?");
+        pst.setObject(1, name);
+
+        ResultSet rst = pst.executeQuery();
+
+        Treatment treatment = null;
+
+        if (rst.next()) {
+
+            treatment = new Treatment(rst.getDouble(4), rst.getString(2), rst.getString(3));
+            treatment.setId(rst.getInt(4));
+        }
+        con.close();
+        return treatment;
     }
 
     @Override
