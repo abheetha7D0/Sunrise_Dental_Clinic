@@ -8,6 +8,7 @@ import Controller.AppointmentController;
 import Controller.DentiestController;
 import Controller.PatientController;
 import Controller.TreatmentController;
+import Controller.UserController;
 import Enums.AppointmentStetus;
 import Enums.DentistStetus;
 import dto.AppoinmentDTO;
@@ -37,6 +38,7 @@ public final class DashbordForm extends javax.swing.JFrame {
     private final PatientController patientController;
     private final TreatmentController treatmentController;
     private final AppointmentController appointmentController;
+    private final UserController userController;
 
     final void showDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
@@ -173,6 +175,7 @@ public final class DashbordForm extends javax.swing.JFrame {
         patientController = new PatientController(this);
         treatmentController = new TreatmentController(this);
         appointmentController = new AppointmentController(this);
+        userController = new UserController(this);
 
         showDate();
         showTime();
@@ -367,6 +370,12 @@ public final class DashbordForm extends javax.swing.JFrame {
         jBtnSettingClear = new javax.swing.JButton();
         jBtnSettingChangePassword = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        jTxtSettingOldPw = new javax.swing.JTextField();
+        jLabel42 = new javax.swing.JLabel();
+        jTxtSettingNewPw = new javax.swing.JTextField();
+        jLabel43 = new javax.swing.JLabel();
+        jTxtSettingReEnterNewPw = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1085, 780));
@@ -1429,6 +1438,21 @@ public final class DashbordForm extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
         jLabel3.setText("Current Username");
 
+        jLabel41.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel41.setText("Old Password");
+
+        jTxtSettingOldPw.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        jLabel42.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel42.setText("New Password");
+
+        jTxtSettingNewPw.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        jLabel43.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel43.setText("Re Enter New Password");
+
+        jTxtSettingReEnterNewPw.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
         javax.swing.GroupLayout jPanelSettingContextLayout = new javax.swing.GroupLayout(jPanelSettingContext);
         jPanelSettingContext.setLayout(jPanelSettingContextLayout);
         jPanelSettingContextLayout.setHorizontalGroup(
@@ -1457,43 +1481,68 @@ public final class DashbordForm extends javax.swing.JFrame {
                             .addComponent(jLabel37))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSettingContextLayout.createSequentialGroup()
-                .addContainerGap(340, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel36)
                 .addGap(339, 339, 339))
-            .addGroup(jPanelSettingContextLayout.createSequentialGroup()
-                .addGap(388, 388, 388)
-                .addComponent(jBtnSettingChangePassword)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSettingContextLayout.createSequentialGroup()
+                .addGap(116, 116, 116)
+                .addGroup(jPanelSettingContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel42)
+                    .addComponent(jLabel41)
+                    .addGroup(jPanelSettingContextLayout.createSequentialGroup()
+                        .addGroup(jPanelSettingContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTxtSettingOldPw)
+                            .addComponent(jTxtSettingNewPw, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTxtSettingReEnterNewPw, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel43, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(36, 36, 36)
+                        .addComponent(jBtnSettingChangePassword)))
+                .addGap(394, 531, Short.MAX_VALUE))
         );
         jPanelSettingContextLayout.setVerticalGroup(
             jPanelSettingContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelSettingContextLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(jLabel36)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelSettingContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSettingContextLayout.createSequentialGroup()
-                        .addComponent(jLabel37)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTxtSettingName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSettingContextLayout.createSequentialGroup()
+                .addGroup(jPanelSettingContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelSettingContextLayout.createSequentialGroup()
-                        .addComponent(jLabel35)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel41)
                         .addGap(18, 18, 18)
-                        .addComponent(jTxtSettingUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanelSettingContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jTxtSettingOldPw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelSettingContextLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanelSettingContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jBtnSettingUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jBtnSettingClear, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanelSettingContextLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel36)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addGap(63, 63, 63)
-                        .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanelSettingContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSettingContextLayout.createSequentialGroup()
+                                .addComponent(jLabel37)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTxtSettingName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelSettingContextLayout.createSequentialGroup()
+                                .addComponent(jLabel35)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTxtSettingUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanelSettingContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelSettingContextLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanelSettingContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jBtnSettingUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jBtnSettingClear, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanelSettingContextLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3)
+                                .addGap(63, 63, 63)
+                                .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                        .addComponent(jBtnSettingChangePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jBtnSettingChangePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(350, Short.MAX_VALUE))
+                .addComponent(jLabel42)
+                .addGap(18, 18, 18)
+                .addComponent(jTxtSettingNewPw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel43)
+                .addGap(18, 18, 18)
+                .addComponent(jTxtSettingReEnterNewPw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47))
         );
 
         javax.swing.GroupLayout jPanelMainContextLayout = new javax.swing.GroupLayout(jPanelMainContext);
@@ -1797,6 +1846,9 @@ public final class DashbordForm extends javax.swing.JFrame {
 
     private void jBtnSettingUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSettingUpdateActionPerformed
         // TODO add your handling code here:
+        String userName = jTxtSettingUserName.getText().trim();
+        String name = jTxtSettingName.getText().trim();
+        userController.UserUpdate(userName, name);
     }//GEN-LAST:event_jBtnSettingUpdateActionPerformed
 
     private void jBtnSettingClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSettingClearActionPerformed
@@ -2091,6 +2143,9 @@ public final class DashbordForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLblDate;
     private javax.swing.JLabel jLblTime;
     private javax.swing.JPanel jPanel;
@@ -2133,6 +2188,9 @@ public final class DashbordForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTxtPatientContactNum;
     private javax.swing.JTextField jTxtPatientName;
     private javax.swing.JTextField jTxtSettingName;
+    private javax.swing.JTextField jTxtSettingNewPw;
+    private javax.swing.JTextField jTxtSettingOldPw;
+    private javax.swing.JTextField jTxtSettingReEnterNewPw;
     private javax.swing.JTextField jTxtSettingUserName;
     private javax.swing.JTextField jTxtTreatmentDescription;
     private javax.swing.JTextField jTxtTreatmentName;

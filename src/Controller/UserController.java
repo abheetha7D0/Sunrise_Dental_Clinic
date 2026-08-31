@@ -43,6 +43,7 @@ public class UserController {
                 dasbordForm.showMessage("User Updated successfully");
             }
         } catch (SQLException ex) {
+            dasbordForm.showMessage("User Updated unsuccessfully");
             System.getLogger(UserController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
                 
