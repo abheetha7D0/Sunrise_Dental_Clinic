@@ -18,6 +18,7 @@ public interface UserDAO extends SuperDAO{
     User addUser(User user)  throws SQLException;
     User updateUser(User user)  throws SQLException;
     User userDelete(User user)  throws SQLException;
+    String getPasswordByUseName(String userName)  throws SQLException;
     boolean UpdateUserByUser(String userName, String name)  throws SQLException;
     boolean updatePassword(String userName, String password)  throws SQLException;
     Role getRoleByUserName(String userName)throws SQLException;

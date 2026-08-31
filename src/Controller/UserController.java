@@ -8,6 +8,7 @@ import Enums.DAOType;
 import Enums.Role;
 import dao.DAOFactory;
 import dao.costom.impl.UserDAOImpl;
+import dto.UserDTO;
 import java.sql.SQLException;
 import util.UserSession;
 import view.DashbordForm;
@@ -26,11 +27,11 @@ public class UserController {
         this.dasbordForm = dasbordForm;
     }
 
-    public void UserUpdate(String userName,String name) {
+    public void UserUpdate(UserDTO user) {
         Role userRole = UserSession.getUserRole();
         
         try {
-            Role roleByUserName = userDAO.getRoleByUserName(userName);
+            Role roleByUserName = userDAO.getRoleByUserName(user.getUsername());
             if (!roleByUserName.equals(userRole)) {
         }
         } catch (SQLException ex) {
@@ -38,7 +39,7 @@ public class UserController {
             System.getLogger(UserController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
         try {
-            boolean UpdateUserByUser = userDAO.UpdateUserByUser(userName, name);
+            boolean UpdateUserByUser = userDAO.UpdateUserByUser(user.getUsername(), user.getPassword());
             if (UpdateUserByUser) {
                 dasbordForm.showMessage("User Updated successfully");
             }

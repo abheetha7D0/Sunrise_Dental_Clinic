@@ -15,6 +15,8 @@ import dto.AppoinmentDTO;
 import dto.DentiestDTO;
 import dto.PatientDTO;
 import dto.TreatmentDTO;
+import dto.UpdateUserDTO;
+import dto.UserDTO;
 import java.awt.event.ActionEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -1848,11 +1850,13 @@ public final class DashbordForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         String userName = jTxtSettingUserName.getText().trim();
         String name = jTxtSettingName.getText().trim();
-        userController.UserUpdate(userName, name);
+        userController.UserUpdate(new UpdateUserDTO(userName, name));
     }//GEN-LAST:event_jBtnSettingUpdateActionPerformed
 
     private void jBtnSettingClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSettingClearActionPerformed
         // TODO add your handling code here:
+        jTxtSettingUserName.setText("");
+        jTxtSettingName.setText("");
     }//GEN-LAST:event_jBtnSettingClearActionPerformed
 
     private void jCmbDentistStetusKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCmbDentistStetusKeyReleased
@@ -2050,6 +2054,11 @@ public final class DashbordForm extends javax.swing.JFrame {
 
     private void jBtnSettingChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSettingChangePasswordActionPerformed
         // TODO add your handling code here:
+        String oldPw = jTxtSettingOldPw.getText().trim();
+        String newPw = jTxtSettingNewPw.getText().trim();
+        String reEnterNewPw = jTxtSettingReEnterNewPw.getText().trim();
+        
+        
     }//GEN-LAST:event_jBtnSettingChangePasswordActionPerformed
 
     /**

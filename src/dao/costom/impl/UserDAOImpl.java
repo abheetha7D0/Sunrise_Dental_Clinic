@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import model.Patient;
 
 /**
  *
@@ -46,7 +47,7 @@ public class UserDAOImpl implements UserDAO {
     public User updateUser(User user) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     @Override
     public User userDelete(User user) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -76,9 +77,9 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public boolean UpdateUserByUser(String userName, String Name) throws SQLException {
         String sql = "UPDATE USERS SET full_name=?, WHERE username=?";
-        
+
         Connection con = DBConnection.getConnection();
-        
+
         PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
 
         pst.setString(1, Name);
@@ -88,15 +89,15 @@ public class UserDAOImpl implements UserDAO {
         int executeUpdate = pst.executeUpdate();
         con.close();
         return executeUpdate > 0;
-        
+
     }
 
     @Override
     public boolean updatePassword(String userName, String password) throws SQLException {
         String sql = "UPDATE USERS SET password=?, WHERE username=?";
-        
+
         Connection con = DBConnection.getConnection();
-        
+
         PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
 
         pst.setString(1, password);
@@ -106,5 +107,23 @@ public class UserDAOImpl implements UserDAO {
         int executeUpdate = pst.executeUpdate();
         con.close();
         return executeUpdate > 0;
+    }
+
+    @Override
+    public String getPasswordByUseName(String userName) throws SQLException {
+        String sql = "SELECT * FROM USERS WHERE username = ?";
+
+        try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, userName);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString(3);
+                
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return null;
     }
 }
