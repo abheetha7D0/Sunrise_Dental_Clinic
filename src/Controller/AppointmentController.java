@@ -10,9 +10,7 @@ import dao.DAOFactory;
 import dao.costom.impl.AppointmentDAOImpl;
 import dto.AppoinmentDTO;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 import model.Appointment;
-import model.Dentist;
 import util.UserSession;
 import view.DashbordForm;
 
@@ -20,12 +18,12 @@ import view.DashbordForm;
  *
  * @author ASUS
  */
-public class AppoinmentController {
+public class AppointmentController {
 
     AppointmentDAOImpl appointmentDAO = (AppointmentDAOImpl) DAOFactory.getInstance().getDAO(DAOType.APPOINMENT);
     private final DashbordForm dasbordForm;
 
-    public AppoinmentController(DashbordForm dasbordForm) {
+    public AppointmentController(DashbordForm dasbordForm) {
         this.dasbordForm = dasbordForm;
     }
 

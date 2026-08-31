@@ -7,7 +7,6 @@ package Controller;
 import Enums.DAOType;
 import Enums.Role;
 import dao.DAOFactory;
-import dao.costom.impl.DentistDAOImpl;
 import dao.costom.impl.PatientDAOImpl;
 import dto.PatientDTO;
 import java.sql.SQLException;
@@ -129,9 +128,24 @@ public class PatientController {
         }
     }
 
+    public Patient getPatientById(int id) {
+        Role userRole = getUserRole();
+        if (!Role.ADMIN.equals(userRole)) {
+            dasbordForm.showMessage("Access denied");
+            return null;
+        }
+        try {
+            return patientDAO.findByPatientId(id);
+        } catch (SQLException ex) {
+            dasbordForm.showMessage("Cant find patient by id");
+            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        return null;
+    }
+
     public void delete(int id) {
         Role userRole = getUserRole();
-        if (!Role.ADMIN.equals(userRole) ) {
+        if (!Role.ADMIN.equals(userRole)) {
             dasbordForm.showMessage("Access denied");
             return;
         }

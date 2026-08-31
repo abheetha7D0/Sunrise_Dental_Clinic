@@ -11,6 +11,7 @@ import Enums.AppointmentStetus;
  * @author ASUS
  */
 public class AppoinmentDTO {
+
     private int id;
     private String Appointment_number;
     private int patientId;
@@ -22,6 +23,17 @@ public class AppoinmentDTO {
 
     public AppoinmentDTO(int id, String Appointment_number, int patientId, int dentistId, int treatmentId, String AppointmentDate, String AppointmentTime, AppointmentStetus Stetus) {
         this.id = id;
+        this.Appointment_number = Appointment_number;
+        this.patientId = patientId;
+        this.dentistId = dentistId;
+        this.treatmentId = treatmentId;
+        this.AppointmentDate = AppointmentDate;
+        this.AppointmentTime = AppointmentTime;
+        this.Stetus = Stetus;
+    }
+
+    public AppoinmentDTO(String Appointment_number, int patientId, int dentistId, int treatmentId, String AppointmentDate, String AppointmentTime, AppointmentStetus Stetus) {
+
         this.Appointment_number = Appointment_number;
         this.patientId = patientId;
         this.dentistId = dentistId;
@@ -94,6 +106,5 @@ public class AppoinmentDTO {
     public AppointmentStetus getStetus() {
         return Stetus;
     }
-    
-    
+
 }

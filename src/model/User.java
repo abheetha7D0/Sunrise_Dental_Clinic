@@ -13,7 +13,7 @@ import Enums.UserStetus;
  */
 public class User {
     
-    private Long id;
+    private int id;
 
     private String username;
 
@@ -33,6 +33,15 @@ public class User {
         this.role = role;
     }
 
+    public User(int id, String username, String password, String fullName, UserStetus stetus, Role role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.stetus = stetus;
+        this.role = role;
+    }
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;
@@ -42,7 +51,7 @@ public class User {
         this.stetus = stetus;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 

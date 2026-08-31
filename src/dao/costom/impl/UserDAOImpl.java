@@ -7,7 +7,6 @@ package dao.costom.impl;
 import Enums.Role;
 import dao.costom.UserDAO;
 import db.DBConnection;
-import dto.UserDTO;
 import model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -47,7 +46,7 @@ public class UserDAOImpl implements UserDAO {
     public User updateUser(User user) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     @Override
     public User userDelete(User user) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -74,4 +73,38 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
+    @Override
+    public boolean UpdateUserByUser(String userName, String Name) throws SQLException {
+        String sql = "UPDATE USERS SET full_name=?, WHERE username=?";
+        
+        Connection con = DBConnection.getConnection();
+        
+        PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+
+        pst.setString(1, Name);
+
+        pst.setString(2, userName);
+
+        int executeUpdate = pst.executeUpdate();
+        con.close();
+        return executeUpdate > 0;
+        
+    }
+
+    @Override
+    public boolean updatePassword(String userName, String password) throws SQLException {
+        String sql = "UPDATE USERS SET password=?, WHERE username=?";
+        
+        Connection con = DBConnection.getConnection();
+        
+        PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+
+        pst.setString(1, password);
+
+        pst.setString(2, userName);
+
+        int executeUpdate = pst.executeUpdate();
+        con.close();
+        return executeUpdate > 0;
+    }
 }

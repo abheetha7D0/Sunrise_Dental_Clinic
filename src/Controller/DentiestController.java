@@ -39,7 +39,7 @@ public class DentiestController {
         return phone != null && phone.trim().matches(phoneRegex);
     }
 
-    public List<DentiestDTO> getAll(){
+    public List<DentiestDTO> getAll() {
         String userName = UserSession.getUserName();
         Role userRole = UserSession.getUserRole();
         System.out.println(userRole);
@@ -70,6 +70,21 @@ public class DentiestController {
             ));
         }
         return dentistList;
+    }
+
+    public Dentist getDentistById(int id) {
+        Role userRole = UserSession.getUserRole();
+        if (!Role.ADMIN.equals(userRole)) {
+            dasbordForm.showMessage("Access denied");
+            return null;
+        }
+        try {
+            return dentistDAO.findByDentistId(id);
+        } catch (SQLException ex) {
+            dasbordForm.showMessage("Cant find Dentist by id");
+            System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        return null;
     }
 
     public void save(DentiestDTO dentiestDto) {

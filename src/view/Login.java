@@ -4,7 +4,7 @@
  */
 package view;
 
-import Controller.UserController;
+import Controller.LoginUserController;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,11 +22,11 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-    private final UserController controller;
+    private final LoginUserController controller;
 
     public Login() {
         initComponents();
-        controller= new UserController(this);
+        controller= new LoginUserController(this);
     }
 
     /**
