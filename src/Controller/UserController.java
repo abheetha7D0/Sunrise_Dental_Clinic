@@ -8,7 +8,7 @@ import Enums.DAOType;
 import Enums.Role;
 import dao.DAOFactory;
 import dao.costom.impl.UserDAOImpl;
-import dto.UserDTO;
+import dto.UpdateUserDTO;
 import java.sql.SQLException;
 import util.UserSession;
 import view.DashbordForm;
@@ -27,7 +27,7 @@ public class UserController {
         this.dasbordForm = dasbordForm;
     }
 
-    public void UserUpdate(UserDTO user) {
+    public void UserUpdate(UpdateUserDTO user) {
         Role userRole = UserSession.getUserRole();
         
         try {

@@ -21,15 +21,27 @@ public class User {
     
     private String fullName;
     
-    private UserStetus stetus;
+    private String email;
+    
+    private UserStetus status;
     
     private Role role;
+
+    public User(int id, String username, String password, String fullName, String email, UserStetus stetus, Role role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.email = email;
+        this.status = stetus;
+        this.role = role;
+    }
 
     public User(String username, String password, String fullName, UserStetus stetus,Role role) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
-        this.stetus = stetus;
+        this.status = stetus;
         this.role = role;
     }
 
@@ -38,7 +50,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
-        this.stetus = stetus;
+        this.status = stetus;
         this.role = role;
     }
 
@@ -47,8 +59,8 @@ public class User {
         this.password = password;
     }
 
-    public void setStetus(UserStetus stetus) {
-        this.stetus = stetus;
+    public void setStatus(UserStetus status) {
+        this.status = status;
     }
 
     public int getId() {
@@ -67,8 +79,8 @@ public class User {
         return fullName;
     }
 
-    public UserStetus getStetus() {
-        return stetus;
+    public UserStetus getStatus() {
+        return status;
     }
 
     public Role getRole() {

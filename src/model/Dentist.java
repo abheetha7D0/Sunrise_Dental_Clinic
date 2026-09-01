@@ -16,7 +16,16 @@ public class Dentist {
     private String fullName;
     private String specialization;
     private String contactNumber;
+    private String email;
     private DentistStetus stetus;
+
+    public Dentist(String fullName, String specialization, String contactNumber, String email, DentistStetus stetus) {
+        this.fullName = fullName;
+        this.specialization = specialization;
+        this.contactNumber = contactNumber;
+        this.email = email;
+        this.stetus = stetus;
+    }
 
     public Dentist(String fullName, String specialization, String contactNumber, DentistStetus stetus) {
         this.fullName = fullName;

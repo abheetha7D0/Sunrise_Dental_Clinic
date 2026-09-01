@@ -11,5 +11,6 @@ package Enums;
 public enum Role {
     ADMIN,
     STAFF,
-    DENTIST
+    DENTIST,
+    PATIENT
 }

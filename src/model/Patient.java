@@ -14,6 +14,14 @@ public class Patient {
     private String fullName;
     private String address;
     private String contactNumber;
+    private String email;
+
+    public Patient(String fullName, String address, String contactNumber, String email) {
+        this.fullName = fullName;
+        this.address = address;
+        this.contactNumber = contactNumber;
+        this.email = email;
+    }
 
     public Patient(String fullName, String address, String contactNumber) {
         this.fullName = fullName;
