@@ -36,6 +36,14 @@ public class Patient {
         this.contactNumber = contactNumber;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     public int getId() {
         return id;
     }

@@ -22,7 +22,7 @@ public class DentistDAOImpl implements DentistDAO {
 
     @Override
     public List<Dentist> getALLDentists() throws SQLException {
-        
+
         ResultSet rs = null;
 
         java.sql.Connection con = DBConnection.getConnection();
@@ -30,14 +30,14 @@ public class DentistDAOImpl implements DentistDAO {
         java.sql.PreparedStatement pst = con.prepareStatement(sql);
         rs = pst.executeQuery();
         List<Dentist> dentistList = new ArrayList<>();
-        
+
         while (rs.next()) {
             int id = rs.getInt(1);
             String name = rs.getString(2);
             String specialization = rs.getString(3);
             String number = rs.getString(4);
             DentistStetus status = DentistStetus.valueOf(rs.getString(5));
-            
+
             Dentist dentiest = new Dentist(id, name, specialization, number, status);
             dentistList.add(dentiest);
         }
@@ -183,6 +183,21 @@ public class DentistDAOImpl implements DentistDAO {
         }
         con.close();
         return dentist;
+    }
+
+    @Override
+    public String getDentistEmailById(int id) throws SQLException {
+        Connection con = (Connection) DBConnection.getConnection();
+        PreparedStatement pst = (PreparedStatement) con.prepareStatement("SELECT email FROM dentists WHERE id = ?");
+
+        pst.setObject(1, id);
+        ResultSet rst = pst.executeQuery();
+
+        if (rst.next()) {
+            return rst.getString("email");
+        }
+        return null;
+
     }
 
 }

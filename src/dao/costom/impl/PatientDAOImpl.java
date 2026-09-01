@@ -123,4 +123,18 @@ public class PatientDAOImpl implements PatientDAO {
         return dentistList;
     }
 
+    @Override
+    public String getPatientEmailById(int id) throws SQLException {
+        Connection con = (Connection) DBConnection.getConnection();
+        PreparedStatement pst = (PreparedStatement) con.prepareStatement("SELECT email FROM Patients WHERE id = ?");
+
+        pst.setObject(1, id);
+        ResultSet rst = pst.executeQuery();
+
+        if (rst.next()) {
+            return rst.getString("email");
+        }
+        return null;
+    }
+
 }
