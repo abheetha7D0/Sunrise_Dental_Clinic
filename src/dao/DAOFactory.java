@@ -9,6 +9,7 @@ import dao.costom.impl.AppointmentDAOImpl;
 import dao.costom.impl.BillDAOImpl;
 import dao.costom.impl.DentistDAOImpl;
 import dao.costom.impl.PatientDAOImpl;
+import dao.costom.impl.TokenDAOImpl;
 import dao.costom.impl.TreatmentDAOImpl;
 import dao.costom.impl.UserDAOImpl;
 
@@ -41,6 +42,8 @@ public class DAOFactory {
                 return new TreatmentDAOImpl();
             case USER:
                 return new UserDAOImpl();
+            case TOKEN:
+                return new TokenDAOImpl();
             default:
                 return null;
         }

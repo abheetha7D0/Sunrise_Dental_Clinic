@@ -49,7 +49,7 @@ public class Login extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jBtnSignIn = new javax.swing.JButton();
         jBtnForgottonPassword = new javax.swing.JLabel();
-        jBtnFistLogIn = new javax.swing.JButton();
+        jBtnRegister = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1085, 730));
@@ -98,11 +98,11 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        jBtnFistLogIn.setBackground(new java.awt.Color(102, 102, 102));
-        jBtnFistLogIn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jBtnFistLogIn.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnFistLogIn.setText("First Log In");
-        jBtnFistLogIn.addActionListener(this::jBtnFistLogInActionPerformed);
+        jBtnRegister.setBackground(new java.awt.Color(102, 102, 102));
+        jBtnRegister.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jBtnRegister.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnRegister.setText("Register");
+        jBtnRegister.addActionListener(this::jBtnRegisterActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,7 +121,7 @@ public class Login extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(jLabel2)
                             .addGap(422, 422, 422)
-                            .addComponent(jBtnFistLogIn)
+                            .addComponent(jBtnRegister)
                             .addGap(27, 27, 27))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,7 +148,7 @@ public class Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jBtnFistLogIn))
+                    .addComponent(jBtnRegister))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLblUserName)
@@ -191,12 +191,12 @@ public class Login extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jBtnSignInActionPerformed
 
-    private void jBtnFistLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnFistLogInActionPerformed
+    private void jBtnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRegisterActionPerformed
         // TODO add your handling code here:
-        FirstLogin form = new FirstLogin();
+        Register form = new Register();
         form.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jBtnFistLogInActionPerformed
+    }//GEN-LAST:event_jBtnRegisterActionPerformed
 
     private void jBtnForgottonPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnForgottonPasswordMouseClicked
         // TODO add your handling code here:
@@ -228,8 +228,8 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBtnFistLogIn;
     private javax.swing.JLabel jBtnForgottonPassword;
+    private javax.swing.JButton jBtnRegister;
     private javax.swing.JButton jBtnSignIn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

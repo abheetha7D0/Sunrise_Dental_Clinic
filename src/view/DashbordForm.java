@@ -11,17 +11,22 @@ import Controller.TreatmentController;
 import Controller.UserController;
 import Enums.AppointmentStetus;
 import Enums.DentistStetus;
+import Enums.Role;
+import Enums.UserStetus;
+import dto.AddUserDTO;
 import dto.AppoinmentDTO;
 import dto.DentiestDTO;
 import dto.PatientDTO;
 import dto.TreatmentDTO;
 import dto.UpdateUserDTO;
-import dto.UserDTO;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JEditorPane;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import model.Dentist;
@@ -80,7 +85,7 @@ public final class DashbordForm extends javax.swing.JFrame {
         jTxtPatientContactNum.setText("");
 
         jTxtDentistName.setText("");
-        jTxtDentistSpec.setText("");
+        jTxtDentistEmail.setText("");
         jTxtDentistContactNum.setText("");
 
         jTxtTreatmentName.setText("");
@@ -101,7 +106,7 @@ public final class DashbordForm extends javax.swing.JFrame {
 
     private void checkInputs() {
         String name = jTxtDentistName.getText().trim();
-        String spec = jTxtDentistSpec.getText().trim();
+        String spec = jTxtDentistEmail.getText().trim();
         String phone = jTxtDentistContactNum.getText().trim();
 
         boolean isDataEnterd = !name.isEmpty()
@@ -207,6 +212,7 @@ public final class DashbordForm extends javax.swing.JFrame {
                 dentiest.getFullName(),
                 dentiest.getSpecialization(),
                 dentiest.getContactNumber(),
+                dentiest.getEmail(),
                 dentiest.getStetus()
             });
         }
@@ -227,7 +233,8 @@ public final class DashbordForm extends javax.swing.JFrame {
                 patient.getId(),
                 patient.getFullName(),
                 patient.getAddress(),
-                patient.getContactNumber()
+                patient.getContactNumber(),
+                patient.getEmail()
             });
         }
     }
@@ -301,12 +308,13 @@ public final class DashbordForm extends javax.swing.JFrame {
         jTxtAppoinmentTime = new javax.swing.JTextField();
         jTxtAppoinmentTreatment = new javax.swing.JTextField();
         jTxtAppoinmentDate = new javax.swing.JTextField();
+        jTxtAppoinmentSearch = new javax.swing.JTextField();
         jPanelDentistContext = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jTxtDentistName = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jTxtDentistSpec = new javax.swing.JTextField();
+        jTxtDentistEmail = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         jCmbDentistStetus = new javax.swing.JComboBox<>();
         jLabel17 = new javax.swing.JLabel();
@@ -318,6 +326,8 @@ public final class DashbordForm extends javax.swing.JFrame {
         jTblDentist = new javax.swing.JTable();
         jBtnDentistCancel = new javax.swing.JButton();
         jTxtDentistContactNum = new javax.swing.JFormattedTextField();
+        jLabel47 = new javax.swing.JLabel();
+        jTxtDentistSpec = new javax.swing.JTextField();
         jPanelPatientContext = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
         jTxtPatientName = new javax.swing.JTextField();
@@ -333,6 +343,8 @@ public final class DashbordForm extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         jTblPatient = new javax.swing.JTable();
         jBtnPatientCancel = new javax.swing.JButton();
+        jTxtPatientEmail = new javax.swing.JTextField();
+        jLabel50 = new javax.swing.JLabel();
         jPanelTreatmentContext = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
         jTxtTreatmentName = new javax.swing.JTextField();
@@ -350,19 +362,21 @@ public final class DashbordForm extends javax.swing.JFrame {
         jTxtTreatmentPrice = new javax.swing.JFormattedTextField();
         jPanelBillsContext = new javax.swing.JPanel();
         jLabel31 = new javax.swing.JLabel();
-        jTxtDentistName6 = new javax.swing.JTextField();
+        jTxtBillAppoinmentNumber = new javax.swing.JTextField();
         jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
-        jTxtDentistSpec6 = new javax.swing.JTextField();
+        jTxtBillConsultationFee = new javax.swing.JTextField();
         jLabel34 = new javax.swing.JLabel();
-        jTxtDentistContactNum6 = new javax.swing.JTextField();
-        jSeparator7 = new javax.swing.JSeparator();
+        jTxtBillDiscount = new javax.swing.JTextField();
         jBtnDentistSave6 = new javax.swing.JButton();
-        jBtnDentistUpdate6 = new javax.swing.JButton();
-        jBtnDentistDelete6 = new javax.swing.JButton();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        jTblTreatment1 = new javax.swing.JTable();
         jBtnDentistCancel6 = new javax.swing.JButton();
+        jTxtBillTreatmentFee = new javax.swing.JTextField();
+        jLabel51 = new javax.swing.JLabel();
+        jTxtBillTotalFee = new javax.swing.JTextField();
+        jLabel52 = new javax.swing.JLabel();
+        jPlBillPreview = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtLivePreview = new javax.swing.JEditorPane();
         jPanelSettingContext = new javax.swing.JPanel();
         jLabel35 = new javax.swing.JLabel();
         jTxtSettingUserName = new javax.swing.JTextField();
@@ -396,6 +410,7 @@ public final class DashbordForm extends javax.swing.JFrame {
         jCmbUserStatus = new javax.swing.JComboBox<>();
         jCmbUsersRole = new javax.swing.JComboBox<>();
         jLabel49 = new javax.swing.JLabel();
+        jTxtUsersSearch = new javax.swing.JTextField();
 
         jTxtSettingReEnterNewPw.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -519,7 +534,7 @@ public final class DashbordForm extends javax.swing.JFrame {
                     .addComponent(jLblTime))
                 .addGap(253, 253, 253)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
                 .addComponent(jBtnSetting)
                 .addGap(18, 18, 18)
                 .addComponent(jBtnLogOut)
@@ -538,9 +553,9 @@ public final class DashbordForm extends javax.swing.JFrame {
                 .addContainerGap(15, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBtnLogOut)
-                    .addComponent(jBtnSetting))
+                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jBtnSetting)
+                    .addComponent(jBtnLogOut))
                 .addGap(30, 30, 30))
         );
 
@@ -647,6 +662,8 @@ public final class DashbordForm extends javax.swing.JFrame {
 
         jTxtAppoinmentDate.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
+        jTxtAppoinmentSearch.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanelAppoinmentContextLayout = new javax.swing.GroupLayout(jPanelAppoinmentContext);
         jPanelAppoinmentContext.setLayout(jPanelAppoinmentContextLayout);
         jPanelAppoinmentContextLayout.setHorizontalGroup(
@@ -654,14 +671,13 @@ public final class DashbordForm extends javax.swing.JFrame {
             .addGroup(jPanelAppoinmentContextLayout.createSequentialGroup()
                 .addGap(295, 295, 295)
                 .addComponent(jLabel19)
-                .addContainerGap(289, Short.MAX_VALUE))
+                .addContainerGap(256, Short.MAX_VALUE))
             .addGroup(jPanelAppoinmentContextLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanelAppoinmentContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 836, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelAppoinmentContextLayout.createSequentialGroup()
-                        .addGroup(jPanelAppoinmentContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelAppoinmentContextLayout.createSequentialGroup()
+                        .addGroup(jPanelAppoinmentContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelAppoinmentContextLayout.createSequentialGroup()
                                 .addGroup(jPanelAppoinmentContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jTxtAppoinmentNumber))
@@ -670,7 +686,7 @@ public final class DashbordForm extends javax.swing.JFrame {
                                     .addComponent(jTxtAppoinmentPatient)
                                     .addComponent(jLabel20)
                                     .addComponent(jCmbPatientId, 0, 176, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                                 .addGroup(jPanelAppoinmentContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel21)
                                     .addComponent(jCmbDentistId, 0, 176, Short.MAX_VALUE)
@@ -680,7 +696,7 @@ public final class DashbordForm extends javax.swing.JFrame {
                                     .addComponent(jLabel22)
                                     .addComponent(jCmbTreatmentId, 0, 176, Short.MAX_VALUE)
                                     .addComponent(jTxtAppoinmentTreatment)))
-                            .addGroup(jPanelAppoinmentContextLayout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelAppoinmentContextLayout.createSequentialGroup()
                                 .addGroup(jPanelAppoinmentContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel38, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jTxtAppoinmentDate, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -698,7 +714,10 @@ public final class DashbordForm extends javax.swing.JFrame {
                                 .addComponent(jBtnAppoinmentUpdate)
                                 .addGap(18, 18, 18)
                                 .addComponent(jBtnAppoinmentCancel)))
-                        .addGap(68, 68, 68))))
+                        .addGap(68, 68, 68))
+                    .addGroup(jPanelAppoinmentContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jTxtAppoinmentSearch, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE))))
         );
         jPanelAppoinmentContextLayout.setVerticalGroup(
             jPanelAppoinmentContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -736,7 +755,7 @@ public final class DashbordForm extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jTxtAppoinmentNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelAppoinmentContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelAppoinmentContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jBtnAppoinmentSave)
@@ -754,9 +773,11 @@ public final class DashbordForm extends javax.swing.JFrame {
                         .addComponent(jLabel39)
                         .addGap(18, 18, 18)
                         .addComponent(jTxtAppoinmentTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(44, 44, 44)
+                .addComponent(jTxtAppoinmentSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
 
         jPanelDentistContext.setBackground(new java.awt.Color(255, 255, 255));
@@ -778,10 +799,11 @@ public final class DashbordForm extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel15.setText("Specialization");
 
-        jTxtDentistSpec.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTxtDentistSpec.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTxtDentistEmail.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtDentistEmail.addActionListener(this::jTxtDentistEmailActionPerformed);
+        jTxtDentistEmail.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTxtDentistSpecKeyReleased(evt);
+                jTxtDentistEmailKeyReleased(evt);
             }
         });
 
@@ -827,17 +849,17 @@ public final class DashbordForm extends javax.swing.JFrame {
         jTblDentist.setForeground(new java.awt.Color(255, 255, 255));
         jTblDentist.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Id", "Name", "Specialization", "Contact Number", "Stetus"
+                "Id", "Name", "Specialization", "Contact Number", "Email", "Stetus"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -870,6 +892,16 @@ public final class DashbordForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel47.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel47.setText("Email");
+
+        jTxtDentistSpec.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtDentistSpec.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtDentistSpecKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelDentistContextLayout = new javax.swing.GroupLayout(jPanelDentistContext);
         jPanelDentistContext.setLayout(jPanelDentistContextLayout);
         jPanelDentistContextLayout.setHorizontalGroup(
@@ -891,62 +923,70 @@ public final class DashbordForm extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jBtnDentistCancel))
                             .addGroup(jPanelDentistContextLayout.createSequentialGroup()
-                                .addGap(112, 112, 112)
+                                .addGap(38, 38, 38)
                                 .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanelDentistContextLayout.createSequentialGroup()
-                                        .addGap(213, 213, 213)
-                                        .addComponent(jLabel14))
                                     .addGroup(jPanelDentistContextLayout.createSequentialGroup()
                                         .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel13)
                                             .addComponent(jTxtDentistName, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(40, 40, 40)
+                                        .addGap(18, 18, 18)
                                         .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel15)
                                             .addComponent(jTxtDentistSpec, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(36, 36, 36)
+                                        .addGap(18, 18, 18)
                                         .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel16)
                                             .addComponent(jTxtDentistContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(38, 38, 38)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanelDentistContextLayout.createSequentialGroup()
+                                                .addComponent(jLabel47)
+                                                .addGap(143, 143, 143))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDentistContextLayout.createSequentialGroup()
+                                                .addComponent(jTxtDentistEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)))
                                         .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel17)
-                                            .addComponent(jCmbDentistStetus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addGap(0, 81, Short.MAX_VALUE)))
+                                            .addComponent(jCmbDentistStetus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel14))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDentistContextLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanelDentistContextLayout.createSequentialGroup()
+                .addGap(101, 101, 101)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(84, 84, 84))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelDentistContextLayout.setVerticalGroup(
             jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelDentistContextLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(14, 14, 14)
                 .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelDentistContextLayout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCmbDentistStetus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDentistContextLayout.createSequentialGroup()
                         .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDentistContextLayout.createSequentialGroup()
+                            .addComponent(jLabel15)
+                            .addGroup(jPanelDentistContextLayout.createSequentialGroup()
                                 .addGap(3, 3, 3)
-                                .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel15)
-                                    .addComponent(jLabel13))
-                                .addGap(18, 18, 18))
+                                .addComponent(jLabel13)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTxtDentistName, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel47))
+                        .addGap(66, 66, 66))
+                    .addGroup(jPanelDentistContextLayout.createSequentialGroup()
+                        .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelDentistContextLayout.createSequentialGroup()
                                 .addComponent(jLabel16)
-                                .addGap(21, 21, 21)))
-                        .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTxtDentistContactNum)
-                            .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTxtDentistSpec)
-                                .addComponent(jTxtDentistName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(22, 22, 22)
+                                .addGap(23, 23, 23))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDentistContextLayout.createSequentialGroup()
+                                .addComponent(jLabel17)
+                                .addGap(18, 18, 18)))
+                        .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTxtDentistContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTxtDentistEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCmbDentistStetus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTxtDentistSpec))
+                        .addGap(65, 65, 65)))
                 .addGroup(jPanelDentistContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnDentistSave)
                     .addComponent(jBtnDentistUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -956,7 +996,7 @@ public final class DashbordForm extends javax.swing.JFrame {
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1334, Short.MAX_VALUE))
+                .addContainerGap(1283, Short.MAX_VALUE))
         );
 
         jPanelPatientContext.setBackground(new java.awt.Color(255, 255, 255));
@@ -989,6 +1029,7 @@ public final class DashbordForm extends javax.swing.JFrame {
         jLabel26.setText("Contact Number");
 
         jTxtPatientContactNum.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtPatientContactNum.addActionListener(this::jTxtPatientContactNumActionPerformed);
         jTxtPatientContactNum.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTxtPatientContactNumKeyReleased(evt);
@@ -1018,18 +1059,18 @@ public final class DashbordForm extends javax.swing.JFrame {
         jTblPatient.setForeground(new java.awt.Color(255, 255, 255));
         jTblPatient.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Id", "Name", "Address", "Contact Number"
+                "Id", "Name", "Address", "Contact Number", "Email"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1049,49 +1090,64 @@ public final class DashbordForm extends javax.swing.JFrame {
         jBtnPatientCancel.setText("Cancel");
         jBtnPatientCancel.addActionListener(this::jBtnPatientCancelActionPerformed);
 
+        jTxtPatientEmail.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtPatientEmail.addActionListener(this::jTxtPatientEmailActionPerformed);
+        jTxtPatientEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtPatientEmailKeyReleased(evt);
+            }
+        });
+
+        jLabel50.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel50.setText("Email");
+
         javax.swing.GroupLayout jPanelPatientContextLayout = new javax.swing.GroupLayout(jPanelPatientContext);
         jPanelPatientContext.setLayout(jPanelPatientContextLayout);
         jPanelPatientContextLayout.setHorizontalGroup(
             jPanelPatientContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPatientContextLayout.createSequentialGroup()
-                .addGap(112, 112, 112)
-                .addGroup(jPanelPatientContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelPatientContextLayout.createSequentialGroup()
-                        .addGap(117, 117, 117)
-                        .addComponent(jBtnPatientSave, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(jBtnPatientUpdate)
-                        .addGap(38, 38, 38)
-                        .addComponent(jBtnPatientDelete)
-                        .addGap(41, 41, 41)
-                        .addComponent(jBtnPatientCancel))
-                    .addGroup(jPanelPatientContextLayout.createSequentialGroup()
-                        .addGap(213, 213, 213)
-                        .addComponent(jLabel24))
-                    .addGroup(jPanelPatientContextLayout.createSequentialGroup()
-                        .addGroup(jPanelPatientContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel23)
-                            .addComponent(jTxtPatientName, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanelPatientContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelPatientContextLayout.createSequentialGroup()
-                                .addGap(69, 69, 69)
-                                .addComponent(jLabel25))
-                            .addGroup(jPanelPatientContextLayout.createSequentialGroup()
-                                .addGap(67, 67, 67)
-                                .addComponent(jTxtPatientAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(62, 62, 62)
-                        .addGroup(jPanelPatientContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel26)
-                            .addComponent(jTxtPatientContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(175, Short.MAX_VALUE))
-            .addGroup(jPanelPatientContextLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jSeparator5)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPatientContextLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 75, Short.MAX_VALUE)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(84, 84, 84))
+            .addGroup(jPanelPatientContextLayout.createSequentialGroup()
+                .addGroup(jPanelPatientContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelPatientContextLayout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addGroup(jPanelPatientContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel24)
+                            .addGroup(jPanelPatientContextLayout.createSequentialGroup()
+                                .addGap(117, 117, 117)
+                                .addComponent(jBtnPatientSave, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32)
+                                .addComponent(jBtnPatientUpdate)
+                                .addGap(38, 38, 38)
+                                .addComponent(jBtnPatientDelete)
+                                .addGap(41, 41, 41)
+                                .addComponent(jBtnPatientCancel))))
+                    .addGroup(jPanelPatientContextLayout.createSequentialGroup()
+                        .addGap(74, 74, 74)
+                        .addGroup(jPanelPatientContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel23)
+                            .addComponent(jTxtPatientName, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelPatientContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelPatientContextLayout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(jLabel25))
+                            .addComponent(jTxtPatientAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelPatientContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel26)
+                            .addComponent(jTxtPatientContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelPatientContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel50)
+                            .addComponent(jTxtPatientEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelPatientContextLayout.setVerticalGroup(
             jPanelPatientContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1099,19 +1155,24 @@ public final class DashbordForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel24)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelPatientContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPatientContextLayout.createSequentialGroup()
-                        .addGroup(jPanelPatientContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel25)
-                            .addComponent(jLabel26))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanelPatientContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTxtPatientAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTxtPatientContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanelPatientContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanelPatientContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPatientContextLayout.createSequentialGroup()
+                            .addComponent(jLabel26)
+                            .addGap(18, 18, 18)
+                            .addComponent(jTxtPatientContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanelPatientContextLayout.createSequentialGroup()
+                            .addComponent(jLabel23)
+                            .addGap(18, 18, 18)
+                            .addComponent(jTxtPatientName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanelPatientContextLayout.createSequentialGroup()
-                        .addComponent(jLabel23)
+                        .addComponent(jLabel25)
                         .addGap(18, 18, 18)
-                        .addComponent(jTxtPatientName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTxtPatientAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelPatientContextLayout.createSequentialGroup()
+                        .addComponent(jLabel50)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTxtPatientEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(25, 25, 25)
                 .addGroup(jPanelPatientContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnPatientSave)
@@ -1294,23 +1355,33 @@ public final class DashbordForm extends javax.swing.JFrame {
         jPanelBillsContext.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel31.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel31.setText("Name");
+        jLabel31.setText("Appoinment Number");
 
-        jTxtDentistName6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtBillAppoinmentNumber.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jLabel32.setFont(new java.awt.Font("Microsoft Yi Baiti", 1, 48)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(0, 102, 255));
         jLabel32.setText("Manage Bills");
 
         jLabel33.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel33.setText("Description");
+        jLabel33.setText("Consultation Fee");
 
-        jTxtDentistSpec6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtBillConsultationFee.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtBillConsultationFee.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtBillConsultationFeeKeyReleased(evt);
+            }
+        });
 
         jLabel34.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel34.setText("Price");
+        jLabel34.setText("Discount");
 
-        jTxtDentistContactNum6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtBillDiscount.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtBillDiscount.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTxtBillDiscountMouseReleased(evt);
+            }
+        });
 
         jBtnDentistSave6.setBackground(new java.awt.Color(0, 102, 255));
         jBtnDentistSave6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -1318,117 +1389,93 @@ public final class DashbordForm extends javax.swing.JFrame {
         jBtnDentistSave6.setText("Save");
         jBtnDentistSave6.addActionListener(this::jBtnDentistSave6ActionPerformed);
 
-        jBtnDentistUpdate6.setBackground(new java.awt.Color(255, 102, 51));
-        jBtnDentistUpdate6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jBtnDentistUpdate6.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnDentistUpdate6.setText("Update");
-        jBtnDentistUpdate6.addActionListener(this::jBtnDentistUpdate6ActionPerformed);
-
-        jBtnDentistDelete6.setBackground(new java.awt.Color(255, 0, 0));
-        jBtnDentistDelete6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jBtnDentistDelete6.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnDentistDelete6.setText("Delete");
-        jBtnDentistDelete6.addActionListener(this::jBtnDentistDelete6ActionPerformed);
-
-        jTblTreatment1.setBackground(new java.awt.Color(0, 153, 204));
-        jTblTreatment1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jTblTreatment1.setForeground(new java.awt.Color(0, 102, 255));
-        jTblTreatment1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Name", "Description", "Price"
-            }
-        ));
-        jScrollPane7.setViewportView(jTblTreatment1);
-
         jBtnDentistCancel6.setBackground(new java.awt.Color(255, 51, 0));
         jBtnDentistCancel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jBtnDentistCancel6.setForeground(new java.awt.Color(255, 255, 255));
         jBtnDentistCancel6.setText("Cancel");
         jBtnDentistCancel6.addActionListener(this::jBtnDentistCancel6ActionPerformed);
 
+        jTxtBillTreatmentFee.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtBillTreatmentFee.setEnabled(false);
+
+        jLabel51.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel51.setText("Treatment Fee");
+
+        jTxtBillTotalFee.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtBillTotalFee.setEnabled(false);
+
+        jLabel52.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel52.setText("Total Fee");
+
+        jPlBillPreview.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPlBillPreview.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane1.setViewportView(txtLivePreview);
+
+        jPlBillPreview.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
         javax.swing.GroupLayout jPanelBillsContextLayout = new javax.swing.GroupLayout(jPanelBillsContext);
         jPanelBillsContext.setLayout(jPanelBillsContextLayout);
         jPanelBillsContextLayout.setHorizontalGroup(
             jPanelBillsContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBillsContextLayout.createSequentialGroup()
-                .addGap(112, 112, 112)
-                .addGroup(jPanelBillsContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(47, 47, 47)
+                .addGroup(jPanelBillsContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel34)
                     .addGroup(jPanelBillsContextLayout.createSequentialGroup()
-                        .addGap(117, 117, 117)
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel33))
+                    .addComponent(jLabel31)
+                    .addComponent(jLabel52)
+                    .addGroup(jPanelBillsContextLayout.createSequentialGroup()
                         .addComponent(jBtnDentistSave6, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(jBtnDentistUpdate6)
-                        .addGap(38, 38, 38)
-                        .addComponent(jBtnDentistDelete6)
-                        .addGap(41, 41, 41)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBtnDentistCancel6))
-                    .addGroup(jPanelBillsContextLayout.createSequentialGroup()
-                        .addGroup(jPanelBillsContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel31)
-                            .addComponent(jTxtDentistName6, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanelBillsContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelBillsContextLayout.createSequentialGroup()
-                                .addGroup(jPanelBillsContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanelBillsContextLayout.createSequentialGroup()
-                                        .addGap(69, 69, 69)
-                                        .addComponent(jLabel33))
-                                    .addGroup(jPanelBillsContextLayout.createSequentialGroup()
-                                        .addGap(67, 67, 67)
-                                        .addComponent(jTxtDentistSpec6, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(62, 62, 62)
-                                .addGroup(jPanelBillsContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel34)
-                                    .addComponent(jTxtDentistContactNum6, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanelBillsContextLayout.createSequentialGroup()
-                                .addGap(69, 69, 69)
-                                .addComponent(jLabel32)))))
-                .addContainerGap(206, Short.MAX_VALUE))
-            .addGroup(jPanelBillsContextLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSeparator7)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBillsContextLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(84, 84, 84))
+                    .addComponent(jTxtBillTotalFee)
+                    .addComponent(jTxtBillDiscount)
+                    .addComponent(jTxtBillConsultationFee)
+                    .addComponent(jTxtBillAppoinmentNumber)
+                    .addComponent(jLabel51)
+                    .addComponent(jTxtBillTreatmentFee))
+                .addGap(124, 124, 124)
+                .addGroup(jPanelBillsContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel32)
+                    .addComponent(jPlBillPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
         jPanelBillsContextLayout.setVerticalGroup(
             jPanelBillsContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBillsContextLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel32)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelBillsContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBillsContextLayout.createSequentialGroup()
-                        .addGroup(jPanelBillsContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel33)
-                            .addComponent(jLabel34))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanelBillsContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTxtDentistSpec6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTxtDentistContactNum6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelBillsContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelBillsContextLayout.createSequentialGroup()
                         .addComponent(jLabel31)
                         .addGap(18, 18, 18)
-                        .addComponent(jTxtDentistName6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(25, 25, 25)
-                .addGroup(jPanelBillsContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBtnDentistSave6)
-                    .addComponent(jBtnDentistUpdate6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnDentistDelete6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnDentistCancel6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                        .addComponent(jTxtBillAppoinmentNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel33)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTxtBillConsultationFee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel51)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTxtBillTreatmentFee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel34)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTxtBillDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel52)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTxtBillTotalFee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelBillsContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jBtnDentistSave6)
+                            .addComponent(jBtnDentistCancel6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPlBillPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         jPanelSettingContext.setBackground(new java.awt.Color(255, 255, 255));
@@ -1579,7 +1626,7 @@ public final class DashbordForm extends javax.swing.JFrame {
 
         jLabel45.setFont(new java.awt.Font("Microsoft Yi Baiti", 1, 48)); // NOI18N
         jLabel45.setForeground(new java.awt.Color(0, 102, 255));
-        jLabel45.setText("Manage Bills");
+        jLabel45.setText("Manage User");
 
         jLabel46.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel46.setText("Email");
@@ -1650,6 +1697,13 @@ public final class DashbordForm extends javax.swing.JFrame {
         jLabel49.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel49.setText("Role");
 
+        jTxtUsersSearch.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtUsersSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTxtUsersSearchMouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelUserContextLayout = new javax.swing.GroupLayout(jPanelUserContext);
         jPanelUserContext.setLayout(jPanelUserContextLayout);
         jPanelUserContextLayout.setHorizontalGroup(
@@ -1692,7 +1746,9 @@ public final class DashbordForm extends javax.swing.JFrame {
                 .addContainerGap(57, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelUserContextLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelUserContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)
+                    .addComponent(jTxtUsersSearch))
                 .addGap(83, 83, 83))
         );
         jPanelUserContextLayout.setVerticalGroup(
@@ -1727,7 +1783,9 @@ public final class DashbordForm extends javax.swing.JFrame {
                     .addComponent(jBtnUsersClear, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(jTxtUsersSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
@@ -1852,16 +1910,42 @@ public final class DashbordForm extends javax.swing.JFrame {
         jPanelDentistContext.setVisible(false);
         viewAllDentist();
     }//GEN-LAST:event_jBtnPatientActionPerformed
+    private void updateLivePreview() {
+        try {
 
+            String appointmentNumber = jTxtBillAppoinmentNumber.getText().trim();
+            double consultation = jTxtBillConsultationFee.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(jTxtBillConsultationFee.getText().trim());
+            double treatment = jTxtBillTreatmentFee.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(jTxtBillTreatmentFee.getText().trim());
+            double discount = jTxtBillDiscount.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(jTxtBillDiscount.getText().trim());
+
+            double totalFee = (consultation + treatment) - discount;
+            jTxtBillTotalFee.setText(String.valueOf(totalFee));
+
+            txtLivePreview.setContentType("text/html");
+
+            String liveHtml = util.ReceiptGenerator.buildHtmlReceipt(
+                    "PREVIEW-MODE",
+                    new dto.BillDTO(appointmentNumber, consultation, treatment, discount),
+                    totalFee,
+                    java.time.LocalDate.now().toString()
+            );
+
+            txtLivePreview.setText(liveHtml);
+
+        } catch (NumberFormatException ex) {
+            txtLivePreview.setText("<html><body style='padding:20px; font-family:sans-serif; color:red;'><b>Awaiting valid numerical inputs...</b></body></html>");
+        }
+    }
     private void jBtnDentistSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistSaveActionPerformed
         // TODO add your handling code here:
 
         String name = jTxtDentistName.getText().trim();
-        String Specialization = jTxtDentistSpec.getText().trim();
+        String Specialization = jTxtDentistEmail.getText().trim();
         String contact_number = jTxtDentistContactNum.getText().trim();
+        String email = jTxtDentistEmail.getText().trim();
         DentistStetus status = DentistStetus.valueOf(jCmbDentistStetus.getSelectedItem().toString());
 
-        dentiestController.save(new DentiestDTO(name, Specialization, contact_number, status));
+        dentiestController.save(new DentiestDTO(name, Specialization, contact_number, email, status));
         clearInputs();
         viewAllDentist();
     }//GEN-LAST:event_jBtnDentistSaveActionPerformed
@@ -1869,10 +1953,10 @@ public final class DashbordForm extends javax.swing.JFrame {
     private void jBtnDentistUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistUpdateActionPerformed
         // TODO add your handling code here:
         int row = jTblDentist.getSelectedRow();
-        int id= Integer.parseInt(jTblDentist.getValueAt(row, 0).toString());
+        int id = Integer.parseInt(jTblDentist.getValueAt(row, 0).toString());
 
         String name = jTxtDentistName.getText().trim();
-        String Specialization = jTxtDentistSpec.getText().trim();
+        String Specialization = jTxtDentistEmail.getText().trim();
         String contact_number = jTxtDentistContactNum.getText().trim();
         DentistStetus status = (DentistStetus) jCmbDentistStetus.getSelectedItem();
 
@@ -1908,16 +1992,16 @@ public final class DashbordForm extends javax.swing.JFrame {
         String time = jTxtAppoinmentTime.getText().trim();
         AppointmentStetus status = AppointmentStetus.valueOf(jCmbAppoinmentStetus.getSelectedItem().toString());
 
-        appointmentController.save(new AppoinmentDTO(name, patientId, dentistId, treatmentId,date,time,status));
+        appointmentController.save(new AppoinmentDTO(name, patientId, dentistId, treatmentId, date, time, status));
         clearInputs();
         viewAllDentist();
-        
+
     }//GEN-LAST:event_jBtnAppoinmentSaveActionPerformed
 
     private void jBtnAppoinmentUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAppoinmentUpdateActionPerformed
         // TODO add your handling code here:
         int row = jTblDentist.getSelectedRow();
-        int id= Integer.parseInt(jTblDentist.getValueAt(row, 0).toString());
+        int id = Integer.parseInt(jTblDentist.getValueAt(row, 0).toString());
 
         String name = jTxtAppoinmentNumber.getText().trim();
         int patientId = (int) jCmbPatientId.getSelectedItem();
@@ -1927,7 +2011,7 @@ public final class DashbordForm extends javax.swing.JFrame {
         String time = jTxtAppoinmentTime.getText().trim();
         AppointmentStetus status = AppointmentStetus.valueOf(jCmbAppoinmentStetus.getSelectedItem().toString());
 
-        appointmentController.save(new AppoinmentDTO(id,name, patientId, dentistId, treatmentId,date,time,status));
+        appointmentController.save(new AppoinmentDTO(id, name, patientId, dentistId, treatmentId, date, time, status));
         clearInputs();
 
         viewAllDentist();
@@ -1936,7 +2020,7 @@ public final class DashbordForm extends javax.swing.JFrame {
     private void jBtnAppoinmentCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAppoinmentCancelActionPerformed
         // TODO add your handling code here:
         clearInputs();
-        
+
     }//GEN-LAST:event_jBtnAppoinmentCancelActionPerformed
 
     private void jBtnPatientSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPatientSaveActionPerformed
@@ -1944,8 +2028,9 @@ public final class DashbordForm extends javax.swing.JFrame {
         String name = jTxtPatientName.getText().trim();
         String address = jTxtPatientAddress.getText().trim();
         String contact_number = jTxtPatientContactNum.getText().trim();
+        String email = jTxtPatientEmail.getText().trim();
 
-        patientController.save(new PatientDTO(name, address, contact_number));
+        patientController.save(new PatientDTO(name, address, contact_number, email));
 
         clearInputs();
         viewAllPatient();
@@ -1959,8 +2044,9 @@ public final class DashbordForm extends javax.swing.JFrame {
         String name = jTxtPatientName.getText().trim();
         String address = jTxtPatientAddress.getText().trim();
         String contact_number = jTxtPatientContactNum.getText().trim();
+        String email = jTxtPatientEmail.getText().trim();
 
-        patientController.update(new PatientDTO(id, name, address, contact_number));
+        patientController.update(new PatientDTO(id, name, address, contact_number, email));
         clearInputs();
 
         viewAllPatient();
@@ -2029,14 +2115,6 @@ public final class DashbordForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtnDentistSave6ActionPerformed
 
-    private void jBtnDentistUpdate6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistUpdate6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jBtnDentistUpdate6ActionPerformed
-
-    private void jBtnDentistDelete6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistDelete6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jBtnDentistDelete6ActionPerformed
-
     private void jBtnDentistCancel6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistCancel6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtnDentistCancel6ActionPerformed
@@ -2064,10 +2142,10 @@ public final class DashbordForm extends javax.swing.JFrame {
         checkInputs();
     }//GEN-LAST:event_jTxtDentistContactNumKeyReleased
 
-    private void jTxtDentistSpecKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtDentistSpecKeyReleased
+    private void jTxtDentistEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtDentistEmailKeyReleased
         // TODO add your handling code here:
         checkInputs();
-    }//GEN-LAST:event_jTxtDentistSpecKeyReleased
+    }//GEN-LAST:event_jTxtDentistEmailKeyReleased
 
     private void jTxtDentistNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtDentistNameKeyReleased
         // TODO add your handling code here:
@@ -2088,7 +2166,7 @@ public final class DashbordForm extends javax.swing.JFrame {
         Object stetusOb = jTblDentist.getValueAt(row, 4);
 
         jTxtDentistName.setText(name);
-        jTxtDentistSpec.setText(spec);
+        jTxtDentistEmail.setText(spec);
         jTxtDentistContactNum.setText(contact_number);
 
         if (stetusOb != null) {
@@ -2215,10 +2293,10 @@ public final class DashbordForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jTblAppoinmentMousePressed
 
     private void jCmbPatientIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCmbPatientIdActionPerformed
-        
-        Patient patientById = patientController.getPatientById((int) jCmbPatientId.getSelectedItem());     
+
+        Patient patientById = patientController.getPatientById((int) jCmbPatientId.getSelectedItem());
         jTxtAppoinmentPatient.setText(patientById.getFullName());
-                
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jCmbPatientIdActionPerformed
 
@@ -2237,13 +2315,13 @@ public final class DashbordForm extends javax.swing.JFrame {
 
     private void jCmbDentistIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCmbDentistIdActionPerformed
         // TODO add your handling code here:
-        Dentist dentistById = dentiestController.getDentistById((int) jCmbDentistId.getSelectedItem());     
+        Dentist dentistById = dentiestController.getDentistById((int) jCmbDentistId.getSelectedItem());
         jTxtAppoinmentDentist.setText(dentistById.getFullName());
     }//GEN-LAST:event_jCmbDentistIdActionPerformed
 
     private void jCmbTreatmentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCmbTreatmentIdActionPerformed
         // TODO add your handling code here:
-        Treatment treatmentById = treatmentController.getTreatmentById((int) jCmbTreatmentId.getSelectedItem());     
+        Treatment treatmentById = treatmentController.getTreatmentById((int) jCmbTreatmentId.getSelectedItem());
         jTxtAppoinmentTreatment.setText(treatmentById.getTretmentName());
     }//GEN-LAST:event_jCmbTreatmentIdActionPerformed
 
@@ -2252,12 +2330,18 @@ public final class DashbordForm extends javax.swing.JFrame {
         String oldPw = jTxtSettingOldPw.getText().trim();
         String newPw = jTxtSettingNewPw.getText().trim();
         String reEnterNewPw = jTxtSettingReEnterNewPw.getText().trim();
-        
-        
+
+
     }//GEN-LAST:event_jBtnSettingChangePasswordActionPerformed
 
     private void jBtnUsersAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnUsersAddActionPerformed
         // TODO add your handling code here:
+        String name = jTxtUsersName.getText().trim();
+        String email = jTxtUsersEmail.getText().trim();
+        UserStetus status = UserStetus.valueOf(jCmbUserStatus.getSelectedItem().toString());
+        Role role = Role.valueOf(jCmbUsersRole.getSelectedItem().toString());
+
+        userController.addUser(new AddUserDTO(name, email, status, role));
     }//GEN-LAST:event_jBtnUsersAddActionPerformed
 
     private void jBtnUsersUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnUsersUpdateActionPerformed
@@ -2271,6 +2355,40 @@ public final class DashbordForm extends javax.swing.JFrame {
     private void jBtnUsersClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnUsersClearActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jBtnUsersClearActionPerformed
+
+    private void jTxtUsersSearchMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTxtUsersSearchMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtUsersSearchMouseReleased
+
+    private void jTxtDentistSpecKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtDentistSpecKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtDentistSpecKeyReleased
+
+    private void jTxtDentistEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtDentistEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtDentistEmailActionPerformed
+
+    private void jTxtPatientContactNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtPatientContactNumActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtPatientContactNumActionPerformed
+
+    private void jTxtPatientEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtPatientEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtPatientEmailActionPerformed
+
+    private void jTxtPatientEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtPatientEmailKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtPatientEmailKeyReleased
+
+    private void jTxtBillConsultationFeeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtBillConsultationFeeKeyReleased
+        // TODO add your handling code here:
+        updateLivePreview();
+    }//GEN-LAST:event_jTxtBillConsultationFeeKeyReleased
+
+    private void jTxtBillDiscountMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTxtBillDiscountMouseReleased
+        // TODO add your handling code here:
+        updateLivePreview();
+    }//GEN-LAST:event_jTxtBillDiscountMouseReleased
 
     /**
      * @param args the command line arguments
@@ -2307,11 +2425,9 @@ public final class DashbordForm extends javax.swing.JFrame {
     private javax.swing.JButton jBtnDentistCancel;
     private javax.swing.JButton jBtnDentistCancel6;
     private javax.swing.JButton jBtnDentistDelete;
-    private javax.swing.JButton jBtnDentistDelete6;
     private javax.swing.JButton jBtnDentistSave;
     private javax.swing.JButton jBtnDentistSave6;
     private javax.swing.JButton jBtnDentistUpdate;
-    private javax.swing.JButton jBtnDentistUpdate6;
     private javax.swing.JButton jBtnLogOut;
     private javax.swing.JButton jBtnPatient;
     private javax.swing.JButton jBtnPatientCancel;
@@ -2376,8 +2492,12 @@ public final class DashbordForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLblDate;
     private javax.swing.JLabel jLblTime;
     private javax.swing.JPanel jPanel;
@@ -2390,38 +2510,42 @@ public final class DashbordForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelSettingContext;
     private javax.swing.JPanel jPanelTreatmentContext;
     private javax.swing.JPanel jPanelUserContext;
+    private javax.swing.JPanel jPlBillPreview;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTable jTblAppoinment;
     private javax.swing.JTable jTblDentist;
     private javax.swing.JTable jTblPatient;
     private javax.swing.JTable jTblTreatment;
-    private javax.swing.JTable jTblTreatment1;
     private javax.swing.JTable jTblUsers;
     private javax.swing.JTextField jTxtAppoinmentDate;
     private javax.swing.JTextField jTxtAppoinmentDentist;
     private javax.swing.JTextField jTxtAppoinmentNumber;
     private javax.swing.JTextField jTxtAppoinmentPatient;
+    private javax.swing.JTextField jTxtAppoinmentSearch;
     private javax.swing.JTextField jTxtAppoinmentTime;
     private javax.swing.JTextField jTxtAppoinmentTreatment;
+    private javax.swing.JTextField jTxtBillAppoinmentNumber;
+    private javax.swing.JTextField jTxtBillConsultationFee;
+    private javax.swing.JTextField jTxtBillDiscount;
+    private javax.swing.JTextField jTxtBillTotalFee;
+    private javax.swing.JTextField jTxtBillTreatmentFee;
     private javax.swing.JFormattedTextField jTxtDentistContactNum;
-    private javax.swing.JTextField jTxtDentistContactNum6;
+    private javax.swing.JTextField jTxtDentistEmail;
     private javax.swing.JTextField jTxtDentistName;
-    private javax.swing.JTextField jTxtDentistName6;
     private javax.swing.JTextField jTxtDentistSpec;
-    private javax.swing.JTextField jTxtDentistSpec6;
     private javax.swing.JTextField jTxtPatientAddress;
     private javax.swing.JTextField jTxtPatientContactNum;
+    private javax.swing.JTextField jTxtPatientEmail;
     private javax.swing.JTextField jTxtPatientName;
     private javax.swing.JTextField jTxtSettingName;
     private javax.swing.JTextField jTxtSettingNewPw;
@@ -2433,5 +2557,7 @@ public final class DashbordForm extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jTxtTreatmentPrice;
     private javax.swing.JTextField jTxtUsersEmail;
     private javax.swing.JTextField jTxtUsersName;
+    private javax.swing.JTextField jTxtUsersSearch;
+    private javax.swing.JEditorPane txtLivePreview;
     // End of variables declaration//GEN-END:variables
 }

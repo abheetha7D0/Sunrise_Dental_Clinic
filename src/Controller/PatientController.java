@@ -40,6 +40,11 @@ public class PatientController {
         return phone != null && phone.trim().matches(phoneRegex);
     }
 
+    public boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
+        return email != null && email.trim().matches(emailRegex);
+    }
+
     public List<PatientDTO> getAll() {
         Role userRole = getUserRole();
         if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole)) {
@@ -61,7 +66,8 @@ public class PatientController {
                     dentiest.getId(),
                     dentiest.getFullName(),
                     dentiest.getAddress(),
-                    dentiest.getContactNumber()
+                    dentiest.getContactNumber(),
+                    dentiest.getEmail()
             ));
         }
         return patientList;
@@ -83,8 +89,13 @@ public class PatientController {
             return;
         }
 
+        if (!isValidEmail(patient.getEmail())) {
+            dasbordForm.showMessage("Please enter a valid Email ", "Invalid Name Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         try {
-            boolean addPatient = patientDAO.addPatient(new Patient(patient.getFullName(), patient.getAddress(), patient.getContactNumber()));
+            boolean addPatient = patientDAO.addPatient(new Patient(patient.getFullName(), patient.getAddress(), patient.getContactNumber(), patient.getEmail()));
             if (addPatient) {
                 dasbordForm.showMessage("Patient added successfully.");
             }
@@ -110,12 +121,16 @@ public class PatientController {
             dasbordForm.showMessage("Please enter a valid 10-digit phone number (e.g., 0771111111)", "Invalid Contact Number", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        if (!isValidEmail(patient.getEmail())) {
+            dasbordForm.showMessage("Please enter a valid Email ", "Invalid Name Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         try {
             Patient patientOb = patientDAO.findByPatientId(patient.getId());
             patientOb.setFullName(patient.getFullName());
             patientOb.setContactNumber(patient.getContactNumber());
             patientOb.setAddress(patient.getAddress());
+            patientOb.setEmail(patient.getEmail());
             boolean updatePatient = patientDAO.updatePatient(patientOb);
 
             if (updatePatient) {

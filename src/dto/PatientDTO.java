@@ -14,23 +14,21 @@ public class PatientDTO {
     private String fullName;
     private String address;
     private String contactNumber;
+    private String email;
 
-    public PatientDTO(int id, String fullName, String address, String contactNumber) {
+    public PatientDTO(int id, String fullName, String address, String contactNumber, String email) {
         this.id = id;
         this.fullName = fullName;
         this.address = address;
         this.contactNumber = contactNumber;
+        this.email = email;
     }
 
-    public PatientDTO(String fullName, String address, String contactNumber) {
+    public PatientDTO(String fullName, String address, String contactNumber, String email) {
         this.fullName = fullName;
         this.address = address;
         this.contactNumber = contactNumber;
-    }
-
-    @Override
-    public String toString() {
-        return "PatientDTO{" + "id=" + id + ", fullName=" + fullName + ", address=" + address + ", contactNumber=" + contactNumber + '}';
+        this.email = email;
     }
 
     public void setId(int id) {
@@ -63,6 +61,10 @@ public class PatientDTO {
 
     public String getContactNumber() {
         return contactNumber;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
 }

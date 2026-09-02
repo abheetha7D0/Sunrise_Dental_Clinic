@@ -15,12 +15,14 @@ public class DentiestDTO {
     private String fullName;
     private String specialization;
     private String contactNumber;
+    private String email;
     private DentistStetus stetus;
 
-    public DentiestDTO(String fullName, String specialization, String contactNumber, DentistStetus stetus) {
+    public DentiestDTO(String fullName, String specialization, String contactNumber, String email, DentistStetus stetus) {
         this.fullName = fullName;
         this.specialization = specialization;
         this.contactNumber = contactNumber;
+        this.email = email;
         this.stetus = stetus;
     }
 
@@ -66,6 +68,10 @@ public class DentiestDTO {
 
     public String getContactNumber() {
         return contactNumber;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public DentistStetus getStetus() {

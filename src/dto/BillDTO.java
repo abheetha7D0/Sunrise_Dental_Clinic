@@ -10,46 +10,28 @@ package dto;
  */
 public class BillDTO {
     
-    private int id;
-    private int billNumber;
+    private int appointmentId;
+    private String appointmentNumber;
     private double consultationFee;
     private double TreatmentCost;
-    private String billDate;
+    private double discount;
 
-    public BillDTO(int id, int billNumber, double consultationFee, double TreatmentCost, String billDate) {
-        this.id = id;
-        this.billNumber = billNumber;
+    public BillDTO(int appointmentId, double consultationFee, double TreatmentCost, double discount) {
+        this.appointmentId = appointmentId;
         this.consultationFee = consultationFee;
         this.TreatmentCost = TreatmentCost;
-        this.billDate = billDate;
+        this.discount = discount;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setBillNumber(int billNumber) {
-        this.billNumber = billNumber;
-    }
-
-    public void setConsultationFee(double consultationFee) {
+    public BillDTO(String appointmentNumber, double consultationFee, double TreatmentCost, double discount) {
+        this.appointmentNumber = appointmentNumber;
         this.consultationFee = consultationFee;
-    }
-
-    public void setTreatmentCost(double TreatmentCost) {
         this.TreatmentCost = TreatmentCost;
+        this.discount = discount;
     }
 
-    public void setBillDate(String billDate) {
-        this.billDate = billDate;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public int getBillNumber() {
-        return billNumber;
+    public int getAppointmentId() {
+        return appointmentId;
     }
 
     public double getConsultationFee() {
@@ -60,7 +42,24 @@ public class BillDTO {
         return TreatmentCost;
     }
 
-    public String getBillDate() {
-        return billDate;
+    public double getDiscount() {
+        return discount;
     }
+
+    public void setAppointmentId(int appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
+    public void setConsultationFee(double consultationFee) {
+        this.consultationFee = consultationFee;
+    }
+
+    public void setTreatmentCost(double TreatmentCost) {
+        this.TreatmentCost = TreatmentCost;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
 }

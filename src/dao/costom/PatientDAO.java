@@ -26,4 +26,6 @@ public interface PatientDAO extends SuperDAO {
     Patient findByPatientId(int id)  throws SQLException;
 
     Patient findByPatientName(String name)  throws SQLException;
+    
+    String getPatientEmailById(int id)  throws SQLException;
 }

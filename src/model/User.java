@@ -37,6 +37,15 @@ public class User {
         this.role = role;
     }
 
+    public User(String username, String password, String fullName, String email, UserStetus status, Role role) {
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.email = email;
+        this.status = status;
+        this.role = role;
+    }
+
     public User(String username, String password, String fullName, UserStetus stetus,Role role) {
         this.username = username;
         this.password = password;
@@ -81,6 +90,10 @@ public class User {
 
     public UserStetus getStatus() {
         return status;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public Role getRole() {

@@ -11,32 +11,49 @@ package model;
 public class Bill {
     
     private int id;
-    private int billNumber;
-    private double consultationFee;
-    private double TreatmentCost;
-    private String billDate;
+    private String billNumber; 
+    private int appointmentId;       
+    private double consultationFee; 
+    private double treatmentFee;    
+    private double discount;        
+    private double totalFee;        
+    private String billDate; 
 
-    public Bill(int billNumber, double consultationFee, double TreatmentCost, String billDate) {
-        this.billNumber = billNumber;
+    public Bill(int appointmentId,String billNumber, double consultationFee, double treatmentFee, double discount) {
+        this.appointmentId = appointmentId;
+        this.billNumber =  billNumber;
         this.consultationFee = consultationFee;
-        this.TreatmentCost = TreatmentCost;
-        this.billDate = billDate;
+        this.treatmentFee = treatmentFee;
+        this.discount = discount;
+        this.totalFee = (consultationFee + treatmentFee) - discount;
     }
 
     public int getId() {
         return id;
     }
 
-    public int getBillNumber() {
+    public String getBillNumber() {
         return billNumber;
+    }
+
+    public int getAppointmentId() {
+        return appointmentId;
     }
 
     public double getConsultationFee() {
         return consultationFee;
     }
 
-    public double getTreatmentCost() {
-        return TreatmentCost;
+    public double getTreatmentFee() {
+        return treatmentFee;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public double getTotalFee() {
+        return totalFee;
     }
 
     public String getBillDate() {
@@ -47,25 +64,32 @@ public class Bill {
         this.id = id;
     }
 
-    public void setBillNumber(int billNumber) {
+    public void setBillNumber(String billNumber) {
         this.billNumber = billNumber;
+    }
+
+    public void setAppointmentId(int appointmentId) {
+        this.appointmentId = appointmentId;
     }
 
     public void setConsultationFee(double consultationFee) {
         this.consultationFee = consultationFee;
     }
 
-    public void setTreatmentCost(double TreatmentCost) {
-        this.TreatmentCost = TreatmentCost;
+    public void setTreatmentFee(double treatmentFee) {
+        this.treatmentFee = treatmentFee;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public void setTotalFee(double totalFee) {
+        this.totalFee = totalFee;
     }
 
     public void setBillDate(String billDate) {
         this.billDate = billDate;
-    }
-
-    @Override
-    public String toString() {
-        return "Bill{" + "id=" + id + ", billNumber=" + billNumber + ", consultationFee=" + consultationFee + ", TreatmentCost=" + TreatmentCost + ", billDate=" + billDate + '}';
     }
     
     

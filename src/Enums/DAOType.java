@@ -14,5 +14,6 @@ public enum DAOType {
     DENTIST,
     PATIENT,
     TREATMENT,
-    USER
+    USER,
+    TOKEN
 }

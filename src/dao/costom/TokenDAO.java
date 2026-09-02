@@ -6,13 +6,11 @@ package dao.costom;
 
 import dao.SuperDAO;
 import java.sql.SQLException;
-import model.Bill;
 
 /**
  *
  * @author ASUS
  */
-public interface BillDAO extends SuperDAO{
-    String generateNextBillNumber() throws SQLException;
-    boolean saveBill(Bill bill)  throws SQLException;
+public interface TokenDAO extends SuperDAO{
+    public boolean saveToken(String token, int userId) throws SQLException;
 }

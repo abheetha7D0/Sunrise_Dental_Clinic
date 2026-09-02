@@ -5,7 +5,6 @@
 package dao.costom;
 
 import dao.SuperDAO;
-import java.sql.ResultSet;
 import model.Dentist;
 import java.sql.SQLException;
 import java.util.List;
@@ -29,4 +28,6 @@ public interface DentistDAO extends SuperDAO {
     Dentist findByDentistId(int id) throws SQLException ;
 
     Dentist findBySpecialization(String specialization) throws SQLException;
+    
+    String getDentistEmailById(int id)  throws SQLException;
 }

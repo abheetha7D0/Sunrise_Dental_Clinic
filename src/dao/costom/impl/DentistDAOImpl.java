@@ -50,7 +50,7 @@ public class DentistDAOImpl implements DentistDAO {
 
         Connection con = (Connection) DBConnection.getConnection();
 
-        String sql = "INSERT INTO dentists(name,specialization,contact_number,status) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO dentists(name,specialization,contact_number,email,status) VALUES(?,?,?,?,?)";
 
         PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
 
@@ -60,7 +60,9 @@ public class DentistDAOImpl implements DentistDAO {
 
         pst.setString(3, dentist.getContactNumber());
 
-        pst.setString(4, dentist.getStetus().name());
+        pst.setString(4, dentist.getEmail());
+
+        pst.setString(5, dentist.getStetus().name());
 
         int executeUpdate = pst.executeUpdate();
         con.close();
@@ -84,7 +86,9 @@ public class DentistDAOImpl implements DentistDAO {
 
         pst.setString(3, dentist.getContactNumber());
 
-        pst.setString(4, dentist.getStetus().name());
+        pst.setString(4, dentist.getEmail());
+
+        pst.setString(5, dentist.getStetus().name());
 
         pst.setInt(5, dentist.getId());
 
@@ -128,7 +132,7 @@ public class DentistDAOImpl implements DentistDAO {
                 status = DentistStetus.valueOf(statusStr.toUpperCase());
             }
             dentist = new Dentist(rst.getString(2), rst.getString(3),
-                    rst.getString(4), status);
+                    rst.getString(4), rst.getString(5), status);
             dentist.setId(rst.getInt(1));
         }
         con.close();
@@ -153,7 +157,7 @@ public class DentistDAOImpl implements DentistDAO {
                 status = DentistStetus.valueOf(statusStr.toUpperCase());
             }
             dentist = new Dentist(rst.getString(2), rst.getString(3),
-                    rst.getString(4), status);
+                    rst.getString(4), rst.getString(5), status);
             dentist.setId(rst.getInt(1));
         }
         con.close();
@@ -178,7 +182,7 @@ public class DentistDAOImpl implements DentistDAO {
                 status = DentistStetus.valueOf(statusStr.toUpperCase());
             }
             dentist = new Dentist(rst.getString(2), rst.getString(3),
-                    rst.getString(4), status);
+                    rst.getString(4), rst.getString(5), status);
             dentist.setId(id);
         }
         con.close();

@@ -27,13 +27,6 @@ public class Dentist {
         this.stetus = stetus;
     }
 
-    public Dentist(String fullName, String specialization, String contactNumber, DentistStetus stetus) {
-        this.fullName = fullName;
-        this.specialization = specialization;
-        this.contactNumber = contactNumber;
-        this.stetus = stetus;
-    }
-
     public Dentist(int id, String fullName, String specialization, String contactNumber, DentistStetus stetus) {
         this.id = id;
         this.fullName = fullName;

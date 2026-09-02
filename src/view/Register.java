@@ -8,14 +8,14 @@ package view;
  *
  * @author ASUS
  */
-public class FirstLogin extends javax.swing.JFrame {
+public class Register extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FirstLogin.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Register.class.getName());
 
     /**
      * Creates new form Login
      */
-    public FirstLogin() {
+    public Register() {
         initComponents();
 
     }
@@ -34,14 +34,16 @@ public class FirstLogin extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLblUserName = new javax.swing.JLabel();
         jLblPassword = new javax.swing.JLabel();
-        jTxtUserName = new javax.swing.JTextField();
-        jBtnPassword = new javax.swing.JPasswordField();
+        jTxtRegisterUserName = new javax.swing.JTextField();
+        jBtnRegisterPassword = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jBtnRegister = new javax.swing.JButton();
         jLblPassword1 = new javax.swing.JLabel();
-        jBtnReEnterPassword = new javax.swing.JPasswordField();
+        jBtnRegisterReEnterPassword = new javax.swing.JPasswordField();
         jBtnSignIn = new javax.swing.JButton();
+        jLblUserName1 = new javax.swing.JLabel();
+        jTxtUserRegisterToken = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -65,13 +67,17 @@ public class FirstLogin extends javax.swing.JFrame {
         jLblPassword.setForeground(new java.awt.Color(51, 51, 51));
         jLblPassword.setText("Password");
 
-        jTxtUserName.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jTxtUserName.setToolTipText("");
-        jTxtUserName.setName(""); // NOI18N
-        jTxtUserName.addActionListener(this::jTxtUserNameActionPerformed);
+        jTxtRegisterUserName.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jTxtRegisterUserName.setToolTipText("");
+        jTxtRegisterUserName.setName(""); // NOI18N
+        jTxtRegisterUserName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtRegisterUserNameKeyReleased(evt);
+            }
+        });
 
-        jBtnPassword.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jBtnPassword.addActionListener(this::jBtnPasswordActionPerformed);
+        jBtnRegisterPassword.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jBtnRegisterPassword.addActionListener(this::jBtnRegisterPasswordActionPerformed);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/src/converted_image.png"))); // NOI18N
 
@@ -85,14 +91,31 @@ public class FirstLogin extends javax.swing.JFrame {
         jLblPassword1.setForeground(new java.awt.Color(51, 51, 51));
         jLblPassword1.setText("Re Enter Password");
 
-        jBtnReEnterPassword.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jBtnReEnterPassword.addActionListener(this::jBtnReEnterPasswordActionPerformed);
+        jBtnRegisterReEnterPassword.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jBtnRegisterReEnterPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jBtnRegisterReEnterPasswordKeyReleased(evt);
+            }
+        });
 
         jBtnSignIn.setBackground(new java.awt.Color(0, 102, 255));
         jBtnSignIn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jBtnSignIn.setForeground(new java.awt.Color(255, 255, 255));
         jBtnSignIn.setText("Sign In");
         jBtnSignIn.addActionListener(this::jBtnSignInActionPerformed);
+
+        jLblUserName1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLblUserName1.setForeground(new java.awt.Color(51, 51, 51));
+        jLblUserName1.setText("Token");
+
+        jTxtUserRegisterToken.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jTxtUserRegisterToken.setToolTipText("");
+        jTxtUserRegisterToken.setName(""); // NOI18N
+        jTxtUserRegisterToken.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtUserRegisterTokenKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -101,34 +124,30 @@ public class FirstLogin extends javax.swing.JFrame {
             .addComponent(jSeparator1)
             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(325, Short.MAX_VALUE)
+                .addGap(91, 91, 91)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(62, 62, 62)
-                                .addComponent(jLabel3))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLblUserName)
-                                    .addComponent(jLblPassword)
-                                    .addComponent(jLblPassword1))
-                                .addGap(28, 28, 28)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTxtUserName)
-                                        .addComponent(jBtnPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jBtnReEnterPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jBtnRegister)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addComponent(jLabel4)))
-                        .addGap(335, 335, 335))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(331, 331, 331)
-                        .addComponent(jBtnSignIn)
-                        .addGap(60, 60, 60))))
+                    .addComponent(jLblUserName)
+                    .addComponent(jLblPassword)
+                    .addComponent(jLblPassword1)
+                    .addComponent(jLblUserName1))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTxtRegisterUserName)
+                    .addComponent(jBtnRegisterPassword)
+                    .addComponent(jBtnRegisterReEnterPassword)
+                    .addComponent(jBtnRegister)
+                    .addComponent(jTxtUserRegisterToken, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(99, 99, 99)
+                .addComponent(jLabel4)
+                .addGap(82, 82, 82)
+                .addComponent(jLabel3)
+                .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(331, 331, 331)
+                .addComponent(jBtnSignIn)
+                .addGap(60, 60, 60))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,49 +159,46 @@ public class FirstLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jBtnSignIn))
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLblUserName)
-                    .addComponent(jTxtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBtnPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLblPassword)
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel3)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLblPassword1)
-                    .addComponent(jBtnReEnterPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jBtnRegister)
+                .addGap(115, 115, 115)
+                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLblUserName1)
+                            .addComponent(jTxtUserRegisterToken, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLblUserName)
+                            .addComponent(jTxtRegisterUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jBtnRegisterPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLblPassword))
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLblPassword1)
+                            .addComponent(jBtnRegisterReEnterPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30)
+                        .addComponent(jBtnRegister))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
-        jTxtUserName.getAccessibleContext().setAccessibleName("");
+        jTxtRegisterUserName.getAccessibleContext().setAccessibleName("");
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTxtUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtUserNameActionPerformed
+    private void jBtnRegisterPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRegisterPasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTxtUserNameActionPerformed
-
-    private void jBtnPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jBtnPasswordActionPerformed
+    }//GEN-LAST:event_jBtnRegisterPasswordActionPerformed
 
     private void jBtnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRegisterActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jBtnRegisterActionPerformed
-
-    private void jBtnReEnterPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnReEnterPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jBtnReEnterPasswordActionPerformed
 
     private void jBtnSignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSignInActionPerformed
         // TODO add your handling code here
@@ -190,6 +206,18 @@ public class FirstLogin extends javax.swing.JFrame {
         form.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtnSignInActionPerformed
+
+    private void jBtnRegisterReEnterPasswordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jBtnRegisterReEnterPasswordKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBtnRegisterReEnterPasswordKeyReleased
+
+    private void jTxtRegisterUserNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtRegisterUserNameKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtRegisterUserNameKeyReleased
+
+    private void jTxtUserRegisterTokenKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtUserRegisterTokenKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtUserRegisterTokenKeyReleased
 
     /**
      * @param args the command line arguments
@@ -213,13 +241,13 @@ public class FirstLogin extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new FirstLogin().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new Register().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPasswordField jBtnPassword;
-    private javax.swing.JPasswordField jBtnReEnterPassword;
     private javax.swing.JButton jBtnRegister;
+    private javax.swing.JPasswordField jBtnRegisterPassword;
+    private javax.swing.JPasswordField jBtnRegisterReEnterPassword;
     private javax.swing.JButton jBtnSignIn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -228,7 +256,9 @@ public class FirstLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLblPassword;
     private javax.swing.JLabel jLblPassword1;
     private javax.swing.JLabel jLblUserName;
+    private javax.swing.JLabel jLblUserName1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTxtUserName;
+    private javax.swing.JTextField jTxtRegisterUserName;
+    private javax.swing.JTextField jTxtUserRegisterToken;
     // End of variables declaration//GEN-END:variables
 }

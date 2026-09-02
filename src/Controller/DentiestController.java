@@ -39,6 +39,11 @@ public class DentiestController {
         return phone != null && phone.trim().matches(phoneRegex);
     }
 
+    public boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
+        return email != null && email.trim().matches(emailRegex);
+    }
+
     public List<DentiestDTO> getAll() {
         String userName = UserSession.getUserName();
         Role userRole = UserSession.getUserRole();
@@ -103,9 +108,13 @@ public class DentiestController {
             dasbordForm.showMessage("Please enter a valid 10-digit phone number (e.g., 0771111111)", "Invalid Contact Number", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        if (!isValidEmail(dentiestDto.getEmail())) {
+            dasbordForm.showMessage("Please enter a valid Email ", "Invalid Name Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         try {
-            boolean addDentist = dentistDAO.addDentist(new Dentist(dentiestDto.getFullName(), dentiestDto.getSpecialization(), dentiestDto.getContactNumber(), dentiestDto.getStetus()));
+            boolean addDentist = dentistDAO.addDentist(new Dentist(dentiestDto.getFullName(), dentiestDto.getSpecialization(), dentiestDto.getContactNumber(), dentiestDto.getEmail(), dentiestDto.getStetus()));
             if (addDentist) {
                 dasbordForm.showMessage("Dentist added successfully");
             }
@@ -131,13 +140,17 @@ public class DentiestController {
             dasbordForm.showMessage("Please enter a valid 10-digit phone number (e.g., 0771111111)", "Invalid Contact Number", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        if (!isValidEmail(dentiestDto.getEmail())) {
+            dasbordForm.showMessage("Please enter a valid Email ", "Invalid Name Input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         try {
             Dentist dentistOb = dentistDAO.findByDentistId(dentiestDto.getId());
 
             dentistOb.setFullName(dentiestDto.getFullName());
             dentistOb.setContactNumber(dentiestDto.getContactNumber());
             dentistOb.setSpecialization(dentiestDto.getSpecialization());
+            dentistOb.setEmail(dentiestDto.getEmail());
             dentistOb.setStetus(dentiestDto.getStetus());
             boolean updateDentist = dentistDAO.updateDentist(dentistOb);
 
