@@ -4,6 +4,10 @@
  */
 package view;
 
+import Controller.UserController;
+import dto.RegisterUserDTO;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ASUS
@@ -11,6 +15,7 @@ package view;
 public class Register extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Register.class.getName());
+
 
     /**
      * Creates new form Login
@@ -57,7 +62,7 @@ public class Register extends javax.swing.JFrame {
         jSeparator1.setForeground(new java.awt.Color(0, 0, 102));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setText("First Log In");
+        jLabel2.setText("Register");
 
         jLblUserName.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLblUserName.setForeground(new java.awt.Color(51, 51, 51));
@@ -197,7 +202,28 @@ public class Register extends javax.swing.JFrame {
 
     private void jBtnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRegisterActionPerformed
         // TODO add your handling code here:
-        
+        String token = jTxtUserRegisterToken.getText().trim();
+        String username = jTxtRegisterUserName.getText().trim();
+        String password = new String(jBtnRegisterPassword.getPassword());
+        String rePassword = new String(jBtnRegisterReEnterPassword.getPassword());
+
+        if (token.isEmpty() || username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Validation Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!password.equals(rePassword)) {
+            JOptionPane.showMessageDialog(this, "Passwords do not match.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        RegisterUserDTO registerDTO = new RegisterUserDTO(token, username, password);
+        UserController userController = new UserController(null);
+
+        if (userController.register(registerDTO)) {
+            new Login().setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_jBtnRegisterActionPerformed
 
     private void jBtnSignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSignInActionPerformed

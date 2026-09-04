@@ -11,6 +11,7 @@ import dao.DAOFactory;
 import dao.costom.impl.TokenDAOImpl;
 import dao.costom.impl.UserDAOImpl;
 import dto.AddUserDTO;
+import dto.RegisterUserDTO;
 import dto.UpdateUserDTO;
 import dto.UserDTO;
 import java.sql.SQLException;
@@ -77,9 +78,35 @@ public class UserController {
             System.getLogger(UserController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }
-    
-    public void register(){
-        
+
+    public boolean register(RegisterUserDTO dto) {
+        if (dto.getToken() == null || dto.getToken().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Verification Token is required.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (dto.getUsername() == null || dto.getUsername().length() < 4) {
+            JOptionPane.showMessageDialog(null, "Username must be at least 4 characters long.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (dto.getPassword() == null || dto.getPassword().length() < 6) {
+            JOptionPane.showMessageDialog(null, "Password must be at least 6 characters long.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        try {
+            boolean isRegistered = userDAO.registerUser(dto.getToken(), dto.getUsername(), dto.getPassword());
+            if (isRegistered) {
+                JOptionPane.showMessageDialog(null, "Registration Successful! You can now sign in.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid or expired registration token.", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        } catch (SQLException ex) {
+            System.err.println("Registration failed: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Database error occurred during registration.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
     }
 
     public void addUser(AddUserDTO userDTO) {

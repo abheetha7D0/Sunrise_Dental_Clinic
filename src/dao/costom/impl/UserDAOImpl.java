@@ -162,7 +162,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public List<User> getAllUsers() throws SQLException {
-       String sql = "SELECT * FROM users";
+        String sql = "SELECT * FROM users";
         List<User> userList = new ArrayList<>();
 
         Connection con = (Connection) DBConnection.getConnection();
@@ -171,7 +171,7 @@ public class UserDAOImpl implements UserDAO {
 
         while (rs.next()) {
             int id = rs.getInt(1);
-            
+
             String username = rs.getString(2);
             String password = rs.getString(3);
             String fullName = rs.getString(4);
@@ -189,7 +189,58 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean register(User user) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean registerUser(String token, String username, String password) throws SQLException {
+        String findTokenSql = "SELECT user_id FROM user_registration_tokens WHERE token = ?";
+        String updateUserSql = "UPDATE users SET username = ?, password = ?, status = ? WHERE id = ?";
+        String deleteTokenSql = "DELETE FROM user_registration_tokens WHERE token = ?";
+
+        Connection con = null;
+        try {
+            con = DBConnection.getConnection();
+            con.setAutoCommit(false); 
+
+            int userId = -1;
+            try (PreparedStatement pstToken = con.prepareStatement(findTokenSql)) {
+                pstToken.setString(1, token);
+                try (ResultSet rs = pstToken.executeQuery()) {
+                    if (rs.next()) {
+                        userId = rs.getInt("user_id");
+                    } else {
+                        con.rollback();
+                        return false; 
+                    }
+                }
+            }
+
+            try (PreparedStatement pstUser = con.prepareStatement(updateUserSql)) {
+                pstUser.setString(1, username);
+                pstUser.setString(2, password);
+                pstUser.setString(3, UserStetus.ACTIVATE.name());
+                pstUser.setInt(4, userId);
+
+                if (pstUser.executeUpdate() <= 0) {
+                    con.rollback();
+                    return false;
+                }
+            }
+
+            try (PreparedStatement pstDel = con.prepareStatement(deleteTokenSql)) {
+                pstDel.setString(1, token);
+                pstDel.executeUpdate();
+            }
+
+            con.commit(); 
+            return true;
+        } catch (SQLException ex) {
+            if (con != null) {
+                con.rollback();
+            }
+            throw ex;
+        } finally {
+            if (con != null) {
+                con.setAutoCommit(true);
+                con.close();
+            }
+        }
     }
 }

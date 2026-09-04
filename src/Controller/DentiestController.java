@@ -47,12 +47,8 @@ public class DentiestController {
     public List<DentiestDTO> getAll() {
         String userName = UserSession.getUserName();
         Role userRole = UserSession.getUserRole();
-        System.out.println(userRole);
-        System.out.println(userName);
-        System.out.println(!Role.ADMIN.equals(userRole) && !Role.DENTIST.equals(userRole));
 
-        if (!Role.ADMIN.equals(userRole) && !Role.DENTIST.equals(userRole)) {
-            dasbordForm.showMessage("Access denied");
+        if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole)) {
             return null;
         }
 

@@ -16,7 +16,7 @@ import model.User;
  */
 public interface UserDAO extends SuperDAO{
     boolean Login(User user)  throws SQLException;
-    boolean register(User user)  throws SQLException;
+    boolean registerUser(String token, String username, String password)  throws SQLException;
     List<User> getAllUsers() throws SQLException;
     User addUser(User user)  throws SQLException;
     User updateUser(User user)  throws SQLException;

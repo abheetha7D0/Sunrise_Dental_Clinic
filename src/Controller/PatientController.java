@@ -48,7 +48,6 @@ public class PatientController {
     public List<PatientDTO> getAll() {
         Role userRole = getUserRole();
         if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole)) {
-            dasbordForm.showMessage("Access denied");
             return null;
         }
         List<Patient> allPatients = null;

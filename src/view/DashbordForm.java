@@ -95,7 +95,7 @@ public final class DashbordForm extends javax.swing.JFrame {
 
         jTxtUsersName.setText("");
         jTxtUsersEmail.setText("");
-        
+
         if (jCmbDentistStetus.getItemCount() > 0) {
             jCmbDentistStetus.setSelectedIndex(0);
         }
@@ -105,7 +105,7 @@ public final class DashbordForm extends javax.swing.JFrame {
         jTblPatient.clearSelection();
 
         jTblTreatment.clearSelection();
-        
+
         jTblUsers.clearSelection();
 
     }
@@ -209,12 +209,17 @@ public final class DashbordForm extends javax.swing.JFrame {
         List<DentiestDTO> allDentists = dentiestController.getAll();
 
         DefaultTableModel model = (DefaultTableModel) jTblDentist.getModel();
+
         model.setRowCount(0);
+        jCmbDentistId.removeAllItems();
+
+        if (allDentists == null) {
+            return;
+        }
 
         for (DentiestDTO dentiest : allDentists) {
-            jCmbDentistId.addItem(
-                    dentiest.getId()
-            );
+            jCmbDentistId.addItem(dentiest.getId());
+
             model.addRow(new Object[]{
                 dentiest.getId(),
                 dentiest.getFullName(),
@@ -225,6 +230,8 @@ public final class DashbordForm extends javax.swing.JFrame {
             });
         }
 
+        jCmbDentistId.setSelectedIndex(-1);
+
     }
 
     final void viewAllUsers() {
@@ -233,8 +240,11 @@ public final class DashbordForm extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTblUsers.getModel();
         model.setRowCount(0);
 
-        for (AddUserDTO user : allusers) {
+        if (allusers == null) {
+            return;
+        }
 
+        for (AddUserDTO user : allusers) {
             model.addRow(new Object[]{
                 user.getName(),
                 user.getEmail(),
@@ -249,12 +259,16 @@ public final class DashbordForm extends javax.swing.JFrame {
 
         List<PatientDTO> all = patientController.getAll();
         DefaultTableModel model = (DefaultTableModel) jTblPatient.getModel();
-        model.setRowCount(0);
 
+        model.setRowCount(0);
+        jCmbPatientId.removeAllItems();
+
+        if (all == null) {
+            return;
+        }
         for (PatientDTO patient : all) {
-            jCmbPatientId.addItem(
-                    patient.getId()
-            );
+            jCmbPatientId.addItem(patient.getId());
+
             model.addRow(new Object[]{
                 patient.getId(),
                 patient.getFullName(),
@@ -263,6 +277,8 @@ public final class DashbordForm extends javax.swing.JFrame {
                 patient.getEmail()
             });
         }
+
+        jCmbPatientId.setSelectedIndex(-1);
     }
 
     final void viewAllTreatment() {
@@ -1990,7 +2006,7 @@ public final class DashbordForm extends javax.swing.JFrame {
         String email = jTxtDentistEmail.getText().trim();
         DentistStetus status = DentistStetus.valueOf(jCmbDentistStetus.getSelectedItem().toString());
 
-        dentiestController.update(new DentiestDTO(id, name, Specialization, contact_number,email, status));
+        dentiestController.update(new DentiestDTO(id, name, Specialization, contact_number, email, status));
         clearInputs();
 
         viewAllDentist();
@@ -2331,10 +2347,25 @@ public final class DashbordForm extends javax.swing.JFrame {
 
     private void jCmbPatientIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCmbPatientIdActionPerformed
 
-        Patient patientById = patientController.getPatientById((int) jCmbPatientId.getSelectedItem());
-        jTxtAppoinmentPatient.setText(patientById.getFullName());
+        Object selectedItem = jCmbPatientId.getSelectedItem();
 
-        // TODO add your handling code here:
+        if (selectedItem == null) {
+            jTxtAppoinmentPatient.setText("");
+            return;
+        }
+
+        try {
+            int patientId = Integer.parseInt(selectedItem.toString().trim());
+            Patient patientById = patientController.getPatientById(patientId);
+
+            if (patientById != null) {
+                jTxtAppoinmentPatient.setText(patientById.getFullName());
+            } else {
+                jTxtAppoinmentPatient.setText("");
+            }
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid Patient ID format: " + selectedItem);
+        }
     }//GEN-LAST:event_jCmbPatientIdActionPerformed
 
     private void jCmbAppoinmentStetusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCmbAppoinmentStetusActionPerformed
@@ -2352,14 +2383,47 @@ public final class DashbordForm extends javax.swing.JFrame {
 
     private void jCmbDentistIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCmbDentistIdActionPerformed
         // TODO add your handling code here:
-        Dentist dentistById = dentiestController.getDentistById((int) jCmbDentistId.getSelectedItem());
-        jTxtAppoinmentDentist.setText(dentistById.getFullName());
+
+        Object selectedItem = jCmbDentistId.getSelectedItem();
+
+        if (selectedItem == null) {
+            return;
+        }
+
+        try {
+            int dentistId = Integer.parseInt(selectedItem.toString().trim());
+            Dentist dentistById = dentiestController.getDentistById(dentistId);
+
+            if (dentistById != null) {
+                jTxtAppoinmentDentist.setText(dentistById.getFullName());
+            } else {
+                jTxtAppoinmentDentist.setText("");
+            }
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid Dentist ID selection format: " + selectedItem);
+        }
     }//GEN-LAST:event_jCmbDentistIdActionPerformed
 
     private void jCmbTreatmentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCmbTreatmentIdActionPerformed
-        // TODO add your handling code here:
-        Treatment treatmentById = treatmentController.getTreatmentById((int) jCmbTreatmentId.getSelectedItem());
-        jTxtAppoinmentTreatment.setText(treatmentById.getTretmentName());
+        Object selectedItem = jCmbTreatmentId.getSelectedItem();
+
+        if (selectedItem == null) {
+            jTxtAppoinmentTreatment.setText("");
+            return;
+        }
+
+        try {
+            int treatmentId = Integer.parseInt(selectedItem.toString().trim());
+            Treatment treatmentById = treatmentController.getTreatmentById(treatmentId);
+
+            if (treatmentById != null) {
+                jTxtAppoinmentTreatment.setText(treatmentById.getTretmentName());
+            } else {
+                jTxtAppoinmentTreatment.setText("");
+            }
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid Treatment ID selection format: " + selectedItem);
+        }
     }//GEN-LAST:event_jCmbTreatmentIdActionPerformed
 
     private void jBtnSettingChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSettingChangePasswordActionPerformed
@@ -2379,12 +2443,12 @@ public final class DashbordForm extends javax.swing.JFrame {
         Role role = Role.valueOf(jCmbUsersRole.getSelectedItem().toString());
 
         userController.addUser(new AddUserDTO(name, email, status, role));
-         clearInputs();
+        clearInputs();
     }//GEN-LAST:event_jBtnUsersAddActionPerformed
 
     private void jBtnUsersUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnUsersUpdateActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jBtnUsersUpdateActionPerformed
 
     private void jBtnUsersClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnUsersClearActionPerformed
@@ -2444,7 +2508,7 @@ public final class DashbordForm extends javax.swing.JFrame {
         String name = jTblUsers.getValueAt(row, 0).toString();
         String email = jTblUsers.getValueAt(row, 1).toString();
         Object stetusOb = jTblUsers.getValueAt(row, 2).toString();
-        Object roleOb  = jTblUsers.getValueAt(row, 3).toString();
+        Object roleOb = jTblUsers.getValueAt(row, 3).toString();
 
         jTxtUsersName.setText(name);
         jTxtUsersEmail.setText(email);
@@ -2454,12 +2518,10 @@ public final class DashbordForm extends javax.swing.JFrame {
         if (stetusOb != null) {
             jCmbUsersRole.setSelectedItem(roleOb.toString());
         }
-      
 
         checkInputs();
         jBtnTreatmentSave.setEnabled(false);
     }//GEN-LAST:event_jTblUsersMouseClicked
-
 
     /**
      * @param args the command line arguments
