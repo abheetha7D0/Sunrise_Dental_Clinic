@@ -1846,9 +1846,9 @@
                           <Component id="jLabel31" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel52" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jBtnDentistSave6" min="-2" pref="86" max="-2" attributes="0"/>
+                              <Component id="jBtnBillSave" min="-2" pref="86" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jBtnDentistCancel6" min="-2" max="-2" attributes="0"/>
+                              <Component id="jBtnBillCancel" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jTxtBillTotalFee" alignment="0" max="32767" attributes="0"/>
                           <Component id="jTxtBillDiscount" alignment="0" max="32767" attributes="0"/>
@@ -1895,8 +1895,8 @@
                               <Component id="jTxtBillTotalFee" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jBtnDentistSave6" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jBtnDentistCancel6" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                  <Component id="jBtnBillSave" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jBtnBillCancel" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Component id="jPlBillPreview" min="-2" pref="497" max="-2" attributes="0"/>
@@ -1921,6 +1921,9 @@
                   <Font name="Segoe UI" size="18" style="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTxtBillAppoinmentNumberKeyReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel32">
               <Properties>
@@ -1966,10 +1969,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTxtBillDiscountMouseReleased"/>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTxtBillDiscountKeyReleased"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jBtnDentistSave6">
+            <Component class="javax.swing.JButton" name="jBtnBillSave">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="66" red="0" type="rgb"/>
@@ -1983,10 +1986,10 @@
                 <Property name="text" type="java.lang.String" value="Save"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnDentistSave6ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnBillSaveActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jBtnDentistCancel6">
+            <Component class="javax.swing.JButton" name="jBtnBillCancel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="33" red="ff" type="rgb"/>
@@ -2000,7 +2003,7 @@
                 <Property name="text" type="java.lang.String" value="Cancel"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnDentistCancel6ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnBillCancelActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTxtBillTreatmentFee">
@@ -2008,7 +2011,6 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="18" style="0"/>
                 </Property>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel51">
@@ -2024,7 +2026,6 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="18" style="0"/>
                 </Property>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel52">

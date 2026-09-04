@@ -29,4 +29,10 @@ public interface AppointmentDAO extends SuperDAO {
     List<Appointment> getAllAppoinment() throws SQLException;
 
     String generateNextAppointmentNumber() throws SQLException;
+    
+    boolean isDentistBooked(int dentistId, String date, String time) throws SQLException;
+    
+    boolean isDentistBookedExcludingCurrent(int dentistId, String date, String time, String appNum) throws SQLException;
+    
+    Object[] getAppointmentDetailsForBilling(String appoinmentNumber) throws SQLException;
 }

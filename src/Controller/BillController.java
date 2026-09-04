@@ -7,6 +7,7 @@ package Controller;
 import Enums.DAOType;
 import dao.DAOFactory;
 import dao.costom.impl.BillDAOImpl;
+import dao.costom.impl.PatientDAOImpl;
 import dto.BillDTO;
 import java.sql.SQLException;
 import model.Bill;
@@ -19,13 +20,14 @@ import view.DashbordForm;
 public class BillController {
 
     BillDAOImpl billDAO = (BillDAOImpl) DAOFactory.getInstance().getDAO(DAOType.BILL);
+    PatientDAOImpl patientDAO = (PatientDAOImpl) DAOFactory.getInstance().getDAO(DAOType.PATIENT);
     private DashbordForm dasbordForm;
 
     public BillController(DashbordForm dasbordForm) {
         this.dasbordForm = dasbordForm;
     }
 
-    public void save(BillDTO billDTO) {
+    public void save(BillDTO billDTO, String patientName, String dentistName) {
         try {
             String automaticBillNumber = billDAO.generateNextBillNumber();
 
@@ -52,7 +54,38 @@ public class BillController {
             boolean isSaved = billDAO.saveBill(bill);
 
             if (isSaved) {
+                String currentDate = java.time.LocalDate.now().toString();
+
+                // 1. Generate Final Receipt HTML Content
+                String receiptHtml = util.ReceiptGenerator.buildHtmlReceipt(
+                        automaticBillNumber,
+                        billDTO,
+                        calculatedTotal,
+                        currentDate,
+                        patientName,
+                        dentistName
+                );
+
+                // 2. Update GUI Live Preview
+                dasbordForm.setReceiptPreview(receiptHtml);
                 dasbordForm.showMessage("Receipt " + automaticBillNumber + " generated successfully!");
+
+                // 3. Dispatch Email to Patient
+                try {
+                    // Fetch patient email using appointment ID or DAO
+                    String patientEmail = patientDAO.getPatientEmailByAppointmentId(billDTO.getAppointmentId());
+
+                    if (patientEmail != null && !patientEmail.trim().isEmpty()) {
+                        String subject = "Invoice Statement - " + automaticBillNumber + " | Sunrise Dental";
+                        util.EmailUtility.sendEmail(patientEmail, subject, receiptHtml);
+                        System.out.println("Receipt email sent successfully to: " + patientEmail);
+                    } else {
+                        System.err.println("Bill saved, but patient email is missing.");
+                    }
+                } catch (Exception ex) {
+                    System.err.println("Bill saved, but email dispatch failed: " + ex.getMessage());
+                }
+
             } else {
                 dasbordForm.showMessage("Transaction failed: Could not record transaction properties.");
             }

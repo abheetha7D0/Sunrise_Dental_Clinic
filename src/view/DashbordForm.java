@@ -5,6 +5,7 @@
 package view;
 
 import Controller.AppointmentController;
+import Controller.BillController;
 import Controller.DentiestController;
 import Controller.PatientController;
 import Controller.TreatmentController;
@@ -15,6 +16,7 @@ import Enums.Role;
 import Enums.UserStetus;
 import dto.AddUserDTO;
 import dto.AppoinmentDTO;
+import dto.BillDTO;
 import dto.DentiestDTO;
 import dto.PatientDTO;
 import dto.TreatmentDTO;
@@ -46,6 +48,7 @@ public final class DashbordForm extends javax.swing.JFrame {
     private final TreatmentController treatmentController;
     private final AppointmentController appointmentController;
     private final UserController userController;
+    private final BillController billController;
 
     final void showDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
@@ -189,6 +192,7 @@ public final class DashbordForm extends javax.swing.JFrame {
         treatmentController = new TreatmentController(this);
         appointmentController = new AppointmentController(this);
         userController = new UserController(this);
+        billController = new BillController(this);
 
         showDate();
         showTime();
@@ -434,8 +438,8 @@ public final class DashbordForm extends javax.swing.JFrame {
         jTxtBillConsultationFee = new javax.swing.JTextField();
         jLabel34 = new javax.swing.JLabel();
         jTxtBillDiscount = new javax.swing.JTextField();
-        jBtnDentistSave6 = new javax.swing.JButton();
-        jBtnDentistCancel6 = new javax.swing.JButton();
+        jBtnBillSave = new javax.swing.JButton();
+        jBtnBillCancel = new javax.swing.JButton();
         jTxtBillTreatmentFee = new javax.swing.JTextField();
         jLabel51 = new javax.swing.JLabel();
         jTxtBillTotalFee = new javax.swing.JTextField();
@@ -742,7 +746,7 @@ public final class DashbordForm extends javax.swing.JFrame {
             .addGroup(jPanelAppoinmentContextLayout.createSequentialGroup()
                 .addGap(295, 295, 295)
                 .addComponent(jLabel19)
-                .addContainerGap(256, Short.MAX_VALUE))
+                .addContainerGap(260, Short.MAX_VALUE))
             .addGroup(jPanelAppoinmentContextLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanelAppoinmentContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -757,7 +761,7 @@ public final class DashbordForm extends javax.swing.JFrame {
                                     .addComponent(jTxtAppoinmentPatient)
                                     .addComponent(jLabel20)
                                     .addComponent(jCmbPatientId, 0, 176, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                                 .addGroup(jPanelAppoinmentContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel21)
                                     .addComponent(jCmbDentistId, 0, 176, Short.MAX_VALUE)
@@ -1429,6 +1433,11 @@ public final class DashbordForm extends javax.swing.JFrame {
         jLabel31.setText("Appoinment Number");
 
         jTxtBillAppoinmentNumber.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTxtBillAppoinmentNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtBillAppoinmentNumberKeyReleased(evt);
+            }
+        });
 
         jLabel32.setFont(new java.awt.Font("Microsoft Yi Baiti", 1, 48)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(0, 102, 255));
@@ -1448,32 +1457,30 @@ public final class DashbordForm extends javax.swing.JFrame {
         jLabel34.setText("Discount");
 
         jTxtBillDiscount.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTxtBillDiscount.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jTxtBillDiscountMouseReleased(evt);
+        jTxtBillDiscount.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtBillDiscountKeyReleased(evt);
             }
         });
 
-        jBtnDentistSave6.setBackground(new java.awt.Color(0, 102, 255));
-        jBtnDentistSave6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jBtnDentistSave6.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnDentistSave6.setText("Save");
-        jBtnDentistSave6.addActionListener(this::jBtnDentistSave6ActionPerformed);
+        jBtnBillSave.setBackground(new java.awt.Color(0, 102, 255));
+        jBtnBillSave.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jBtnBillSave.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnBillSave.setText("Save");
+        jBtnBillSave.addActionListener(this::jBtnBillSaveActionPerformed);
 
-        jBtnDentistCancel6.setBackground(new java.awt.Color(255, 51, 0));
-        jBtnDentistCancel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jBtnDentistCancel6.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnDentistCancel6.setText("Cancel");
-        jBtnDentistCancel6.addActionListener(this::jBtnDentistCancel6ActionPerformed);
+        jBtnBillCancel.setBackground(new java.awt.Color(255, 51, 0));
+        jBtnBillCancel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jBtnBillCancel.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnBillCancel.setText("Cancel");
+        jBtnBillCancel.addActionListener(this::jBtnBillCancelActionPerformed);
 
         jTxtBillTreatmentFee.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTxtBillTreatmentFee.setEnabled(false);
 
         jLabel51.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel51.setText("Treatment Fee");
 
         jTxtBillTotalFee.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTxtBillTotalFee.setEnabled(false);
 
         jLabel52.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel52.setText("Total Fee");
@@ -1499,9 +1506,9 @@ public final class DashbordForm extends javax.swing.JFrame {
                     .addComponent(jLabel31)
                     .addComponent(jLabel52)
                     .addGroup(jPanelBillsContextLayout.createSequentialGroup()
-                        .addComponent(jBtnDentistSave6, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBtnBillSave, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBtnDentistCancel6))
+                        .addComponent(jBtnBillCancel))
                     .addComponent(jTxtBillTotalFee)
                     .addComponent(jTxtBillDiscount)
                     .addComponent(jTxtBillConsultationFee)
@@ -1543,8 +1550,8 @@ public final class DashbordForm extends javax.swing.JFrame {
                         .addComponent(jTxtBillTotalFee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanelBillsContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jBtnDentistSave6)
-                            .addComponent(jBtnDentistCancel6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jBtnBillSave)
+                            .addComponent(jBtnBillCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPlBillPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(66, Short.MAX_VALUE))
         );
@@ -1980,16 +1987,26 @@ public final class DashbordForm extends javax.swing.JFrame {
         jPanelUserContext.setVisible(false);
         viewAllDentist();
     }//GEN-LAST:event_jBtnPatientActionPerformed
+    private String currentPatientName = "Not found";
+    private String currentDentistName = "Not found";
+    private int currentAppointmentDbId = 0;
+
+    public void setReceiptPreview(String htmlContent) {
+        txtLivePreview.setContentType("text/html");
+        txtLivePreview.setText(htmlContent);
+    }
+
     private void updateLivePreview() {
         try {
-
+            jTxtBillTreatmentFee.setEditable(false);
+            jTxtBillTotalFee.setEditable(false);
             String appointmentNumber = jTxtBillAppoinmentNumber.getText().trim();
             double consultation = jTxtBillConsultationFee.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(jTxtBillConsultationFee.getText().trim());
             double treatment = jTxtBillTreatmentFee.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(jTxtBillTreatmentFee.getText().trim());
             double discount = jTxtBillDiscount.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(jTxtBillDiscount.getText().trim());
 
             double totalFee = (consultation + treatment) - discount;
-            jTxtBillTotalFee.setText(String.valueOf(totalFee));
+            jTxtBillTotalFee.setText(String.format("%.2f", totalFee));
 
             txtLivePreview.setContentType("text/html");
 
@@ -1997,15 +2014,19 @@ public final class DashbordForm extends javax.swing.JFrame {
                     "PREVIEW-MODE",
                     new dto.BillDTO(appointmentNumber, consultation, treatment, discount),
                     totalFee,
-                    java.time.LocalDate.now().toString()
+                    java.time.LocalDate.now().toString(),
+                    currentPatientName,
+                    currentDentistName
             );
 
             txtLivePreview.setText(liveHtml);
 
         } catch (NumberFormatException ex) {
+            txtLivePreview.setContentType("text/html");
             txtLivePreview.setText("<html><body style='padding:20px; font-family:sans-serif; color:red;'><b>Awaiting valid numerical inputs...</b></body></html>");
         }
     }
+
     private void jBtnDentistSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistSaveActionPerformed
         // TODO add your handling code here:
 
@@ -2077,13 +2098,13 @@ public final class DashbordForm extends javax.swing.JFrame {
 
             String rawDate = jTxtAppoinmentDate.getText().trim();
             if (rawDate.isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Please enter an appointment date (e.g., 2026-10-15).", "Validation Error", javax.swing.JOptionPane.WARNING_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(this, "Please enter an appointment date (e.g., 2026-10-15)", "Validation Error", javax.swing.JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
             String date = rawDate.replace('/', '-');
             if (!date.matches("^\\d{4}-\\d{2}-\\d{2}$")) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Invalid Date format! Please use YYYY-MM-DD (e.g., 2026-10-15).", "Validation Error", javax.swing.JOptionPane.WARNING_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(this, "Invalid Date format! Please use YYYY-MM-DD (e.g., 2026-10-15)", "Validation Error", javax.swing.JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
@@ -2095,7 +2116,7 @@ public final class DashbordForm extends javax.swing.JFrame {
 
             String time = appointmentController.formatToSqlTime(rawTime);
             if (time == null) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Invalid Time format. Please enter a valid hour or HH:mm:ss string.", "Validation Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(this, "Invalid Time format. Please enter a valid hour or HH:mm:ss string", "Validation Error", javax.swing.JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -2109,9 +2130,9 @@ public final class DashbordForm extends javax.swing.JFrame {
             viewAllAppointments();
 
         } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Invalid ID selection. Please re-select items from drop-down menus.", "Input Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(this, "Invalid ID selection. Please re-select items from drop-down menus", "Input Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         } catch (IllegalArgumentException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Invalid Appointment Status selected.", "Input Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(this, "Invalid Appointment Status selected", "Input Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jBtnAppoinmentSaveActionPerformed
 
@@ -2228,13 +2249,34 @@ public final class DashbordForm extends javax.swing.JFrame {
         checkInputs();
     }//GEN-LAST:event_jBtnTreatmentCancelActionPerformed
 
-    private void jBtnDentistSave6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistSave6ActionPerformed
+    private void jBtnBillSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBillSaveActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jBtnDentistSave6ActionPerformed
+        if (currentAppointmentDbId == 0) {
+            showMessage("Please enter a valid Appointment Number first.");
+            return;
+        }
 
-    private void jBtnDentistCancel6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDentistCancel6ActionPerformed
+        try {
+            double consultation = Double.parseDouble(jTxtBillConsultationFee.getText().trim());
+            double treatment = Double.parseDouble(jTxtBillTreatmentFee.getText().trim());
+            double discount = jTxtBillDiscount.getText().trim().isEmpty() ? 0.0 : Double.parseDouble(jTxtBillDiscount.getText().trim());
+
+            BillDTO billDTO = new BillDTO();
+            billDTO.setAppointmentId(currentAppointmentDbId);
+            billDTO.setConsultationFee(consultation);
+            billDTO.setTreatmentCost(treatment);
+            billDTO.setDiscount(discount);
+
+            billController.save(billDTO, currentPatientName, currentDentistName);
+            clearBillFields();
+        } catch (NumberFormatException e) {
+            showMessage("Please enter valid numeric amounts for fees and discount.");
+        }
+    }//GEN-LAST:event_jBtnBillSaveActionPerformed
+
+    private void jBtnBillCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBillCancelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jBtnDentistCancel6ActionPerformed
+    }//GEN-LAST:event_jBtnBillCancelActionPerformed
 
     private void jBtnSettingUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSettingUpdateActionPerformed
         // TODO add your handling code here:
@@ -2561,11 +2603,6 @@ public final class DashbordForm extends javax.swing.JFrame {
         updateLivePreview();
     }//GEN-LAST:event_jTxtBillConsultationFeeKeyReleased
 
-    private void jTxtBillDiscountMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTxtBillDiscountMouseReleased
-        // TODO add your handling code here:
-        updateLivePreview();
-    }//GEN-LAST:event_jTxtBillDiscountMouseReleased
-
     private void jBtnSettingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnSettingMouseClicked
         // TODO add your handling code here:
         jPanelAppoinmentContext.setVisible(false);
@@ -2602,6 +2639,47 @@ public final class DashbordForm extends javax.swing.JFrame {
     private void jTxtAppoinmentNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtAppoinmentNumberActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTxtAppoinmentNumberActionPerformed
+    public void clearBillFields() {
+        jTxtBillAppoinmentNumber.setText("");
+        jTxtBillConsultationFee.setText("");
+        jTxtBillTreatmentFee.setText("");
+        jTxtBillDiscount.setText("");
+        jTxtBillTotalFee.setText("");
+
+        currentAppointmentDbId = 0;
+        currentPatientName = "Not found";
+        currentDentistName = "Not found";
+
+        txtLivePreview.setContentType("text/html");
+        txtLivePreview.setText("<html><body style='font-family:sans-serif; padding:20px; color:#666;'>Select one</body></html>");
+    }
+    private void jTxtBillAppoinmentNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtBillAppoinmentNumberKeyReleased
+        // TODO add your handling code here:
+        String appNum = jTxtBillAppoinmentNumber.getText().trim();
+        jTxtBillTreatmentFee.setEditable(false);
+        jTxtBillTotalFee.setEditable(false);
+        if (appNum.isEmpty()) {
+            return;
+        }
+
+        Object[] details = appointmentController.getAppointmentDetailsForBilling(appNum);
+
+        if (details != null) {
+            currentAppointmentDbId = (int) details[0];
+            currentPatientName = (String) details[1];
+            currentDentistName = (String) details[2];
+            double treatmentCost = (double) details[3];
+
+            jTxtBillTreatmentFee.setText(String.valueOf(treatmentCost));
+
+            updateLivePreview();
+        }
+    }//GEN-LAST:event_jTxtBillAppoinmentNumberKeyReleased
+
+    private void jTxtBillDiscountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtBillDiscountKeyReleased
+
+        updateLivePreview();
+    }//GEN-LAST:event_jTxtBillDiscountKeyReleased
 
     /**
      * @param args the command line arguments
@@ -2634,12 +2712,12 @@ public final class DashbordForm extends javax.swing.JFrame {
     private javax.swing.JButton jBtnAppoinmentSave;
     private javax.swing.JButton jBtnAppoinmentUpdate;
     private javax.swing.JButton jBtnBill;
+    private javax.swing.JButton jBtnBillCancel;
+    private javax.swing.JButton jBtnBillSave;
     private javax.swing.JButton jBtnDentist;
     private javax.swing.JButton jBtnDentistCancel;
-    private javax.swing.JButton jBtnDentistCancel6;
     private javax.swing.JButton jBtnDentistDelete;
     private javax.swing.JButton jBtnDentistSave;
-    private javax.swing.JButton jBtnDentistSave6;
     private javax.swing.JButton jBtnDentistUpdate;
     private javax.swing.JButton jBtnLogOut;
     private javax.swing.JButton jBtnPatient;

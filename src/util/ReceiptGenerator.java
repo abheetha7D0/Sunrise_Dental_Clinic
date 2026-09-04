@@ -12,17 +12,19 @@ import dto.BillDTO;
  */
 public class ReceiptGenerator {
 
-    public static String buildHtmlReceipt(String billNumber, BillDTO dto, double totalFee, String date) {
+    public static String buildHtmlReceipt(String billNumber, BillDTO dto, double totalFee, String date, String patientName, String dentistName) {
         return "<html>"
                 + "<body style='font-family: Arial, sans-serif; padding: 20px; color: #333;'>"
                 + "  <div style='text-align: center; border-bottom: 2px solid #007bff; padding-bottom: 10px;'>"
                 + "    <h2 style='margin: 0; color: #007bff;'>SUNRISE DENTAL CLINIC</h2>"
                 + "    <p style='margin: 5px 0; font-size: 12px;'>Invoice Statement</p>"
                 + "  </div>"
-                + "  <div style='margin: 20px 0; font-size: 14px;'>"
+                + "  <div style='margin: 20px 0; font-size: 14px; line-height: 1.6;'>"
                 + "    <b>Invoice No:</b> " + billNumber + "<br>"
                 + "    <b>Date:</b> " + date + "<br>"
                 + "    <b>Appointment ID:</b> " + dto.getAppointmentId() + "<br>"
+                + "    <b>Patient Name:</b> " + (patientName != null ? patientName : "N/A") + "<br>"
+                + "    <b>Dentist Name:</b> " + (dentistName != null ? dentistName : "N/A") + "<br>"
                 + "  </div>"
                 + "  <table style='width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px;'>"
                 + "    <tr style='background-color: #f4f4f4;'>"

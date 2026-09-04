@@ -12,7 +12,12 @@ import dao.costom.impl.DentistDAOImpl;
 import dao.costom.impl.PatientDAOImpl;
 import dto.AppoinmentDTO;
 import java.sql.SQLException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Locale;
 import model.Appointment;
 import util.EmailUtility;
 import util.UserSession;
@@ -47,23 +52,23 @@ public class AppointmentController {
             return null;
         }
 
-        String input = rawTime.trim();
+        String input = rawTime.trim().toUpperCase();
 
-        if (input.matches("^\\d{1,2}$")) {
-            int val = Integer.parseInt(input);
-            return String.format("00:00:%02d", val);
+        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                .parseCaseInsensitive()
+                .appendPattern("[H:m:s]"
+                        + "[H:m]"
+                        + "[h:m:s a]"
+                        + "[h:m a]"
+                        + "[H]")
+                .toFormatter(Locale.ENGLISH);
+
+        try {
+            LocalTime time = LocalTime.parse(input, formatter);
+            return time.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+        } catch (DateTimeParseException e) {
+            return null; 
         }
-
-        if (input.matches("^\\d{1,2}:\\d{2}$")) {
-            String[] parts = input.split(":");
-            return String.format("%02d:%02d:00", Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
-        }
-
-        if (input.matches("^(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d$")) {
-            return input;
-        }
-
-        return null;
     }
 
     public void save(AppoinmentDTO appointmentDTO) {
@@ -75,17 +80,42 @@ public class AppointmentController {
 
         try {
             if (appointmentDAO.findByAppoinmentNum(appointmentDTO.getAppointment_number()) != null) {
-                dasbordForm.showMessage("Appoinment number Allready Exits");
+                dasbordForm.showMessage("Appointment number already exists!");
+                return; // Halt execution
             }
 
-            boolean createAppoinment = appointmentDAO.createAppoinment(new Appointment(appointmentDTO.getAppointment_number(), appointmentDTO.getPatientId(), appointmentDTO.getDentistId(), appointmentDTO.getTreatmentId(), appointmentDTO.getAppointmentDate(), appointmentDTO.getAppointmentTime(), appointmentDTO.getStetus()));
+            boolean isBooked = appointmentDAO.isDentistBooked(
+                    appointmentDTO.getDentistId(),
+                    appointmentDTO.getAppointmentDate(),
+                    appointmentDTO.getAppointmentTime()
+            );
+
+            if (isBooked) {
+                dasbordForm.showMessage("The selected dentist already has an appointment scheduled at this date and time!");
+                return;
+            }
+
+            Appointment appointment = new Appointment(
+                    appointmentDTO.getAppointment_number(),
+                    appointmentDTO.getPatientId(),
+                    appointmentDTO.getDentistId(),
+                    appointmentDTO.getTreatmentId(),
+                    appointmentDTO.getAppointmentDate(),
+                    appointmentDTO.getAppointmentTime(),
+                    appointmentDTO.getStetus()
+            );
+
+            boolean createAppoinment = appointmentDAO.createAppoinment(appointment);
+
             if (createAppoinment) {
-                dasbordForm.showMessage("Appoinment added successfully");
+                dasbordForm.showMessage("Appointment added successfully");
+            } else {
+                dasbordForm.showMessage("Failed to create appointment.");
+                return;
             }
+
             try {
-
                 String patientEmail = patientDAO.getPatientEmailById(appointmentDTO.getPatientId());
-
                 String subject = "Appointment Confirmation: " + appointmentDTO.getAppointment_number();
 
                 String patientBody = "<h2>Appointment Confirmed!</h2>"
@@ -100,15 +130,13 @@ public class AppointmentController {
                 if (patientEmail != null && !patientEmail.trim().isEmpty()) {
                     EmailUtility.sendEmail(patientEmail, subject, patientBody);
                 }
-
             } catch (Exception ex) {
-
                 System.err.println("Database succeeded, but notification dispatch failed: " + ex.getMessage());
             }
 
         } catch (SQLException ex) {
             System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            dasbordForm.showMessage("Appoinment added unsuccessfully");
+            dasbordForm.showMessage("Appointment added unsuccessfully");
         }
     }
 
@@ -122,21 +150,63 @@ public class AppointmentController {
         try {
             Appointment appoinment = appointmentDAO.findByAppoinmentNum(appointmentDTO.getAppointment_number());
 
+            if (appoinment == null) {
+                dasbordForm.showMessage("Appointment not found!");
+                return;
+            }
+
+            boolean isBooked = appointmentDAO.isDentistBookedExcludingCurrent(
+                    appointmentDTO.getDentistId(),
+                    appointmentDTO.getAppointmentDate(),
+                    appointmentDTO.getAppointmentTime(),
+                    appointmentDTO.getAppointment_number()
+            );
+
+            if (isBooked) {
+                dasbordForm.showMessage("The selected dentist already has another appointment scheduled at this date and time!");
+                return;
+            }
+
             appoinment.setPatientId(appointmentDTO.getPatientId());
             appoinment.setDentistId(appointmentDTO.getDentistId());
             appoinment.setTreatmentId(appointmentDTO.getTreatmentId());
             appoinment.setAppointmentDate(appointmentDTO.getAppointmentDate());
             appoinment.setAppointmentTime(appointmentDTO.getAppointmentTime());
             appoinment.setStetus(appointmentDTO.getStetus());
+
             boolean updateDentist = appointmentDAO.updateAppoinment(appoinment);
 
             if (updateDentist) {
-                dasbordForm.showMessage("Appoinment Updated successfully");
+                dasbordForm.showMessage("Appointment Updated successfully");
+            } else {
+                dasbordForm.showMessage("Failed to update appointment.");
+                return;
+            }
+
+            try {
+                String patientEmail = patientDAO.getPatientEmailById(appointmentDTO.getPatientId());
+                String subject = "Appointment Updated: " + appointmentDTO.getAppointment_number();
+
+                String patientBody = "<h2>Appointment Updated!</h2>"
+                        + "<p>Dear Patient,</p>"
+                        + "<p>Your appointment details have been updated as follows:</p>"
+                        + "<ul>"
+                        + "<li><b>Date:</b> " + appointmentDTO.getAppointmentDate() + "</li>"
+                        + "<li><b>Time:</b> " + appointmentDTO.getAppointmentTime() + "</li>"
+                        + "<li><b>Status:</b> " + appointmentDTO.getStetus() + "</li>"
+                        + "</ul>"
+                        + "<p>Thank you.</p>";
+
+                if (patientEmail != null && !patientEmail.trim().isEmpty()) {
+                    EmailUtility.sendEmail(patientEmail, subject, patientBody);
+                }
+            } catch (Exception ex) {
+                System.err.println("Database succeeded, but notification dispatch failed: " + ex.getMessage());
             }
 
         } catch (SQLException ex) {
             System.getLogger(DashbordForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            dasbordForm.showMessage("Appoinment Updated unsuccessfully");
+            dasbordForm.showMessage("Appointment Updated unsuccessfully");
         }
     }
 
@@ -167,6 +237,15 @@ public class AppointmentController {
         } catch (SQLException ex) {
             System.err.println("Error generating appointment number: " + ex.getMessage());
             return "APT-001";
+        }
+    }
+
+    public Object[] getAppointmentDetailsForBilling(String appNum) {
+        try {
+            return appointmentDAO.getAppointmentDetailsForBilling(appNum);
+        } catch (SQLException ex) {
+            System.err.println("Error fetching appointment billing details: " + ex.getMessage());
+            return null;
         }
     }
 }

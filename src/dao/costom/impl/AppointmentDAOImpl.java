@@ -183,4 +183,67 @@ public class AppointmentDAOImpl implements AppointmentDAO {
         }
         return list;
     }
+
+    @Override
+    public boolean isDentistBooked(int dentistId, String date, String time) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM appointments WHERE dentist_id = ? AND appointment_date = ? AND appointment_time = ? AND status != 'CANCELED'";
+
+        try (Connection con = DBConnection.getConnection(); PreparedStatement pst = con.prepareStatement(sql)) {
+
+            pst.setInt(1, dentistId);
+            pst.setDate(2, java.sql.Date.valueOf(date));
+            pst.setTime(3, java.sql.Time.valueOf(time));
+
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isDentistBookedExcludingCurrent(int dentistId, String date, String time, String appNum) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM appointments WHERE dentist_id = ? AND appointment_date = ? AND appointment_time = ? AND appointment_number != ? AND status != 'CANCELED'";
+        try (Connection con = DBConnection.getConnection(); PreparedStatement pst = con.prepareStatement(sql)) {
+            pst.setInt(1, dentistId);
+            pst.setString(2, date);
+            pst.setString(3, time);
+            pst.setString(4, appNum);
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public Object[] getAppointmentDetailsForBilling(String appoinmentNumber) throws SQLException {
+        String sql = "SELECT a.id, p.full_name AS patient_name, d.full_name AS dentist_name, t.treatment_cost "
+                + "FROM appointments a "
+                + "JOIN patients p ON a.patient_id = p.id "
+                + "JOIN dentists d ON a.dentist_id = d.id "
+                + "JOIN treatments t ON a.treatment_id = t.id "
+                + "WHERE a.appointment_number = ?";
+
+        try (Connection con = DBConnection.getConnection(); PreparedStatement pst = con.prepareStatement(sql)) {
+
+            pst.setString(1, appoinmentNumber);
+
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    return new Object[]{
+                        rs.getInt("id"),
+                        rs.getString("patient_name"),
+                        rs.getString("dentist_name"),
+                        rs.getDouble("treatment_cost")
+                    };
+                }
+            }
+        }
+        return null;
+    }
 }

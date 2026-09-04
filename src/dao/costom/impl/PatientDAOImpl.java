@@ -55,9 +55,9 @@ public class PatientDAOImpl implements PatientDAO {
         pst.setString(2, patient.getAddress());
 
         pst.setString(3, patient.getContactNumber());
-        
+
         pst.setString(4, patient.getEmail());
-        
+
         pst.setInt(5, patient.getId());
 
         int executeUpdate = pst.executeUpdate();
@@ -121,7 +121,7 @@ public class PatientDAOImpl implements PatientDAO {
             String number = rs.getString(4);
             String email = rs.getString(5);
 
-            Patient dentiest = new Patient(id, name, address, number,email);
+            Patient dentiest = new Patient(id, name, address, number, email);
             dentistList.add(dentiest);
         }
         con.close();
@@ -142,4 +142,22 @@ public class PatientDAOImpl implements PatientDAO {
         return null;
     }
 
+    @Override
+    public String getPatientEmailByAppointmentId(int appointmentId) throws SQLException {
+        String sql = "SELECT p.email FROM patients p "
+                + "JOIN appointments a ON p.id = a.patient_id "
+                + "WHERE a.id = ?";
+
+        try (Connection con = DBConnection.getConnection(); PreparedStatement pst = con.prepareStatement(sql)) {
+
+            pst.setInt(1, appointmentId);
+
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("email");
+                }
+            }
+        }
+        return null;
+    }
 }
