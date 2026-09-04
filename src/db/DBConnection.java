@@ -12,7 +12,8 @@ import java.sql.DriverManager;
  * @author ASUS
  */
 public class DBConnection {
-     public static void main(String[] args) {
+
+    public static void main(String[] args) {
         getConnection();
     }
 
@@ -21,7 +22,7 @@ public class DBConnection {
         try {
             Class.forName("com.mysql.jdbc.Driver");
 
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sunrise_dental_clinic?useSSL=false", "root", "1234");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sunrise_dental_clinic?useSSL=false", "root", "");
             System.out.println("Database Connected");
         } catch (Exception e) {
             System.out.println(e);

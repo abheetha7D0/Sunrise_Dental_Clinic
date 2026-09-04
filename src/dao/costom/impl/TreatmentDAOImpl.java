@@ -24,7 +24,7 @@ public class TreatmentDAOImpl implements TreatmentDAO {
     public boolean createTreatment(Treatment treatment) throws SQLException {
         Connection con = DBConnection.getConnection();
 
-        String sql = "INSERT INTO treatment(price,name,description) VALUES(?,?,?)";
+        String sql = "INSERT INTO treatments(treatment_cost,treatment_name,description) VALUES(?,?,?)";
 
         PreparedStatement pst = con.prepareStatement(sql);
 
@@ -43,7 +43,7 @@ public class TreatmentDAOImpl implements TreatmentDAO {
     public boolean updateTreatment(Treatment treatment) throws SQLException {
         Connection con = DBConnection.getConnection();
 
-        String sql = "UPDATE treatment SET price=?,name=?,description=? WHERE id=?";
+        String sql = "UPDATE treatments SET treatment_cost=?,treatment_name=?,description=? WHERE id=?";
 
         PreparedStatement pst = con.prepareStatement(sql);
 
@@ -64,7 +64,7 @@ public class TreatmentDAOImpl implements TreatmentDAO {
     public boolean deleteTreatment(int id) throws SQLException {
         Connection con = DBConnection.getConnection();
 
-        String sql = "DELETE FROM treatment WHERE id=?";
+        String sql = "DELETE FROM treatments WHERE id=?";
 
         PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
 
@@ -78,7 +78,7 @@ public class TreatmentDAOImpl implements TreatmentDAO {
     @Override
     public Treatment findByTreatmentName(String name) throws SQLException {
         Connection con = (Connection) DBConnection.getConnection();
-        PreparedStatement pst = (PreparedStatement) con.prepareStatement("select * from Treatment where name=?");
+        PreparedStatement pst = (PreparedStatement) con.prepareStatement("select * from treatments where treatment_name=?");
         pst.setObject(1, name);
 
         ResultSet rst = pst.executeQuery();
@@ -96,44 +96,45 @@ public class TreatmentDAOImpl implements TreatmentDAO {
 
     @Override
     public List<Treatment> getALLTreatments() throws SQLException {
-        ResultSet rs = null;
-
-        java.sql.Connection con = DBConnection.getConnection();
-        String sql = "SELECT * FROM treatment";
-        java.sql.PreparedStatement pst = con.prepareStatement(sql);
-        rs = pst.executeQuery();
-        
         List<Treatment> treatmentList = new ArrayList<>();
-       
-        while (rs.next()) {
-            int id = rs.getInt(1);
-            double cost = rs.getDouble(4);
-            String name = rs.getString(2);
-            String description = rs.getString(3);
 
-            Treatment treatment = new Treatment(id, cost, name, description);
-            treatmentList.add(treatment);
+        String sql = "SELECT id, treatment_name, treatment_cost, description FROM treatments";
+
+        try (Connection con = DBConnection.getConnection(); PreparedStatement pst = con.prepareStatement(sql); ResultSet rs = pst.executeQuery()) {
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("treatment_name");
+                double cost = rs.getDouble("treatment_cost");
+                String description = rs.getString("description");
+
+                Treatment treatment = new Treatment(id, cost, name, description);
+                treatmentList.add(treatment);
+            }
         }
+
         return treatmentList;
     }
 
     @Override
     public Treatment findByTreatmentId(int id) throws SQLException {
-        Connection con = (Connection) DBConnection.getConnection();
-        PreparedStatement pst = (PreparedStatement) con.prepareStatement("select * from Treatment where id=?");
-        pst.setObject(1, id);
+        String sql = "SELECT id, treatment_cost, treatment_name, description FROM treatments WHERE id = ?";
 
-        ResultSet rst = pst.executeQuery();
+        try (Connection con = DBConnection.getConnection(); PreparedStatement pst = con.prepareStatement(sql)) {
 
-        Treatment treatment = null;
+            pst.setInt(1, id);
 
-        if (rst.next()) {
-
-            treatment = new Treatment(rst.getDouble(4), rst.getString(2), rst.getString(3));
-            treatment.setId(id);
+            try (ResultSet rst = pst.executeQuery()) {
+                if (rst.next()) {
+                    double cost = rst.getDouble("treatment_cost");
+                    String name = rst.getString("treatment_name");
+                    String description = rst.getString("description");
+                    Treatment treatment = new Treatment(id, cost, name, description);
+                    return treatment;
+                }
+            }
         }
-        con.close();
-        return treatment;
+        return null;
     }
 
 }

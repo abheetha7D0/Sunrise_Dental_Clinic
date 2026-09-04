@@ -50,20 +50,22 @@ public class TreatmentController {
         Role userRole = UserSession.getUserRole();
         if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole) && !Role.DENTIST.equals(userRole)) {
             dasbordForm.showMessage("Access denied");
-            return null;
+            return new ArrayList<>();
         }
-        List<Treatment> allTreatments = null;
+        List<Treatment> allTreatments = new ArrayList<>();;
         try {
             allTreatments = treatmentDAO.getALLTreatments();
         } catch (SQLException ex) {
-            dasbordForm.showMessage("Get All Treatment Null");
+            ex.printStackTrace();
+            dasbordForm.showMessage("Failed to retrieve treatments from database.");
+            return new ArrayList<>();
         }
 
-        List<TreatmentDTO> dentistList = new ArrayList<>();
+        List<TreatmentDTO> treatmentList = new ArrayList<>();
 
         for (Treatment treatment : allTreatments) {
 
-            dentistList.add(new TreatmentDTO(
+            treatmentList.add(new TreatmentDTO(
                     treatment.getId(),
                     treatment.getTreatmentCost(),
                     treatment.getTretmentName(),
@@ -71,7 +73,7 @@ public class TreatmentController {
             ));
         }
 
-        return dentistList;
+        return treatmentList;
     }
 
     public Treatment getTreatmentById(int id) {

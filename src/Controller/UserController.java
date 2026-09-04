@@ -12,7 +12,10 @@ import dao.costom.impl.TokenDAOImpl;
 import dao.costom.impl.UserDAOImpl;
 import dto.AddUserDTO;
 import dto.UpdateUserDTO;
+import dto.UserDTO;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import javax.swing.JOptionPane;
 import model.User;
@@ -74,6 +77,10 @@ public class UserController {
             System.getLogger(UserController.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }
+    
+    public void register(){
+        
+    }
 
     public void addUser(AddUserDTO userDTO) {
         Role userRole = getUserRole();
@@ -93,7 +100,7 @@ public class UserController {
         try {
 
             User savedUser = userDAO.addUser(new User(
-                    "",
+                    userDTO.getEmail(),
                     "",
                     userDTO.getName(),
                     userDTO.getEmail(),
@@ -134,4 +141,33 @@ public class UserController {
         }
     }
 
+    public List<AddUserDTO> getAll() {
+        String userName = UserSession.getUserName();
+        Role userRole = UserSession.getUserRole();
+        System.out.println(!Role.ADMIN.equals(userRole) && !Role.DENTIST.equals(userRole));
+
+        if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole)) {
+            dasbordForm.showMessage("Access denied");
+            return null;
+        }
+
+        List<User> allUser = null;
+        try {
+            allUser = userDAO.getAllUsers();
+        } catch (SQLException ex) {
+            dasbordForm.showMessage("Get all User null");
+        }
+        List<AddUserDTO> userList = new ArrayList<>();
+
+        for (User user : allUser) {
+
+            userList.add(new AddUserDTO(
+                    user.getFullName(),
+                    user.getEmail(),
+                    user.getStatus(),
+                    user.getRole()
+            ));
+        }
+        return userList;
+    }
 }

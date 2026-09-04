@@ -27,13 +27,15 @@ public class Dentist {
         this.stetus = stetus;
     }
 
-    public Dentist(int id, String fullName, String specialization, String contactNumber, DentistStetus stetus) {
+    public Dentist(int id, String fullName, String specialization, String contactNumber, String email, DentistStetus stetus) {
         this.id = id;
         this.fullName = fullName;
         this.specialization = specialization;
         this.contactNumber = contactNumber;
+        this.email = email;
         this.stetus = stetus;
     }
+
 
     public void setEmail(String email) {
         this.email = email;

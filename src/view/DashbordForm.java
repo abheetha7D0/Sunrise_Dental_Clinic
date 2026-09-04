@@ -86,12 +86,16 @@ public final class DashbordForm extends javax.swing.JFrame {
 
         jTxtDentistName.setText("");
         jTxtDentistEmail.setText("");
+        jTxtDentistSpec.setText("");
         jTxtDentistContactNum.setText("");
 
         jTxtTreatmentName.setText("");
         jTxtTreatmentDescription.setText("");
         jTxtTreatmentPrice.setText("");
 
+        jTxtUsersName.setText("");
+        jTxtUsersEmail.setText("");
+        
         if (jCmbDentistStetus.getItemCount() > 0) {
             jCmbDentistStetus.setSelectedIndex(0);
         }
@@ -101,6 +105,8 @@ public final class DashbordForm extends javax.swing.JFrame {
         jTblPatient.clearSelection();
 
         jTblTreatment.clearSelection();
+        
+        jTblUsers.clearSelection();
 
     }
 
@@ -191,9 +197,11 @@ public final class DashbordForm extends javax.swing.JFrame {
         jPanelBillsContext.setVisible(false);
         jPanelSettingContext.setVisible(false);
         jPanelTreatmentContext.setVisible(false);
+        jPanelUserContext.setVisible(false);
         viewAllDentist();
         viewAllPatient();
         viewAllTreatment();
+        viewAllUsers();
 
     }
 
@@ -214,6 +222,24 @@ public final class DashbordForm extends javax.swing.JFrame {
                 dentiest.getContactNumber(),
                 dentiest.getEmail(),
                 dentiest.getStetus()
+            });
+        }
+
+    }
+
+    final void viewAllUsers() {
+        List<AddUserDTO> allusers = userController.getAll();
+
+        DefaultTableModel model = (DefaultTableModel) jTblUsers.getModel();
+        model.setRowCount(0);
+
+        for (AddUserDTO user : allusers) {
+
+            model.addRow(new Object[]{
+                user.getName(),
+                user.getEmail(),
+                user.getStatus(),
+                user.getRole()
             });
         }
 
@@ -402,7 +428,6 @@ public final class DashbordForm extends javax.swing.JFrame {
         jSeparator9 = new javax.swing.JSeparator();
         jBtnUsersAdd = new javax.swing.JButton();
         jBtnUsersUpdate = new javax.swing.JButton();
-        jBtnUsersDelete = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         jTblUsers = new javax.swing.JTable();
         jBtnUsersClear = new javax.swing.JButton();
@@ -522,6 +547,11 @@ public final class DashbordForm extends javax.swing.JFrame {
         jBtnSetting.setBackground(new java.awt.Color(255, 255, 255));
         jBtnSetting.setForeground(new java.awt.Color(255, 255, 255));
         jBtnSetting.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/src/icons8-settings-25.png"))); // NOI18N
+        jBtnSetting.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jBtnSettingMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
         jPanel.setLayout(jPanelLayout);
@@ -534,7 +564,7 @@ public final class DashbordForm extends javax.swing.JFrame {
                     .addComponent(jLblTime))
                 .addGap(253, 253, 253)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
                 .addComponent(jBtnSetting)
                 .addGap(18, 18, 18)
                 .addComponent(jBtnLogOut)
@@ -1441,7 +1471,7 @@ public final class DashbordForm extends javax.swing.JFrame {
                 .addGroup(jPanelBillsContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel32)
                     .addComponent(jPlBillPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanelBillsContextLayout.setVerticalGroup(
             jPanelBillsContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1571,7 +1601,7 @@ public final class DashbordForm extends javax.swing.JFrame {
                             .addComponent(jLabel43, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(36, 36, 36)
                         .addComponent(jBtnSettingChangePassword)))
-                .addGap(394, 531, Short.MAX_VALUE))
+                .addGap(394, 457, Short.MAX_VALUE))
         );
         jPanelSettingContextLayout.setVerticalGroup(
             jPanelSettingContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1645,33 +1675,32 @@ public final class DashbordForm extends javax.swing.JFrame {
         jBtnUsersUpdate.setText("Update");
         jBtnUsersUpdate.addActionListener(this::jBtnUsersUpdateActionPerformed);
 
-        jBtnUsersDelete.setBackground(new java.awt.Color(255, 0, 0));
-        jBtnUsersDelete.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jBtnUsersDelete.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnUsersDelete.setText("Delete");
-        jBtnUsersDelete.addActionListener(this::jBtnUsersDeleteActionPerformed);
-
         jTblUsers.setBackground(new java.awt.Color(0, 153, 204));
         jTblUsers.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jTblUsers.setForeground(new java.awt.Color(0, 102, 255));
+        jTblUsers.setForeground(new java.awt.Color(255, 255, 255));
         jTblUsers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Id", "User Name", "Name", "Email", "Stetus", "Role"
+                "Name", "Email", "Stetus", "Role"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTblUsers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTblUsersMouseClicked(evt);
             }
         });
         jScrollPane8.setViewportView(jTblUsers);
@@ -1690,9 +1719,9 @@ public final class DashbordForm extends javax.swing.JFrame {
         jLabel48.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel48.setText("Stetus");
 
-        jCmbUserStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ACTIVATE", "DEACTIVATE", "UNREGISTERED " }));
+        jCmbUserStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ACTIVATE", "DEACTIVATE", "UNREGISTERED" }));
 
-        jCmbUsersRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMIN", "STAFF", "DENTIST", "PATIENT" }));
+        jCmbUsersRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "STAFF", "DENTIST", "PATIENT" }));
 
         jLabel49.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel49.setText("Role");
@@ -1712,44 +1741,42 @@ public final class DashbordForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jSeparator9)
                 .addContainerGap())
-            .addGroup(jPanelUserContextLayout.createSequentialGroup()
-                .addGroup(jPanelUserContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelUserContextLayout.createSequentialGroup()
-                        .addGap(112, 112, 112)
-                        .addGroup(jPanelUserContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel44)
-                            .addComponent(jTxtUsersName, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(69, 69, 69)
-                        .addGroup(jPanelUserContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel45)
-                            .addGroup(jPanelUserContextLayout.createSequentialGroup()
-                                .addGroup(jPanelUserContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel46)
-                                    .addComponent(jTxtUsersEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(61, 61, 61)
-                                .addGroup(jPanelUserContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel48)
-                                    .addComponent(jCmbUserStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanelUserContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel49)
-                                    .addComponent(jCmbUsersRole, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(jPanelUserContextLayout.createSequentialGroup()
-                        .addGap(236, 236, 236)
-                        .addComponent(jBtnUsersAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(jBtnUsersUpdate)
-                        .addGap(38, 38, 38)
-                        .addComponent(jBtnUsersDelete)
-                        .addGap(41, 41, 41)
-                        .addComponent(jBtnUsersClear)))
-                .addContainerGap(57, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelUserContextLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelUserContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)
                     .addComponent(jTxtUsersSearch))
                 .addGap(83, 83, 83))
+            .addGroup(jPanelUserContextLayout.createSequentialGroup()
+                .addGroup(jPanelUserContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelUserContextLayout.createSequentialGroup()
+                        .addGap(349, 349, 349)
+                        .addComponent(jLabel45))
+                    .addGroup(jPanelUserContextLayout.createSequentialGroup()
+                        .addGap(236, 236, 236)
+                        .addComponent(jBtnUsersAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(jBtnUsersUpdate)
+                        .addGap(31, 31, 31)
+                        .addComponent(jBtnUsersClear))
+                    .addGroup(jPanelUserContextLayout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addGroup(jPanelUserContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel44)
+                            .addComponent(jTxtUsersName, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(69, 69, 69)
+                        .addGroup(jPanelUserContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel46)
+                            .addComponent(jTxtUsersEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(61, 61, 61)
+                        .addGroup(jPanelUserContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel48)
+                            .addComponent(jCmbUserStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelUserContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel49)
+                            .addComponent(jCmbUsersRole, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         jPanelUserContextLayout.setVerticalGroup(
             jPanelUserContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1779,7 +1806,6 @@ public final class DashbordForm extends javax.swing.JFrame {
                 .addGroup(jPanelUserContextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnUsersAdd)
                     .addComponent(jBtnUsersUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnUsersDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnUsersClear, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1882,9 +1908,11 @@ public final class DashbordForm extends javax.swing.JFrame {
         jPanelAppoinmentContext.setVisible(false);
         jPanelPatientContext.setVisible(false);
         jPanelBillsContext.setVisible(false);
-        jPanelSettingContext.setVisible(true);
+        jPanelSettingContext.setVisible(false);
         jPanelTreatmentContext.setVisible(false);
         jPanelDentistContext.setVisible(false);
+        jPanelUserContext.setVisible(true);
+
         viewAllDentist();
     }//GEN-LAST:event_jBtnUserActionPerformed
 
@@ -1896,7 +1924,7 @@ public final class DashbordForm extends javax.swing.JFrame {
         jPanelSettingContext.setVisible(false);
         jPanelTreatmentContext.setVisible(false);
         jPanelDentistContext.setVisible(true);
-
+        jPanelUserContext.setVisible(false);
         viewAllDentist();
     }//GEN-LAST:event_jBtnDentistActionPerformed
 
@@ -1908,6 +1936,7 @@ public final class DashbordForm extends javax.swing.JFrame {
         jPanelSettingContext.setVisible(false);
         jPanelTreatmentContext.setVisible(false);
         jPanelDentistContext.setVisible(false);
+        jPanelUserContext.setVisible(false);
         viewAllDentist();
     }//GEN-LAST:event_jBtnPatientActionPerformed
     private void updateLivePreview() {
@@ -1956,11 +1985,12 @@ public final class DashbordForm extends javax.swing.JFrame {
         int id = Integer.parseInt(jTblDentist.getValueAt(row, 0).toString());
 
         String name = jTxtDentistName.getText().trim();
-        String Specialization = jTxtDentistEmail.getText().trim();
+        String Specialization = jTxtDentistSpec.getText().trim();
         String contact_number = jTxtDentistContactNum.getText().trim();
-        DentistStetus status = (DentistStetus) jCmbDentistStetus.getSelectedItem();
+        String email = jTxtDentistEmail.getText().trim();
+        DentistStetus status = DentistStetus.valueOf(jCmbDentistStetus.getSelectedItem().toString());
 
-        dentiestController.update(new DentiestDTO(id, name, Specialization, contact_number, status));
+        dentiestController.update(new DentiestDTO(id, name, Specialization, contact_number,email, status));
         clearInputs();
 
         viewAllDentist();
@@ -2163,10 +2193,12 @@ public final class DashbordForm extends javax.swing.JFrame {
         String name = jTblDentist.getValueAt(row, 1).toString();
         String spec = jTblDentist.getValueAt(row, 2).toString();
         String contact_number = jTblDentist.getValueAt(row, 3).toString();
-        Object stetusOb = jTblDentist.getValueAt(row, 4);
+        String email = jTblDentist.getValueAt(row, 4).toString();
+        Object stetusOb = jTblDentist.getValueAt(row, 5);
 
         jTxtDentistName.setText(name);
-        jTxtDentistEmail.setText(spec);
+        jTxtDentistSpec.setText(spec);
+        jTxtDentistEmail.setText(email);
         jTxtDentistContactNum.setText(contact_number);
 
         if (stetusOb != null) {
@@ -2189,6 +2221,7 @@ public final class DashbordForm extends javax.swing.JFrame {
         jPanelSettingContext.setVisible(false);
         jPanelTreatmentContext.setVisible(false);
         jPanelDentistContext.setVisible(false);
+        jPanelUserContext.setVisible(false);
         viewAllDentist();
     }//GEN-LAST:event_jBtnAppoinmenetActionPerformed
 
@@ -2200,6 +2233,7 @@ public final class DashbordForm extends javax.swing.JFrame {
         jPanelSettingContext.setVisible(false);
         jPanelTreatmentContext.setVisible(true);
         jPanelDentistContext.setVisible(false);
+        jPanelUserContext.setVisible(false);
         viewAllDentist();
     }//GEN-LAST:event_jBtnTretmentActionPerformed
 
@@ -2211,6 +2245,7 @@ public final class DashbordForm extends javax.swing.JFrame {
         jPanelSettingContext.setVisible(false);
         jPanelTreatmentContext.setVisible(false);
         jPanelDentistContext.setVisible(false);
+        jPanelUserContext.setVisible(false);
         viewAllDentist();
     }//GEN-LAST:event_jBtnBillActionPerformed
 
@@ -2239,10 +2274,12 @@ public final class DashbordForm extends javax.swing.JFrame {
         String name = jTblPatient.getValueAt(row, 1).toString();
         String address = jTblPatient.getValueAt(row, 2).toString();
         String contact_number = jTblPatient.getValueAt(row, 3).toString();
+        String email = jTblPatient.getValueAt(row, 4).toString();
 
         jTxtPatientName.setText(name);
         jTxtPatientAddress.setText(address);
         jTxtPatientContactNum.setText(contact_number);
+        jTxtPatientEmail.setText(email);
         checkInputs();
         jBtnPatientSave.setEnabled(false);
 
@@ -2342,18 +2379,17 @@ public final class DashbordForm extends javax.swing.JFrame {
         Role role = Role.valueOf(jCmbUsersRole.getSelectedItem().toString());
 
         userController.addUser(new AddUserDTO(name, email, status, role));
+         clearInputs();
     }//GEN-LAST:event_jBtnUsersAddActionPerformed
 
     private void jBtnUsersUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnUsersUpdateActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jBtnUsersUpdateActionPerformed
-
-    private void jBtnUsersDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnUsersDeleteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jBtnUsersDeleteActionPerformed
 
     private void jBtnUsersClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnUsersClearActionPerformed
         // TODO add your handling code here:
+        clearInputs();
     }//GEN-LAST:event_jBtnUsersClearActionPerformed
 
     private void jTxtUsersSearchMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTxtUsersSearchMouseReleased
@@ -2389,6 +2425,41 @@ public final class DashbordForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         updateLivePreview();
     }//GEN-LAST:event_jTxtBillDiscountMouseReleased
+
+    private void jBtnSettingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnSettingMouseClicked
+        // TODO add your handling code here:
+        jPanelAppoinmentContext.setVisible(false);
+        jPanelPatientContext.setVisible(false);
+        jPanelBillsContext.setVisible(false);
+        jPanelSettingContext.setVisible(true);
+        jPanelTreatmentContext.setVisible(false);
+        jPanelDentistContext.setVisible(false);
+        jPanelUserContext.setVisible(false);
+    }//GEN-LAST:event_jBtnSettingMouseClicked
+
+    private void jTblUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblUsersMouseClicked
+        // TODO add your handling code here:
+        int row = jTblUsers.getSelectedRow();
+
+        String name = jTblUsers.getValueAt(row, 0).toString();
+        String email = jTblUsers.getValueAt(row, 1).toString();
+        Object stetusOb = jTblUsers.getValueAt(row, 2).toString();
+        Object roleOb  = jTblUsers.getValueAt(row, 3).toString();
+
+        jTxtUsersName.setText(name);
+        jTxtUsersEmail.setText(email);
+        if (stetusOb != null) {
+            jCmbUserStatus.setSelectedItem(stetusOb.toString());
+        }
+        if (stetusOb != null) {
+            jCmbUsersRole.setSelectedItem(roleOb.toString());
+        }
+      
+
+        checkInputs();
+        jBtnTreatmentSave.setEnabled(false);
+    }//GEN-LAST:event_jTblUsersMouseClicked
+
 
     /**
      * @param args the command line arguments
@@ -2446,7 +2517,6 @@ public final class DashbordForm extends javax.swing.JFrame {
     private javax.swing.JButton jBtnUser;
     private javax.swing.JButton jBtnUsersAdd;
     private javax.swing.JButton jBtnUsersClear;
-    private javax.swing.JButton jBtnUsersDelete;
     private javax.swing.JButton jBtnUsersUpdate;
     private javax.swing.JComboBox<String> jCmbAppoinmentStetus;
     private javax.swing.JComboBox<Integer> jCmbDentistId;

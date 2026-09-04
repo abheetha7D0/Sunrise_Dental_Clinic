@@ -10,6 +10,6 @@ package Enums;
  */
 public enum AppointmentStetus {
     SHEDULED,
-    COMPLETE,
+    COMPLETED,
     CANCELED
 }

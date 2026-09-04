@@ -12,10 +12,10 @@ import javax.swing.SwingUtilities;
  * @author ASUS
  */
 public class EmailUtility {
-    private static final String SMTP_HOST = "://gmail.com";
+    private static final String SMTP_HOST = "smtp.gmail.com";
     private static final String SMTP_PORT = "587";
     private static final String SENDER_EMAIL = "abeetha.dilushan@gmail.com"; 
-    private static final String SENDER_PASSWORD = "hqry uoul fbiy gedl"; 
+    private static final String SENDER_PASSWORD = "xumwyxgctritnkrv"; 
 
     public static void sendEmail(String recipientEmail, String subject, String htmlContent) {
         

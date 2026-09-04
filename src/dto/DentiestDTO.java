@@ -26,13 +26,15 @@ public class DentiestDTO {
         this.stetus = stetus;
     }
 
-    public DentiestDTO(int id, String fullName, String specialization, String contactNumber, DentistStetus stetus) {
+    public DentiestDTO(int id, String fullName, String specialization, String contactNumber, String email, DentistStetus stetus) {
         this.id = id;
         this.fullName = fullName;
         this.specialization = specialization;
         this.contactNumber = contactNumber;
+        this.email = email;
         this.stetus = stetus;
     }
+
 
     public void setId(int id) {
         this.id = id;

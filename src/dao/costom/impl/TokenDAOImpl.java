@@ -18,7 +18,7 @@ public class TokenDAOImpl implements TokenDAO{
 
     @Override
     public boolean saveToken(String token, int userId) throws SQLException {
-        String sql = "INSERT INTO user_registration_token (token, user_id) VALUES (?, ?)";
+        String sql = "INSERT INTO user_registration_tokens (token, user_id) VALUES (?, ?)";
         try (Connection con = DBConnection.getConnection(); 
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, token);

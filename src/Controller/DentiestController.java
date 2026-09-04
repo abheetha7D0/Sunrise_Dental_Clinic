@@ -71,6 +71,7 @@ public class DentiestController {
                     dentiest.getFullName(),
                     dentiest.getSpecialization(),
                     dentiest.getContactNumber(),
+                    dentiest.getEmail(),
                     dentiest.getStetus()
             ));
         }
@@ -127,6 +128,7 @@ public class DentiestController {
 
     public void update(DentiestDTO dentiestDto) {
         Role userRole = UserSession.getUserRole();
+        System.out.println(dentiestDto.getFullName());
         if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole)) {
             dasbordForm.showMessage("Access denied");
             return;

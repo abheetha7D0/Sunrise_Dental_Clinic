@@ -24,7 +24,7 @@ public class PatientDAOImpl implements PatientDAO {
     public boolean addPatient(Patient patient) throws SQLException {
         Connection con = (Connection) DBConnection.getConnection();
 
-        String sql = "INSERT INTO Patients(name,address,contact_number) VALUES(?,?,?)";
+        String sql = "INSERT INTO Patients(full_name,address,contact_number,email) VALUES(?,?,?,?)";
 
         PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
 
@@ -33,6 +33,8 @@ public class PatientDAOImpl implements PatientDAO {
         pst.setString(2, patient.getAddress());
 
         pst.setString(3, patient.getContactNumber());
+
+        pst.setString(4, patient.getEmail());
 
         int executeUpdate = pst.executeUpdate();
         con.close();
@@ -44,7 +46,7 @@ public class PatientDAOImpl implements PatientDAO {
     public boolean updatePatient(Patient patient) throws SQLException {
         Connection con = (Connection) DBConnection.getConnection();
 
-        String sql = "UPDATE Patients SET name=?,address=?,contact_number=? WHERE id=?";
+        String sql = "UPDATE Patients SET full_name=?,address=?,contact_number=?,email=? WHERE id=?";
 
         PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
 
@@ -53,8 +55,10 @@ public class PatientDAOImpl implements PatientDAO {
         pst.setString(2, patient.getAddress());
 
         pst.setString(3, patient.getContactNumber());
-
-        pst.setInt(4, patient.getId());
+        
+        pst.setString(4, patient.getEmail());
+        
+        pst.setInt(5, patient.getId());
 
         int executeUpdate = pst.executeUpdate();
         con.close();
@@ -109,14 +113,15 @@ public class PatientDAOImpl implements PatientDAO {
         java.sql.PreparedStatement pst = con.prepareStatement(sql);
         rs = pst.executeQuery();
         List<Patient> dentistList = new ArrayList<>();
-        
+
         while (rs.next()) {
             int id = rs.getInt(1);
             String name = rs.getString(2);
             String address = rs.getString(3);
             String number = rs.getString(4);
-            
-            Patient dentiest = new Patient(id, name, address, number);
+            String email = rs.getString(5);
+
+            Patient dentiest = new Patient(id, name, address, number,email);
             dentistList.add(dentiest);
         }
         con.close();

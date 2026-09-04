@@ -29,13 +29,14 @@ public class Patient {
         this.contactNumber = contactNumber;
     }
 
-    public Patient(int id, String fullName, String address, String contactNumber) {
+    public Patient(int id, String fullName, String address, String contactNumber, String email) {
         this.id = id;
         this.fullName = fullName;
         this.address = address;
         this.contactNumber = contactNumber;
+        this.email = email;
     }
-
+    
     public void setEmail(String email) {
         this.email = email;
     }

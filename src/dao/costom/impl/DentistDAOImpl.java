@@ -36,9 +36,10 @@ public class DentistDAOImpl implements DentistDAO {
             String name = rs.getString(2);
             String specialization = rs.getString(3);
             String number = rs.getString(4);
-            DentistStetus status = DentistStetus.valueOf(rs.getString(5));
+            String email = rs.getString(5);
+            DentistStetus status = DentistStetus.valueOf(rs.getString(6));
 
-            Dentist dentiest = new Dentist(id, name, specialization, number, status);
+            Dentist dentiest = new Dentist(id, name, specialization, number, email, status);
             dentistList.add(dentiest);
         }
         con.close();
@@ -50,7 +51,7 @@ public class DentistDAOImpl implements DentistDAO {
 
         Connection con = (Connection) DBConnection.getConnection();
 
-        String sql = "INSERT INTO dentists(name,specialization,contact_number,email,status) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO dentists(full_name,specialization,contact_number,email,status) VALUES(?,?,?,?,?)";
 
         PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
 
@@ -76,7 +77,7 @@ public class DentistDAOImpl implements DentistDAO {
 
         Connection con = (Connection) DBConnection.getConnection();
 
-        String sql = "UPDATE dentists SET name=?,specialization=?,contact_number=?,status=? WHERE id=?";
+        String sql = "UPDATE dentists SET full_name=?,specialization=?,contact_number=?,email=?,status=? WHERE id=?";
 
         PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
 
@@ -90,7 +91,7 @@ public class DentistDAOImpl implements DentistDAO {
 
         pst.setString(5, dentist.getStetus().name());
 
-        pst.setInt(5, dentist.getId());
+        pst.setInt(6, dentist.getId());
 
         int executeUpdate = pst.executeUpdate();
         con.close();
@@ -175,7 +176,7 @@ public class DentistDAOImpl implements DentistDAO {
         Dentist dentist = null;
 
         if (rst.next()) {
-            String statusStr = rst.getString(5);
+            String statusStr = rst.getString(6);
             DentistStetus status = null;
 
             if (statusStr != null) {

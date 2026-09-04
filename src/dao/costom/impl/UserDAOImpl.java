@@ -5,6 +5,7 @@
 package dao.costom.impl;
 
 import Enums.Role;
+import Enums.UserStetus;
 import dao.costom.UserDAO;
 import db.DBConnection;
 import model.User;
@@ -12,6 +13,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -39,7 +42,38 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User addUser(User user) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Connection con = (Connection) DBConnection.getConnection();
+
+        String sql = "INSERT INTO users(username,password,email,full_name,status,role) VALUES(?,?,?,?,?,?)";
+
+        PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS);
+
+        pst.setString(1, user.getUsername());
+
+        pst.setString(2, user.getPassword());
+
+        pst.setString(3, user.getEmail());
+
+        pst.setString(4, user.getFullName());
+
+        pst.setString(5, user.getStatus().name());
+
+        pst.setString(6, user.getRole().name());
+
+        int affectedRows = pst.executeUpdate();
+
+        if (affectedRows > 0) {
+
+            try (ResultSet generatedKeys = pst.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    user.setId(generatedKeys.getInt(1));
+                }
+            }
+        }
+
+        con.close();
+        System.out.println("User Added Successfully with ID: " + user.getId());
+        return user;
     }
 
     @Override
@@ -63,7 +97,7 @@ public class UserDAOImpl implements UserDAO {
 
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
-            String userRole = rs.getString(6);
+            String userRole = rs.getString(7);
 
             if (userRole != null) {
                 role = Role.valueOf(userRole.toUpperCase());
@@ -117,12 +151,45 @@ public class UserDAOImpl implements UserDAO {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return rs.getString(3);
-                
+
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
 
         return null;
+    }
+
+    @Override
+    public List<User> getAllUsers() throws SQLException {
+       String sql = "SELECT * FROM users";
+        List<User> userList = new ArrayList<>();
+
+        Connection con = (Connection) DBConnection.getConnection();
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            int id = rs.getInt(1);
+            
+            String username = rs.getString(2);
+            String password = rs.getString(3);
+            String fullName = rs.getString(4);
+            String email = rs.getString(5);
+            UserStetus status = UserStetus.valueOf(rs.getString(6).toUpperCase());
+            Role role = Role.valueOf(rs.getString(7).toUpperCase());
+
+            User user = new User(id, username, password, fullName, email, status, role);
+            userList.add(user);
+        }
+
+        con.close();
+
+        return userList;
+    }
+
+    @Override
+    public boolean register(User user) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
