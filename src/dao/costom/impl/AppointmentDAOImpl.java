@@ -9,11 +9,13 @@ import java.sql.PreparedStatement;
 import java.sql.Connection;
 import dao.costom.AppointmentDAO;
 import db.DBConnection;
+import dto.AppoinmentDTO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Appointment;
 import java.sql.ResultSet;
+
 /**
  *
  * @author ASUS
@@ -60,13 +62,13 @@ public class AppointmentDAOImpl implements AppointmentDAO {
         pst.setInt(2, appoinment.getPatientId());
 
         pst.setInt(3, appoinment.getDentistId());
-        
+
         pst.setInt(4, appoinment.getTreatmentId());
-        
+
         pst.setString(5, appoinment.getAppointmentDate());
-        
+
         pst.setString(6, appoinment.getAppointmentTime());
-        
+
         pst.setString(7, appoinment.getStetus().name());
 
         pst.setInt(8, appoinment.getId());
@@ -99,9 +101,9 @@ public class AppointmentDAOImpl implements AppointmentDAO {
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setString(1, appoinmentNum);
         ResultSet executeQuery = pst.executeQuery();
-        
+
         Appointment appointment = null;
-        
+
         if (executeQuery.next()) {
             String statusStr = executeQuery.getString(8);
             AppointmentStetus status = null;
@@ -110,8 +112,8 @@ public class AppointmentDAOImpl implements AppointmentDAO {
                 status = AppointmentStetus.valueOf(statusStr.toUpperCase());
             }
 
-            appointment = new Appointment(executeQuery.getInt(1), executeQuery.getString(2), executeQuery.getInt(3),executeQuery.getInt(4),executeQuery.getInt(5),executeQuery.getString(6),executeQuery.getString(7),status);
-            
+            appointment = new Appointment(executeQuery.getInt(1), executeQuery.getString(2), executeQuery.getInt(3), executeQuery.getInt(4), executeQuery.getInt(5), executeQuery.getString(6), executeQuery.getString(7), status);
+
         }
         con.close();
         return appointment;
@@ -137,11 +139,48 @@ public class AppointmentDAOImpl implements AppointmentDAO {
             String appointment_time = rs.getString(7);
             AppointmentStetus status = AppointmentStetus.valueOf(rs.getString(8));
 
-            Appointment appointment = new Appointment(id, appointment_number, patient_id, dentist_id, treatment_id,appointment_date,appointment_time,status);
+            Appointment appointment = new Appointment(id, appointment_number, patient_id, dentist_id, treatment_id, appointment_date, appointment_time, status);
             appointmentList.add(appointment);
         }
         con.close();
         return appointmentList;
     }
 
+    @Override
+    public String generateNextAppointmentNumber() throws SQLException {
+        String sql = "SELECT id FROM appointments ORDER BY id DESC LIMIT 1";
+
+        try (Connection con = DBConnection.getConnection(); PreparedStatement pst = con.prepareStatement(sql); ResultSet rs = pst.executeQuery()) {
+
+            if (rs.next()) {
+                int lastId = rs.getInt(1);
+                return String.format("APT-%03d", lastId + 1);
+            } else {
+                return "APT-001";
+            }
+        }
+    }
+
+    @Override
+    public List<AppoinmentDTO> getAllAppointments() throws SQLException {
+        List<AppoinmentDTO> list = new ArrayList<>();
+        String sql = "SELECT * FROM appointments ORDER BY id DESC";
+
+        try (Connection con = DBConnection.getConnection(); PreparedStatement pst = con.prepareStatement(sql); ResultSet rs = pst.executeQuery()) {
+
+            while (rs.next()) {
+                list.add(new AppoinmentDTO(
+                        rs.getInt("id"),
+                        rs.getString("appointment_number"),
+                        rs.getInt("patient_id"),
+                        rs.getInt("dentist_id"),
+                        rs.getInt("treatment_id"),
+                        rs.getString("appointment_date"),
+                        rs.getString("appointment_time"),
+                        AppointmentStetus.valueOf(rs.getString("status"))
+                ));
+            }
+        }
+        return list;
+    }
 }

@@ -5,6 +5,7 @@
 package dao.costom;
 
 import dao.SuperDAO;
+import dto.AppoinmentDTO;
 import java.sql.SQLException;
 import java.util.List;
 import model.Appointment;
@@ -13,16 +14,19 @@ import model.Appointment;
  *
  * @author ASUS
  */
-public interface AppointmentDAO extends SuperDAO{
+public interface AppointmentDAO extends SuperDAO {
 
-    boolean createAppoinment(Appointment Appoinment)  throws SQLException;
+    List<AppoinmentDTO> getAllAppointments() throws SQLException ;
 
-    boolean updateAppoinment(Appointment Appoinment)  throws SQLException;
+    boolean createAppoinment(Appointment Appoinment) throws SQLException;
 
-    boolean cancelAppoinment(String appoinmentNumber)  throws SQLException;
+    boolean updateAppoinment(Appointment Appoinment) throws SQLException;
 
-    Appointment findByAppoinmentNum(String appoinmentNum)  throws SQLException;
-    
-    List<Appointment> getAllAppoinment()  throws SQLException;
+    boolean cancelAppoinment(String appoinmentNumber) throws SQLException;
 
+    Appointment findByAppoinmentNum(String appoinmentNum) throws SQLException;
+
+    List<Appointment> getAllAppoinment() throws SQLException;
+
+    String generateNextAppointmentNumber() throws SQLException;
 }

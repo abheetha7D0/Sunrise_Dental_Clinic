@@ -202,7 +202,31 @@ public final class DashbordForm extends javax.swing.JFrame {
         viewAllPatient();
         viewAllTreatment();
         viewAllUsers();
+        viewAllAppointments();
+    }
 
+    final void viewAllAppointments() {
+        List<AppoinmentDTO> allAppointments = appointmentController.getAll();
+
+        DefaultTableModel model = (DefaultTableModel) jTblAppoinment.getModel();
+        model.setRowCount(0);
+
+        if (allAppointments == null) {
+            return;
+        }
+
+        for (AppoinmentDTO appointment : allAppointments) {
+            model.addRow(new Object[]{
+                appointment.getId(),
+                appointment.getAppointment_number(),
+                appointment.getPatientId(),
+                appointment.getDentistId(),
+                appointment.getTreatmentId(),
+                appointment.getAppointmentDate(),
+                appointment.getAppointmentTime(),
+                appointment.getStetus()
+            });
+        }
     }
 
     final void viewAllDentist() {
@@ -697,6 +721,7 @@ public final class DashbordForm extends javax.swing.JFrame {
         jCmbAppoinmentStetus.addActionListener(this::jCmbAppoinmentStetusActionPerformed);
 
         jTxtAppoinmentNumber.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTxtAppoinmentNumber.addActionListener(this::jTxtAppoinmentNumberActionPerformed);
 
         jTxtAppoinmentPatient.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
@@ -2029,19 +2054,65 @@ public final class DashbordForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnDentistCancelActionPerformed
 
     private void jBtnAppoinmentSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAppoinmentSaveActionPerformed
-        // TODO add your handling code here:
-        String name = jTxtAppoinmentNumber.getText().trim();
-        int patientId = (int) jCmbPatientId.getSelectedItem();
-        int dentistId = (int) jCmbDentistId.getSelectedItem();
-        int treatmentId = (int) jCmbTreatmentId.getSelectedItem();
-        String date = jTxtAppoinmentDate.getText().trim();
-        String time = jTxtAppoinmentTime.getText().trim();
-        AppointmentStetus status = AppointmentStetus.valueOf(jCmbAppoinmentStetus.getSelectedItem().toString());
 
-        appointmentController.save(new AppoinmentDTO(name, patientId, dentistId, treatmentId, date, time, status));
-        clearInputs();
-        viewAllDentist();
+        if (jCmbPatientId.getSelectedItem() == null
+                || jCmbDentistId.getSelectedItem() == null
+                || jCmbTreatmentId.getSelectedItem() == null
+                || jCmbAppoinmentStetus.getSelectedItem() == null) {
 
+            javax.swing.JOptionPane.showMessageDialog(this, "Please ensure Patient, Dentist, Treatment, and Status are selected.", "Validation Error", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            int patientId = Integer.parseInt(jCmbPatientId.getSelectedItem().toString().trim());
+            int dentistId = Integer.parseInt(jCmbDentistId.getSelectedItem().toString().trim());
+            int treatmentId = Integer.parseInt(jCmbTreatmentId.getSelectedItem().toString().trim());
+
+            String appointmentNumber = jTxtAppoinmentNumber.getText().trim();
+            if (appointmentNumber.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Appointment Number is required.", "Validation Error", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String rawDate = jTxtAppoinmentDate.getText().trim();
+            if (rawDate.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Please enter an appointment date (e.g., 2026-10-15).", "Validation Error", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String date = rawDate.replace('/', '-');
+            if (!date.matches("^\\d{4}-\\d{2}-\\d{2}$")) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Invalid Date format! Please use YYYY-MM-DD (e.g., 2026-10-15).", "Validation Error", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String rawTime = jTxtAppoinmentTime.getText().trim();
+            if (rawTime.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Please enter an appointment time.", "Validation Error", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String time = appointmentController.formatToSqlTime(rawTime);
+            if (time == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Invalid Time format. Please enter a valid hour or HH:mm:ss string.", "Validation Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            AppointmentStetus status = AppointmentStetus.valueOf(jCmbAppoinmentStetus.getSelectedItem().toString().trim());
+
+            AppoinmentDTO appointmentDTO = new AppoinmentDTO(appointmentNumber, patientId, dentistId, treatmentId, date, time, status);
+            appointmentController.save(appointmentDTO);
+
+            clearInputs();
+            loadNextAppointmentNumber();
+            viewAllAppointments();
+
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Invalid ID selection. Please re-select items from drop-down menus.", "Input Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Invalid Appointment Status selected.", "Input Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jBtnAppoinmentSaveActionPerformed
 
     private void jBtnAppoinmentUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAppoinmentUpdateActionPerformed
@@ -2222,7 +2293,11 @@ public final class DashbordForm extends javax.swing.JFrame {
         }
         jBtnDentistSave.setEnabled(false);
     }//GEN-LAST:event_jTblDentistMousePressed
-
+    public void loadNextAppointmentNumber() {
+        String nextAppId = appointmentController.getNextAppointmentNumber();
+        jTxtAppoinmentNumber.setText(nextAppId);
+        jTxtAppoinmentNumber.setEditable(false);
+    }
     private void jTxtDentistContactNumPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTxtDentistContactNumPropertyChange
         // TODO add your handling code here:
         checkInputs();
@@ -2238,6 +2313,7 @@ public final class DashbordForm extends javax.swing.JFrame {
         jPanelTreatmentContext.setVisible(false);
         jPanelDentistContext.setVisible(false);
         jPanelUserContext.setVisible(false);
+        loadNextAppointmentNumber();
         viewAllDentist();
     }//GEN-LAST:event_jBtnAppoinmenetActionPerformed
 
@@ -2522,6 +2598,10 @@ public final class DashbordForm extends javax.swing.JFrame {
         checkInputs();
         jBtnTreatmentSave.setEnabled(false);
     }//GEN-LAST:event_jTblUsersMouseClicked
+
+    private void jTxtAppoinmentNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtAppoinmentNumberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtAppoinmentNumberActionPerformed
 
     /**
      * @param args the command line arguments

@@ -171,7 +171,6 @@ public class UserController {
     public List<AddUserDTO> getAll() {
         String userName = UserSession.getUserName();
         Role userRole = UserSession.getUserRole();
-        System.out.println(!Role.ADMIN.equals(userRole) && !Role.DENTIST.equals(userRole));
 
         if (!Role.ADMIN.equals(userRole) && !Role.STAFF.equals(userRole)) {
             dasbordForm.showMessage("Access denied");

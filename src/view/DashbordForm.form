@@ -453,7 +453,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="295" max="-2" attributes="0"/>
                       <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="256" max="32767" attributes="0"/>
+                      <EmptySpace pref="260" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
@@ -471,7 +471,7 @@
                                           <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
                                           <Component id="jCmbPatientId" pref="176" max="32767" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="51" max="32767" attributes="0"/>
+                                      <EmptySpace pref="55" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
                                           <Component id="jCmbDentistId" pref="176" max="32767" attributes="0"/>
@@ -828,6 +828,9 @@
                   <Font name="Segoe UI" size="14" style="1"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTxtAppoinmentNumberActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTxtAppoinmentPatient">
               <Properties>

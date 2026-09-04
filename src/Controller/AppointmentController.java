@@ -12,6 +12,7 @@ import dao.costom.impl.DentistDAOImpl;
 import dao.costom.impl.PatientDAOImpl;
 import dto.AppoinmentDTO;
 import java.sql.SQLException;
+import java.util.List;
 import model.Appointment;
 import util.EmailUtility;
 import util.UserSession;
@@ -30,6 +31,39 @@ public class AppointmentController {
 
     public AppointmentController(DashbordForm dasbordForm) {
         this.dasbordForm = dasbordForm;
+    }
+
+    public List<AppoinmentDTO> getAll() {
+        try {
+            return appointmentDAO.getAllAppointments();
+        } catch (SQLException ex) {
+            System.err.println("Error fetching appointments: " + ex.getMessage());
+            return new java.util.ArrayList<>();
+        }
+    }
+
+    public String formatToSqlTime(String rawTime) {
+        if (rawTime == null || rawTime.trim().isEmpty()) {
+            return null;
+        }
+
+        String input = rawTime.trim();
+
+        if (input.matches("^\\d{1,2}$")) {
+            int val = Integer.parseInt(input);
+            return String.format("00:00:%02d", val);
+        }
+
+        if (input.matches("^\\d{1,2}:\\d{2}$")) {
+            String[] parts = input.split(":");
+            return String.format("%02d:%02d:00", Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+        }
+
+        if (input.matches("^(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d$")) {
+            return input;
+        }
+
+        return null;
     }
 
     public void save(AppoinmentDTO appointmentDTO) {
@@ -51,7 +85,6 @@ public class AppointmentController {
             try {
 
                 String patientEmail = patientDAO.getPatientEmailById(appointmentDTO.getPatientId());
-                String dentistEmail = dentistDAO.getDentistEmailById(appointmentDTO.getDentistId());
 
                 String subject = "Appointment Confirmation: " + appointmentDTO.getAppointment_number();
 
@@ -64,19 +97,8 @@ public class AppointmentController {
                         + "</ul>"
                         + "<p>Thank you.</p>";
 
-                String dentistBody = "<h2>New Scheduled Appointment</h2>"
-                        + "<p>Dear Doctor,</p>"
-                        + "<p>A new appointment has been booked for you in the system.</p>"
-                        + "<ul>"
-                        + "<li><b>Date:</b> " + appointmentDTO.getAppointmentDate() + "</li>"
-                        + "<li><b>Time:</b> " + appointmentDTO.getAppointmentTime() + "</li>"
-                        + "</ul>";
-
                 if (patientEmail != null && !patientEmail.trim().isEmpty()) {
                     EmailUtility.sendEmail(patientEmail, subject, patientBody);
-                }
-                if (dentistEmail != null && !dentistEmail.trim().isEmpty()) {
-                    EmailUtility.sendEmail(dentistEmail, subject, dentistBody);
                 }
 
             } catch (Exception ex) {
@@ -136,6 +158,15 @@ public class AppointmentController {
             }
         } catch (SQLException ex) {
             dasbordForm.showMessage("Check Appoinment number");
+        }
+    }
+
+    public String getNextAppointmentNumber() {
+        try {
+            return appointmentDAO.generateNextAppointmentNumber();
+        } catch (SQLException ex) {
+            System.err.println("Error generating appointment number: " + ex.getMessage());
+            return "APT-001";
         }
     }
 }

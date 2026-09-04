@@ -197,7 +197,7 @@ public class UserDAOImpl implements UserDAO {
         Connection con = null;
         try {
             con = DBConnection.getConnection();
-            con.setAutoCommit(false); 
+            con.setAutoCommit(false);
 
             int userId = -1;
             try (PreparedStatement pstToken = con.prepareStatement(findTokenSql)) {
@@ -207,7 +207,7 @@ public class UserDAOImpl implements UserDAO {
                         userId = rs.getInt("user_id");
                     } else {
                         con.rollback();
-                        return false; 
+                        return false;
                     }
                 }
             }
@@ -229,7 +229,7 @@ public class UserDAOImpl implements UserDAO {
                 pstDel.executeUpdate();
             }
 
-            con.commit(); 
+            con.commit();
             return true;
         } catch (SQLException ex) {
             if (con != null) {
